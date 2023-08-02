@@ -1,0 +1,19 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "핵심프로젝트",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "운암",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql2": "^3.5.2",
+    "nunjucks": "^3.2.4"
+  }
+}
