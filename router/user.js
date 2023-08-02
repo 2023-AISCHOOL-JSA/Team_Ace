@@ -51,6 +51,7 @@ router.post("/login", function(request, response){
         }
     });
 });
+
 router.post("/delete", function(request, response){
     let deleteNick = request.body.deleteNick;
 
@@ -99,31 +100,33 @@ router.post("/update", function(request, response){
 
 router.post("/join", function(request, response){
     let id = request.body.id;
-    let pw = request.body.pw;
-    let pwr = request.body.pwr;
-    let userName = request.body.userName;
+    let pw = request.body.password;
+    let name = request.body.fullname;
     let nick = request.body.nick;
     let phonenum = request.body.phonenum;
+    let date = request.body.date;
+    let gender = request.body.gender;
+    let email = request.body.email;
+    let postcode = parseInt(request.body.sample6_postcode);
+    let address = request.body.sample6_address;
+    let detailAddress = request.body.sample6_detailAddress;
+    let extraAddress = request.body.sample6_extraAddress;
 
-    if (pw == pwr){
-        conn.connect();
-        let sql = "insert into member values ( ?, ?, ?, ?, ? )";
-        console.log("비번 통과, 커넥션");
-        conn.query(sql, [id, pw, userName, nick, phonenum], function(err, rows){
-            if(!err){
-                console.log("가입 성공");
-                response.redirect("/page/");
-            }
-            else {
-                console.log("가입 실패");
-                response.redirect("/page/Join");
-            }
-        });
-    } else {
-        console.log("비번미일치");
-        response.redirect("/Join");
-    }
-    
+
+    conn.connect();
+    let sql = "insert into member values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    console.log("비번 통과, 커넥션");
+    conn.query(sql, [id, pw, name, nick, phonenum, date, gender, email, address, postcode, detailAddress, extraAddress], function(err, rows){
+        if(!err){
+            console.log("가입 성공");
+            response.redirect("/page/");
+        }
+        else {
+            console.log("가입 실패");
+            console.log(err);
+            response.redirect("/page/Join");
+        }
+    });
 });
 
 router.get("/selectAll", function(request, response){

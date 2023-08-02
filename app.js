@@ -15,6 +15,8 @@ const cookieParse = require("cookie-parser");
 const session = require("express-session");
 
 const ninjucks = require("nunjucks");
+
+
 app.set("view engine", "html");
 ninjucks.configure("views",{
     express: app,
@@ -24,6 +26,7 @@ ninjucks.configure("views",{
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(express.static(__dirname + "/public"));
 
 app.use(session({
     httpOnly : true,     // httpOnly : http 통신일 때 허용?
