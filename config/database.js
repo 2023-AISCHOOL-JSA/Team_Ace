@@ -3,11 +3,11 @@
 const mysql = require("mysql2");
 
 let conn = {
-    host : "localhost",
-    user : "root",
-    password : "123456",
-    port : "3306",
-    database : "nodejs_DB"
+    host : "project-db-stu3.smhrd.com",
+    user : "Insa4_JSA_hacksim_4",
+    password : "aishcool4",
+    port : "3307",
+    database : "Insa4_JSA_hacksim_4"
 };
 
 module.exports = {
