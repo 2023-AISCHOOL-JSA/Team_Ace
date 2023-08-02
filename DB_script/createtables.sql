@@ -28,6 +28,7 @@ CREATE TABLE collection(
 );
 
 select * from collection;
+-- 수거 테이블 컬럼명 변경
 alter table collection change productNum ownNum varchar(50);
 commit;
 
@@ -102,3 +103,13 @@ create table shoppingDetail(
 commit;
 
 show tables;
+
+-- 각 테이블 PK키 설정
+ALTER TABLE member MODIFY COLUMN id varchar(100) PRIMARY KEY;
+ALTER TABLE collection MODIFY COLUMN collectNum varchar(100) PRIMARY KEY;
+ALTER TABLE product MODIFY COLUMN productNum varchar(50) PRIMARY KEY;
+ALTER TABLE shopping MODIFY COLUMN shoppingNum varchar(50) PRIMARY KEY;
+ALTER TABLE seller MODIFY COLUMN companyName varchar(50) PRIMARY KEY;
+ALTER TABLE image MODIFY COLUMN serialNum varchar(50) PRIMARY KEY;
+
+commit;
