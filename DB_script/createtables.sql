@@ -100,3 +100,5 @@ create table shoppingDetail(
 );
 
 commit;
+
+show tables;
