@@ -23,6 +23,11 @@ router.get('/Delete', function(request,response){
     response.render("Delete");
 });
 
+// http://localhost:3000/page/Update
+router.get('/Update', function(request,response){
+    response.render("Update");
+});
+
 // http://localhost:3000/page/selectAll
 router.get('/selectAll', function(request,response){
     response.render("selectAll");
@@ -32,5 +37,6 @@ router.get('/selectAll', function(request,response){
 router.get('/selectOne', function(request,response){
     response.render('selectOne', {info: request.cookies.info});
 });
+
 
 module.exports = router;
