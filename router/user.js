@@ -52,18 +52,20 @@ router.post("/login", function(request, response){
     });
 });
 router.post("/delete", function(request, response){
-    let nick = request.body.deleteUser;
+    let deleteNick = request.body.deleteNick;
 
     conn.connect();
 
     let sql = "delete from member where nick=?";
 
-    conn.query(sql, [nick], function(err, rows){
+    conn.query(sql, [deleteNick], function(err, rows){
         console.log(err);
         console.log(rows.affectedRows);
 
         if (!err){
             console.log("삭제 성공!!");
+            response.clearCookie('info');
+            request.session.destroy(); 
             response.redirect("/page/");
         } else {
             console.log("삭제 실패!!");
@@ -99,14 +101,15 @@ router.post("/join", function(request, response){
     let id = request.body.id;
     let pw = request.body.pw;
     let pwr = request.body.pwr;
+    let userName = request.body.userName;
     let nick = request.body.nick;
     let phonenum = request.body.phonenum;
 
     if (pw == pwr){
         conn.connect();
-        let sql = "insert into member values ( ?, ?, ?, ? )";
+        let sql = "insert into member values ( ?, ?, ?, ?, ? )";
         console.log("비번 통과, 커넥션");
-        conn.query(sql, [id, pw, nick, phonenum], function(err, rows){
+        conn.query(sql, [id, pw, userName, nick, phonenum], function(err, rows){
             if(!err){
                 console.log("가입 성공");
                 response.redirect("/page/");
