@@ -14,9 +14,9 @@
          null, undefind 조자 안나옴 -->
     {%if user.length > 0 %}
         <p>찾은 아이디 정보</p>
-        <p>ID : {{user[0].ID}}</p>
-        <p>NICK : {{user[0].NICK}}</p>
-        <p>PHONENUM : {{user[0].PHONENUM}}</p>
+        <p>ID : {{user[0].id}}</p>
+        <p>NICK : {{user[0].nick}}</p>
+        <p>PHONENUM : {{user[0].phonenum}}</p>
     {%elif user.length == 0 %}
         <p>해당 아이디는 존재하지 않습니다</p>
     {%else %}
@@ -25,9 +25,9 @@
     <br>
     {%if info != null %}
         <p>현재 접속 아이디 정보</p>
-        <p>ID : {{info.ID}}</p>
-        <p>NICK : {{info.NICK}}</p>
-        <p>PHONENUM : {{info.PHONENUM}}</p>
+        <p>ID : {{info.id}}</p>
+        <p>NICK : {{info.nick}}</p>
+        <p>PHONENUM : {{info.phonenum}}</p>
     {% endif %}
     <button><a href="/page/">메인 페이지로!</a></button>
 </body>
