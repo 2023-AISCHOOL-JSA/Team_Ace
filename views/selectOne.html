@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/user/selectOne" method="post">
+        <input name="nickorphonenum" placeholder="닉네임 or 전화번호 입력">
+        <input type="submit" value="찾기">
+    </form>
+    <!-- nunjucks 문법에서는 값이 없을때 출력을 아예 안한다
+         null, undefind 조자 안나옴 -->
+    {%if user.length > 0 %}
+        <p>찾은 아이디 정보</p>
+        <p>ID : {{user[0].ID}}</p>
+        <p>NICK : {{user[0].NICK}}</p>
+        <p>PHONENUM : {{user[0].PHONENUM}}</p>
+    {%elif user.length == 0 %}
+        <p>해당 아이디는 존재하지 않습니다</p>
+    {%else %}
+        <p>검색하세요!</p>
+    {% endif %}
+    <br>
+    {%if info != null %}
+        <p>현재 접속 아이디 정보</p>
+        <p>ID : {{info.ID}}</p>
+        <p>NICK : {{info.NICK}}</p>
+        <p>PHONENUM : {{info.PHONENUM}}</p>
+    {% endif %}
+    <button><a href="/page/">메인 페이지로!</a></button>
+</body>
+</html>

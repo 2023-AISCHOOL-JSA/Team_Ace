@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if userList.length > 0 %}
+    <table border="1px solid black">
+        <tr>
+            <td>ID</td>
+            <td>PW</td>
+            <td>NICK</td>
+            <td>PHONENUM</td>
+        </tr>
+        {%for user in userList %}
+        <tr>
+            <td>{{user.ID}}</td>
+            <td>{{user.PW}}</td>
+            <td>{{user.NICK}}</td>
+            <td>{{user.PHONENUM}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    {% endif %}
+    <button><a href="/page/">메인 페이지로!</a></button>
+</body>
+</html>
