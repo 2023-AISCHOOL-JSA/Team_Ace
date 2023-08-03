@@ -1,5 +1,6 @@
 select * from product;
 
+-- 더미데이터１
 insert into product(
 	productNum,
     productName,
@@ -22,6 +23,7 @@ insert into product(
     '2023-08-03'
 );
 
+-- 더미데이터２
 insert into product(
 	productNum,
     productName,
@@ -43,3 +45,8 @@ insert into product(
     'sellercodetest2',
     '2023-06-01'
 );
+
+-- shoppping 테이블 컬럼명 변경
+ALTER TABLE shopping CHANGE productNum ownNum varchar(100);
+
+commit;
