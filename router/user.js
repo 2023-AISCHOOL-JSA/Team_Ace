@@ -99,10 +99,10 @@ router.post("/findPw", function(request, response){
         console.log(rows);
 
         if(!err & rows.length > 0){
-            console.log(`ID 찾음:${rows[0].pw}`);
+            console.log(`PW 찾음:${rows[0].pw}`);
         }
         else{
-            console.log('ID를 찾을 수 없습니다.');
+            console.log('PW를 찾을 수 없습니다.');
         }
     })
 })
