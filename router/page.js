@@ -28,6 +28,10 @@ router.get('/Update', function(request,response){
     response.render("Update");
 });
 
+router.get('/Find', function(request,response){
+    response.render("Find");
+});
+
 // http://localhost:3000/page/selectAll
 router.get('/selectAll', function(request,response){
     response.render("selectAll");

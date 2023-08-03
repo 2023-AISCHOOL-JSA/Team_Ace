@@ -31,7 +31,7 @@ router.get("/logout", function(request, response){
 router.post("/login", function(request, response){
     let id = request.body.id;
     let pw = request.body.pw;
-
+    
     conn.connect();
 
     let sql = "select * from member where ID=? and PW=?";
@@ -51,6 +51,61 @@ router.post("/login", function(request, response){
         }
     });
 });
+
+// 아이디 찾기
+router.post("/findId", function(request, response){
+    // 모달창에서 아이디를 찾을 때 요청보낸 이름
+    let nameforFindid = request.body.name;
+    let phoneforFindid = request.body.phone;
+
+    conn.connect();
+
+    // id 찾기 쿼리문 이름과 전화번호로 찾음
+    let findsql = `select id from member where 
+            userName=${nameforFindid} 
+            and phonenum=${phoneforFindid}`;
+    
+    // 쿼리 결과 
+    conn.query(findsql, function(err, rows){
+        console.log(err);
+        console.log(rows);
+
+        if(!err & rows.length > 0){
+            console.log(`ID 찾음:${rows[0].id}`)
+        }
+        else{
+            console.log('ID를 찾을 수 없습니다.')
+        }
+    })
+})
+
+// 패스워드 찾기
+router.post("/findPw", function(request, response){
+    let nameforFindPW = request.body.name;
+    let phoneforFindPW = request.body.phone;
+    let idforFindPW = request.body.id;
+
+    conn.connect();
+
+    // PW찾기 쿼리문 이름, 전화번호, 아이디를 통해 찾음
+    let findsql = `select pw from member where 
+            userName=${nameforFindPW} 
+            and phonenum=${phoneforFindPW}
+            and id=${idforFindPW}`;
+
+    // 쿼리 결과
+    conn.query(findsql, function(err, rows){
+        console.log(err);
+        console.log(rows);
+
+        if(!err & rows.length > 0){
+            console.log(`ID 찾음:${rows[0].pw}`);
+        }
+        else{
+            console.log('ID를 찾을 수 없습니다.');
+        }
+    })
+})
 
 router.post("/delete", function(request, response){
     let deleteNick = request.body.deleteNick;
