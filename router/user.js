@@ -221,4 +221,8 @@ router.post("/selectOne", function(request, response){
     });
 });
 
+router.get("/productDetail", function(request,response){
+    
+})
+
 module.exports = router;
