@@ -10,7 +10,7 @@ router.get('/', function(request,response){
 
 // http://localhost:3000/page/Login
 router.get('/Login', function(request,response){
-    response.render("Login");
+    response.render("Login", {loginFlag: request.session.loginFlag});
 });
 
 // http://localhost:3000/page/Join
