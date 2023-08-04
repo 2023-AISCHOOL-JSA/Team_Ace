@@ -32,6 +32,11 @@ router.get('/Find', function(request,response){
     response.render("Find");
 });
 
+router.get('/Pay', function(request,response){
+    response.render("Pay", {info: request.session.info,
+    order: request.session.order});
+});
+
 // http://localhost:3000/page/selectAll
 router.get('/selectAll', function(request,response){
     response.render("selectAll");
