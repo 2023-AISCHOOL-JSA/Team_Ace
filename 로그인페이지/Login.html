@@ -14,11 +14,11 @@
     <div id = "container">
         <div id ="login_main">
             <div id = "top"><h2>LOGiN</h2></div>
-            <div id="err">   
-                <h6 id="errMsg">아이디 또는 비밀번호를 잘못 입력했습니다<br>
+        <div id="err">   
+            <h6 id="errMsg">아이디 또는 비밀번호를 잘못 입력했습니다<br>
                 입력하신 내용을 다시 확인해주세요.
-                </h6>
-            </div>   
+            </h6>
+        </div>   
             <form action="/user/login" method="post" id="loginForm">
                 <div id="id">
                     <span class="label">아이디</span>
@@ -28,9 +28,11 @@
                     <span class="label">비밀번호</span>
                     <input type="password" name="inputPw" placeholder="  비밀번호를 입력하세요" minlength="1" size="30" autocomplete="off">
                 </div>
+                
+            
                 <input type="submit" id="loginButton" value="로그인">
+                <button>회원가입</button>
             </form>
-                <a href="/page/Join"><button>회원가입</button></a>
         </div>
     </div>
 

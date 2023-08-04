@@ -29,8 +29,8 @@ router.get("/logout", function(request, response){
 });
 
 router.post("/login", function(request, response){
-    let id = request.body.id;
-    let pw = request.body.pw;
+    let id = request.body.inputId;
+    let pw = request.body.inputPw;
     
     conn.connect();
 
@@ -48,6 +48,7 @@ router.post("/login", function(request, response){
             response.redirect("/page/");
         } else {
             response.redirect("/page/Login");
+            response.send('<alert>');
         }
     });
 
