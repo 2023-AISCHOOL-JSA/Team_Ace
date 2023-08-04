@@ -34,7 +34,7 @@ router.post("/login", function(request, response){
     
     conn.connect();
 
-    let sql = "select * from member where ID=? and PW=?";
+    let sql = "select * from MEMBER where ID=? and PW=?";
 
     conn.query(sql, [id, pw], function(err, rows){
         console.log(err);
@@ -50,6 +50,18 @@ router.post("/login", function(request, response){
             response.redirect("/page/Login");
         }
     });
+
+    // 로그인 시 유저 주문 정보 테이블을 가져옴
+    // 세션에 보관함
+    // sql = `SELECT * FROM ORDER WHERE ID=${id}`
+    // conn.query(sql, function(err, rows){
+    //     if(!err & rows){
+    //         request.session.order = rows;
+    //     }
+    //     else{
+    //         console.log(err)
+    //     }
+    // })
 });
 
 // 아이디 찾기
@@ -61,7 +73,7 @@ router.post("/findId", function(request, response){
     conn.connect();
 
     // id 찾기 쿼리문 이름과 전화번호로 찾음
-    let findsql = `select id from member where 
+    let findsql = `select id from MEMBER where 
             userName=${nameforFindid} 
             and phonenum=${phoneforFindid}`;
     
@@ -88,7 +100,7 @@ router.post("/findPw", function(request, response){
     conn.connect();
 
     // PW찾기 쿼리문 이름, 전화번호, 아이디를 통해 찾음
-    let findsql = `select pw from member where 
+    let findsql = `select pw from MEMBER where 
             userName=${nameforFindPW} 
             and phonenum=${phoneforFindPW}
             and id=${idforFindPW}`;
@@ -112,7 +124,7 @@ router.post("/delete", function(request, response){
 
     conn.connect();
 
-    let sql = "delete from member where nick=?";
+    let sql = "delete from MEMBER where nick=?";
 
     conn.query(sql, [deleteNick], function(err, rows){
         console.log(err);
@@ -137,7 +149,7 @@ router.post("/update", function(request, response){
 
     conn.connect();
 
-    let sql = "update member set pw=?, nick=? where id=?";
+    let sql = "update MEMBER set pw=?, nick=? where id=?";
 
     conn.query(sql, [pw, nick, id], function(err, rows){
         console.log(err);
@@ -169,7 +181,7 @@ router.post("/join", function(request, response){
 
 
     conn.connect();
-    let sql = "insert into member values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let sql = "insert into MEMBER values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     console.log("비번 통과, 커넥션");
     conn.query(sql, [id, pw, name, nick, phonenum, date, gender, email, address, postcode, detailAddress, extraAddress], function(err, rows){
         if(!err){
@@ -188,7 +200,7 @@ router.get("/selectAll", function(request, response){
     console.log("접근완");
 
     conn.connect();
-    let sql = "select * from member";
+    let sql = "select * from MEMBER";
     conn.query(sql, function(err, rows){
         console.log(rows);
 
@@ -206,7 +218,7 @@ router.post("/selectOne", function(request, response){
     let nickorphonenum = request.body.nickorphonenum;
 
     conn.connect();
-    let sql = "select * from member where nick = ? or phonenum = ?";
+    let sql = "select * from MEMBER where nick = ? or phonenum = ?";
     conn.query(sql, [nickorphonenum, nickorphonenum], function(err, rows){
         console.log(rows);
 
@@ -221,8 +233,17 @@ router.post("/selectOne", function(request, response){
     });
 });
 
-router.get("/productDetail", function(request,response){
-    
+// 결제 시 결제 정보를 ORDER 테이블에 저장
+router.post("/pay", function(request,response){
+    // conn.connect();
+    // let name = request.body.recipient_name;
+    // let addr = request.body.recipient_address;
+    // let memo = request.body.recipient_place;
+
+    // let sql = ``;
+    // conn.query(sql, function(err, rows){
+
+    // })
 })
 
 module.exports = router;

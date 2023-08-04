@@ -24,7 +24,7 @@ CREATE TABLE collection(
    memberPhone varchar(100),
    deliverNum varchar(100),
    deliverMemo varchar(100),
-   collectCode varchar(100),
+   collectCode varchar(100)
 );
 
 select * from collection;

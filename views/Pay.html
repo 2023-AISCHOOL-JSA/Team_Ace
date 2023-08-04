@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <link rel="stylesheet" href="/assets/css/pay.css">
+    <title>테스트 페이지</title>
+</head>
+
+<body>
+    <header>
+        <img src="/img/logo.jpg" alt="로고 이미지">
+    </header>
+    <div class="payment-form">
+        <h2>주문 결제</h2>
+        <form action="/user/pay" method="post" id="order-form">
+            <h3>구매자 정보</h3>
+            <table>
+                <tr>
+                    <th>이름</th>
+                    <td>{{info.NAME}}</td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td>{{info.EMAIL}}</td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td>{{info.ADDR}}</td>
+                </tr>
+                <!-- 추가적인 구매자 정보를 이곳에 추가할 수 있습니다. -->
+            </table>
+
+            <section>
+                <h3>받는 사람 정보</h3>
+                <div class="form-group">
+                    <label for="recipient_name">이름</label>
+                    <input type="text" id="recipient_name" name="recipient_name" placeholder="받는 사람 이름을 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipient_name">핸드폰번호</label>
+                    <input type="text" id="recipient_tel" name="recipient_name" placeholder="받는 사람 핸드폰번호를 입력하세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipient_address">주소</label>
+                    <input type="text" id="recipient_address" name="recipient_address" placeholder="받는 사람 주소를 입력하세요"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="recipient_address">배송요청사항</label>
+                    <input type="text" id="recipient_address" name="recipient_place" placeholder="요청사항을 입력하세요" required>
+                </div>
+
+                <!-- 추가적인 받는 사람 정보 입력 항목들을 여기에 추가할 수 있습니다. -->
+            </section>
+
+            <h2>결제 정보</h2>
+            <table>
+                <tr>
+                    <th>총상품가격</th>
+                    <td>{{order}}</td>
+                </tr>
+                <tr>
+                    <th>배송비</th>
+                    <td>3,000</td>
+                </tr>
+                <tr>
+                    <th>총결제금액</th>
+                    <td>db값</td>
+                </tr>
+                <!-- 추가적인 결제 정보를 이곳에 추가할 수 있습니다. -->
+            </table>
+            <input type="submit" value="결제하기" id="check_module">
+        </form>
+    </div>
+    <script src="/assets/js/pay.js"></script>
+</body>
