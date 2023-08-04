@@ -51,17 +51,17 @@ router.post("/login", function(request, response){
         }
     });
 
-    // 로그인 시 유저 주문 정보 테이블을 가져옴
+    // 로그인 시 유저 주문 정보 테이블을 가져와서
     // 세션에 보관함
-    // sql = `SELECT * FROM ORDER WHERE ID=${id}`
-    // conn.query(sql, function(err, rows){
-    //     if(!err & rows){
-    //         request.session.order = rows;
-    //     }
-    //     else{
-    //         console.log(err)
-    //     }
-    // })
+    sql = `select * from ORDER where ID=${id}`
+    conn.query(sql, function(err, rows){
+        if(!err & rows){
+            request.session.order = rows;
+        }
+        else{
+            console.log(err)
+        }
+    })
 });
 
 // 아이디 찾기
@@ -73,9 +73,7 @@ router.post("/findId", function(request, response){
     conn.connect();
 
     // id 찾기 쿼리문 이름과 전화번호로 찾음
-    let findsql = `select id from MEMBER where 
-            userName=${nameforFindid} 
-            and phonenum=${phoneforFindid}`;
+    let findsql = `select id from MEMBER where NAME=${nameforFindid} and TEL=${phoneforFindid}`;
     
     // 쿼리 결과 
     conn.query(findsql, function(err, rows){
@@ -101,9 +99,9 @@ router.post("/findPw", function(request, response){
 
     // PW찾기 쿼리문 이름, 전화번호, 아이디를 통해 찾음
     let findsql = `select pw from MEMBER where 
-            userName=${nameforFindPW} 
-            and phonenum=${phoneforFindPW}
-            and id=${idforFindPW}`;
+            NAME=${nameforFindPW}
+            and TEL=${phoneforFindPW}
+            and ID=${idforFindPW}`;
 
     // 쿼리 결과
     conn.query(findsql, function(err, rows){
@@ -124,7 +122,7 @@ router.post("/delete", function(request, response){
 
     conn.connect();
 
-    let sql = "delete from MEMBER where nick=?";
+    let sql = "delete from MEMBER where NICK=?";
 
     conn.query(sql, [deleteNick], function(err, rows){
         console.log(err);
