@@ -1,115 +1,162 @@
-select * from member;
-
--- 1 멤버 테이블 컬럼 추가
- ALTER TABLE member
-   ADD BIRTH DATE,
-   ADD GENDER VARCHAR(6),
-   ADD EMAIL VARCHAR(100),
-   ADD ADDRESS VARCHAR(150);
-
--- 멤버 테이블 컬럼 추가 
- ALTER TABLE member
-   ADD POSTCODE INT,
-   ADD DETAILADDRESS VARCHAR(100),
-   ADD EXTRAADDRESS VARCHAR(100);
-
--- 2 수거 테이블 생성
-CREATE TABLE collection(
-   collectNum varchar(100),
-   id VARCHAR(100),
-   collectLocation varchar(100),
-   collectDate date,
-   productNum varchar(50),
-   memberName varchar(100),
-   memberPhone varchar(100),
-   deliverNum varchar(100),
-   deliverMemo varchar(100),
-   collectCode varchar(100)
-);
-
-select * from collection;
--- 수거 테이블 컬럼명 변경
-alter table collection change productNum ownNum varchar(50);
+SHOW TABLES;
 commit;
 
--- 컬럼 타입 변경
-ALTER TABLE member MODIFY POSTCODE VARCHAR(100);
+ALTER TABLE member ADD nick VARCHAR(200);
+ALTER TABLE member ADD phonenum VARCHAR(200);
 
--- 3 상품 테이블 생성
-create table product(
-	productNum varchar(50),
-    productName varchar(100),
-    categoryNum varchar(100),
-    productDetail varchar(255),
-    productPrice varchar(255),
-    productStart date,
-    productEnd date,
-    sellerCode varchar(100),
-    uptoDate date
+UPDATE member SET nick = '닉네임', phonenum = '000-1111-2222' where id = 'absoo';
+insert into member values ( '123', '123', '123', '123', '123');
+delete from member where id = 'absoo';
+DROP TABLE `MEMBER`;
+
+SHOW PROCESSLIST;
+KILL 5416;
+KILL 5417;
+KILL 5619;
+KILL 5638;
+KILL 5710;
+
+set sql_safe_updates=0;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- -------------------- 테이블 생성 쿼리 --------------------------------
+-- 1 멤버 테이블 생성
+CREATE TABLE `MEMBER`(
+ID VARCHAR(50) PRIMARY KEY,
+PW VARCHAR(50) NOT NULL,
+NAME VARCHAR(100) NOT NULL,
+NICK VARCHAR(50) NOT NULL,
+TEL VARCHAR(20) NOT NULL,
+BIRTH DATE NOT NULL,
+GENDER VARCHAR(10) NOT NULL,
+EMAIL VARCHAR(50),
+ADDR VARCHAR(100) NOT NULL,
+POSTCODE VARCHAR(20) NOT NULL,
+ADDR_DETAIL VARCHAR(100) NOT NULL,
+ADDR_EXTRA VARCHAR(100) NOT NULL
 );
 
--- 4 주문 테이블 생성
-create table shopping(
-	shoppingNum varchar(50),
-    id varchar(100),
-    price varchar(100),
-    takerName varchar(100),
-    takerPhone varchar(100),
-    takerAddress varchar(100),
-    productNum varchar(100),
-    deliverMemo varchar(100),
-    shoppingStatus varchar(2),
-    shoppingDate date
+SELECT * FROM MEMBER;
+
+-- 2 판매자 테이블 생성
+CREATE TABLE SELLER(
+SELLER_CODE INT(8) PRIMARY KEY,
+COM_NM VARCHAR(50) NOT NULL,
+COM_ADDR VARCHAR(100) NOT NULL,
+COM_TEL VARCHAR(20) NOT NULL
 );
 
--- 5 결제 테이블 생성
-create table payment(
-	shoppingNum varchar(50),
-    payCode varchar(50),
-	payPrice varchar(50),
-    payDate date
+SELECT * FROM SELLER;
+
+-- 3 시퀀스 모음 테이블 생성
+CREATE TABLE SEQUENCES(
+PRD_NO INT(8),
+SERIAL_NO INT(8),
+ORDER_NO INT(8),
+COLL_NO INT(8),
+PRD_CODE INT(8),
+SELLER_CODE INT(8)
 );
 
--- 6 이미지 테이블 생성
-create table image(
-	serialNum varchar(50),
-    productNum varchar(50),
-    imagePath varchar(100)
-); 
+INSERT INTO SEQUENCES VALUES (0, 0, 0, 0, 0, 0);
+SELECT * FROM SEQUENCES;
 
--- 7 재고 테이블 생성
-create table productWare(
-	productType varchar(100),
-    sellerCode varchar(100),
-    productNum varchar(50),
-    ownNum varchar(50),
-    sellAvailable varchar(2)
-); 
-
--- 8 판매자 테이블 생성
-create table seller(
-	companyName varchar(50),
-    sellerCode varchar(100)
+-- 4 상품 테이블 생성
+CREATE TABLE PRD(
+PRD_NO INT(8) PRIMARY KEY,
+SELLER_CODE VARCHAR(50),
+PRD_CODE VARCHAR(50),
+PRD_NM VARCHAR(50) NOT NULL,
+PRD_DETAIL VARCHAR(4000) NOT NULL,
+PRD_PRICE INT(10) NOT NULL,
+PRD_START DATE NOT NULL,
+PRD_END DATE NOT NULL,
+PRD_SIGN DATE NOT NULL
 );
 
-commit;
+SELECT * FROM PRD;
 
--- 9 주문 상세 테이블 생성
-create table shoppingDetail(
-	ownNum varchar(50),
-    shoppingNum varchar(50)
+-- 5 상품 이미지 테이블 생성
+CREATE TABLE PRD_IMG(
+PRD_NO INT(8),
+IMG_PATH VARCHAR(1000) NOT NULL
 );
 
-commit;
+SELECT * FROM PRD_IMG;
 
-show tables;
+-- 6 상품 종류 테이블 생성
+CREATE TABLE PRD_CATE(
+PRD_CODE INT(8) PRIMARY KEY,
+PRD_TYPE VARCHAR(100) NOT NULL
+);
 
--- 각 테이블 PK키 설정
-ALTER TABLE member MODIFY COLUMN id varchar(100) PRIMARY KEY;
-ALTER TABLE collection MODIFY COLUMN collectNum varchar(100) PRIMARY KEY;
-ALTER TABLE product MODIFY COLUMN productNum varchar(50) PRIMARY KEY;
-ALTER TABLE shopping MODIFY COLUMN shoppingNum varchar(50) PRIMARY KEY;
-ALTER TABLE seller MODIFY COLUMN companyName varchar(50) PRIMARY KEY;
-ALTER TABLE image MODIFY COLUMN serialNum varchar(50) PRIMARY KEY;
+SELECT * FROM PRD_CATE;
 
-commit;
+-- 7 상품 재고 테이블 생성
+CREATE TABLE PRD_ST(
+SERIAL_NO INT(8) PRIMARY KEY,
+PRD_NO INT(8)
+);
+
+SELECT * FROM PRD_ST;
+
+-- 8 장바구니 테이블 생성
+CREATE TABLE BASKET(
+ID VARCHAR(50),
+PRD_NO INT(8)
+);
+
+SELECT * FROM BASKET;
+
+-- 9 주문 정보 테이블 생성
+CREATE TABLE `ORDER`(
+ORDER_NO INT(8) PRIMARY KEY,
+ID VARCHAR(50),
+PRD_NO INT(8),
+SELLER_CODE INT(8),
+TOTAL_PRICE INT(8) NOT NULL,
+TAKER_NM VARCHAR(100) NOT NULL,
+TAKER_TEL VARCHAR(20) NOT NULL,
+TAKER_ADDR VARCHAR(200) NOT NULL,
+ORDER_COM_TEL VARCHAR(20) NOT NULL,
+ORDER_MEMO VARCHAR(500),
+ORDER_STATUS VARCHAR(20) NOT NULL,
+PAY_DATE DATE NOT NULL,
+PAY_CODE VARCHAR(20) NOT NULL
+);
+
+SELECT * FROM `ORDER`;
+
+-- 10 주문 상품 테이블 생성
+CREATE TABLE ORDER_PRD(
+ORDER_NO INT(8),
+SERIAL_NO INT(8)
+);
+
+SELECT * FROM ORDER_PRD;
+
+-- 11 수거 정보 테이블 생성
+CREATE TABLE COLL(
+COLL_NO INT(8) PRIMARY KEY,
+ID VARCHAR(50),
+PRD_NO INT(8),
+GIVER_NM VARCHAR(100) NOT NULL,
+GIVER_TEL VARCHAR(20) NOT NULL,
+GIVER_ADDR VARCHAR(200) NOT NULL,
+COLL_COM_TEL VARCHAR(20) NOT NULL,
+COLL_MEMO VARCHAR(500),
+COLL_STATUS VARCHAR(20) NOT NULL,
+COLL_DATE DATE NOT NULL
+);
+
+SELECT * FROM COLL;
+
+-- 12 수거 상품 테이블 생성
+CREATE TABLE COLL_PRD(
+COLL_NO INT(8),
+SERIAL_NO INT(8)
+);
+
+SELECT * FROM COLL_PRD;
+
+COMMIT;
