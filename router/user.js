@@ -40,15 +40,21 @@ router.post("/login", function(request, response){
         console.log(err);
         console.log(rows);
 
-        if (!err & rows.length > 0){
-            response.cookie('info', rows[0]);
-            console.log("쿠키 생성");
-            request.session.info = rows[0];
-            console.log("세션 생성");
-            response.redirect("/page/");
+        if (!err){
+            if(rows.length > 0){
+                response.cookie('info', rows[0]);
+                console.log("쿠키 생성");
+                request.session.info = rows[0];
+                console.log("세션 생성");
+                request.session.loginFlag = 1;
+                response.redirect("/page/");
+            }
+            else{
+                request.session.loginFlag = 0;
+                response.redirect("/page/Login");
+            }
         } else {
-            response.redirect("/page/Login");
-            response.send('<alert>');
+            console.log(err);
         }
     });
 
