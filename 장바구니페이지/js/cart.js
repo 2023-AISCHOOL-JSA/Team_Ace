@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 삭제 버튼의 클릭 이벤트를 처리하는 함수를 정의합니다.
     function handleDeleteButtonClick(event) {
+        event.preventDefault();
         // 선택된 상품 체크박스들을 찾습니다.
         const selectedProductCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]:checked');
 
