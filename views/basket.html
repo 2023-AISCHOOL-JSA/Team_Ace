@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>basket</title>
+    <link rel="stylesheet" href="/assets/css/basket.css">
+</head>
+
+<body>
+    <header>
+        <!-- 로고이미지 -->
+        <div class="logo">
+            <a href="https://naver.com"><img src="/assets/img/가구.jpg" alt="로고"></a>
+        </div>
+    </header>
+    <!-- 섹션 -->
+    <section class="cart">
+        <form action="/user/pay" method="post">
+            <table class="cart__list">
+                <!-- 테이블 헤드 -->
+                <thead>
+                    <tr>
+                        <td><input type="checkbox">전체선택</td>
+                        <td colspan="2">상품정보</td>
+                        <td>옵션</td>
+                        <td>상품금액</td>
+                        <td>배송비</td>
+                    </tr>
+                </thead>
+                <!-- 테이블 바디 -->
+                <tbody>
+                    <tr class="cart__list__detail">
+                        <td><input type="checkbox"></td>
+                        <!-- 상품이미지 -->
+                        <td><a href=""><img src="/assets/img/가구.jpg"></a></td>
+                        <td>
+                            <p>아임 홈리빙 클랙식 목재 가구</p>
+                            <span class="price">8/9도착 보장</span>
+                        </td>
+                        <td>
+                            <span>수량</span>
+                            <select>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </td>
+                        <td><span class="price">300000원</span><br>
+                        </td>
+                        <td>무료</td>
+                    </tr>
+                    <tr class="cart__list__detail">
+                        <td><input type="checkbox"></td>
+                        <td><a href=""><img src="/assets/img/가구.jpg"></a></td>
+                        <td>
+                            <p>아임 홈리빙 클랙식 목재 가구</p>
+                            <span class="price">8/9도착 보장</span>
+                        </td>
+                        <td>
+                            <span>수량</span>
+                            <select>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </td>
+                        <td><span class="price">300000원</span><br>
+                        </td>
+                        <td>무료</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <button class="cart__list__optionbtn" id="deleteButton">선택상품 삭제</button>
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+            <div>
+            </div>
+            <!-- 버튼 -->
+            <div class="cart__mainbtns">
+                <button type="button" class="cart__bigorderbtn left">쇼핑 계속하기</button>
+                <button class="cart__bigorderbtn right">주문하기</button>  <!-- submit -->
+            </div>
+        </form>
+    </section>
+    <!-- js연결 -->
+    <script src="/assets/js/basket.js"></script>
+    <script src="/assets/js/basket2.js"></script>
+</body>
+
+</html>
