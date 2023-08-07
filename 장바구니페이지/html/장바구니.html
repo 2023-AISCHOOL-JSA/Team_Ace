@@ -17,8 +17,8 @@
     </header>
     <!-- 섹션 -->
     <section class="cart">
-        <table class="cart__list">
-            <form>
+        <form action="#" method="post">
+            <table class="cart__list">
                 <!-- 테이블 헤드 -->
                 <thead>
                     <tr>
@@ -33,6 +33,7 @@
                 <tbody>
                     <tr class="cart__list__detail">
                         <td><input type="checkbox"></td>
+                        <!-- 상품이미지 -->
                         <td><a href=""><img src="/img/가구.jpg"></a></td>
                         <td>
                             <p>아임 홈리빙 클랙식 목재 가구</p>
@@ -81,15 +82,16 @@
                         </td>
                     </tr>
                 </tfoot>
-            </form>
-        </table>
-        <div>
-        </div>
-        <!-- 버튼 -->
-        <div class="cart__mainbtns">
-            <button class="cart__bigorderbtn left">쇼핑 계속하기</button>
-            <button class="cart__bigorderbtn right">주문하기</button>
-        </div>
+
+            </table>
+            <div>
+            </div>
+            <!-- 버튼 -->
+            <div class="cart__mainbtns">
+                <button type="button" class="cart__bigorderbtn left">쇼핑 계속하기</button>
+                <button class="cart__bigorderbtn right">주문하기</button>  <!-- submit -->
+            </div>
+        </form>
     </section>
     <!-- js연결 -->
     <script src="/js/장바구니.js"></script>
