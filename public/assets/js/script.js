@@ -1,6 +1,17 @@
 (function($) {
 
   "use strict";
+  // console.log('best');
+  
+  // console.log(session.getAttribute("best"));
+  // var uid = '<%=(String)session.getAttribute("uid")%>';
+  // let best1 = '/assets/img/'+ session.getAttribute("best").PRD_NO+'.png';
+  // document.getElementById("best1").src = '<%= %>';
+  // let sale1 = '/assets/img/'+`${request.session.sale[0].PRD_NO}`+'.png';
+  // document.getElementById("sale1").src = sale1;
+  // let new1 = '/assets/img/'+`${request.session.new[0].PRD_NO}`+'.png';
+  // document.getElementById("new1").src = new1;
+
 
   var initPreloader = function() {
     $(document).ready(function($) {
