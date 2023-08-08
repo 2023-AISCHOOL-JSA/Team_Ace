@@ -32,6 +32,10 @@ router.get('/Find', function(request,response){
     response.render("Find");
 });
 
+router.get('/Cart', function(request,response){
+    response.render("Cart");
+});
+
 router.get('/Pay', function(request,response){
     response.render("Pay", {info: request.session.info,
     order: request.session.order});

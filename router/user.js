@@ -60,17 +60,6 @@ router.post("/login", function(request, response){
 
     // 로그인 시 유저 주문 정보 테이블을 가져와서
     // 세션에 보관함
-<<<<<<< HEAD
-    // sql = `SELECT * FROM BASKET WHERE ID=${id}`
-    // conn.query(sql, function(err, rows){
-    //     if(!err & rows){
-    //         request.session.order = rows;
-    //     }
-    //     else{
-    //         console.log(err)
-    //     }
-    // })
-=======
     sql = `select * from ORDER where ID=${id}`
     conn.query(sql, function(err, rows){
         if(!err & rows){
@@ -80,7 +69,6 @@ router.post("/login", function(request, response){
             console.log(err)
         }
     })
->>>>>>> 60ddfeab0f1845f1929ea1a23e89df1a31ad80bb
 });
 
 // 아이디 찾기
@@ -345,5 +333,9 @@ router.post("/pay_f", function(request,response){
         response.render("main");
     });
 });
+
+router.post("/cart", function(request,response){
+    
+})
 
 module.exports = router;
