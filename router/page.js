@@ -51,5 +51,9 @@ router.get('/selectOne', function(request,response){
     response.render('selectOne', {info: request.cookies.info});
 });
 
+router.get('/basket', function(request,response){
+    response.render('basket', {basket: request.session.basket});
+});
+
 
 module.exports = router;

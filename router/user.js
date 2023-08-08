@@ -28,6 +28,31 @@ router.get("/logout", function(request, response){
     response.redirect("/page/");
 });
 
+router.get("/basket", function(request, response){
+    console.log("장바구니");
+    let id = request.session.info.ID;
+    conn.connect();
+    let sql = "select * from BASKET where ID=?";
+    conn.query(sql, [id], function(err, rows){
+        console.log(err);
+        console.log(rows);
+        if (!err){
+            request.session.basket = rows[0];
+            console.log(request.session.basket);
+            response.redirect("/page/basket");
+        } else {
+            console.log(err);
+            response.redirect("/page/");
+        }
+        
+    });
+});
+
+router.get("/login", function(request, response){
+    request.session.loginFlag = 1;
+    response.redirect("/page/login");
+});
+
 router.post("/login", function(request, response){
     let id = request.body.inputId;
     let pw = request.body.inputPw;
@@ -44,9 +69,13 @@ router.post("/login", function(request, response){
             if(rows.length > 0){
                 response.cookie('info', rows[0]);
                 console.log("쿠키 생성");
+                // console.log(request.cookies.info);
                 request.session.info = rows[0];
                 console.log("세션 생성");
+                console.log(request.session.info);
+
                 request.session.loginFlag = 1;
+
                 response.redirect("/page/");
             }
             else{
@@ -60,15 +89,27 @@ router.post("/login", function(request, response){
 
     // 로그인 시 유저 주문 정보 테이블을 가져와서
     // 세션에 보관함
-    sql = `select * from ORDER where ID=${id}`
-    conn.query(sql, function(err, rows){
-        if(!err & rows){
-            request.session.order = rows;
-        }
-        else{
-            console.log(err)
-        }
-    })
+// <<<<<<< HEAD
+    // sql = `SELECT * FROM BASKET WHERE ID=${id}`
+    // conn.query(sql, function(err, rows){
+    //     if(!err & rows){
+    //         request.session.order = rows;
+    //     }
+    //     else{
+    //         console.log(err)
+    //     }
+    // });
+// =======
+//     // sql = `select * from ORDER where ID=${id}`
+//     // conn.query(sql, function(err, rows){
+//     //     if(!err & rows){
+//     //         request.session.order = rows;
+//     //     }
+//     //     else{
+//     //         console.log(err)
+//     //     }
+//     // })
+// >>>>>>> 60ddfeab0f1845f1929ea1a23e89df1a31ad80bb
 });
 
 // 아이디 찾기
@@ -240,102 +281,62 @@ router.post("/selectOne", function(request, response){
 
 // 결제 시 결제 정보를 ORDER 테이블에 저장
 router.post("/pay", function(request,response){
-    console.log("도착?")
+    console.log("주문")
     console.log(request.session.info);
-    console.log(request.session.order);
+    console.log(request.session.basket);
+    console.log(request.session.info.ID);
 
-    request.session.pay.ID = request.session.info.ID;
-    request.session.pay.PRD_NO = request.session.order.PRD_NO;
-    request.session.pay.SELLER_CODE = request.session.order.SELLER_CODE;
-    request.session.pay.TOTAL_PRICE = request.session.order.TOTAL_PRICE;
-    request.session.pay.TAKER_NM;
-    request.session.pay.TAKER_TEL;
-    request.session.pay.TAKER_ADDR;
-    request.session.pay.ORDER_COM_TEL = request.session.order.ORDER_COM_TEL;
-    request.session.pay.ORDER_MEMO;
-    request.session.pay.ORDER_STATUS;
-    request.session.pay.PAY_DATE;
-    request.session.pay.PAY_CODE;
+    // request.session.pay.ID = request.session.info.ID;
+    // request.session.pay.PRD_NO = request.session.order.PRD_NO;
+    // request.session.pay.SELLER_CODE = request.session.order.SELLER_CODE;
+    // request.session.pay.TOTAL_PRICE = request.session.order.TOTAL_PRICE;
+    // request.session.pay.TAKER_NM;
+    // request.session.pay.TAKER_TEL;
+    // request.session.pay.TAKER_ADDR;
+    // request.session.pay.ORDER_COM_TEL = request.session.order.ORDER_COM_TEL;
+    // request.session.pay.ORDER_MEMO;
+    // request.session.pay.ORDER_STATUS;
+    // request.session.pay.PAY_DATE;
+    // request.session.pay.PAY_CODE;
 
     response.render("pay", {info: request.cookies.info, order:request.session.order});
 });
 
-router.post("/pay_s", function(request,response){
+router.post("/pay_c", function(request,response){
     console.log("결제 성공")
     console.log(request.session.info);
     console.log(request.session.order);
     console.log(request.session.pay);
 
-    let id = request.session.pay.ID;
-    let prd_no = request.session.pay.PRD_NO;
-    let seller_code = request.session.pay.SELLER_CODE;
-    let total_price = request.session.pay.TOTAL_PRICE;
-    let taker_nm = request.body.recipient_name;
-    let taker_tel = request.body.recipient_tel;
-    let taker_addr = request.body.recipient_address;
-    let order_com_tel = request.session.pay.ORDER_COM_TEL;
-    let order_memo = request.body.recipient_place;
-    let order_status = 1;
-    let pay_date = Date().getTime();
-    let pay_code = 'card';
+    // let id = request.session.pay.ID;
+    // let prd_no = request.session.pay.PRD_NO;
+    // let seller_code = request.session.pay.SELLER_CODE;
+    // let total_price = request.session.pay.TOTAL_PRICE;
+    // let taker_nm = request.body.recipient_name;
+    // let taker_tel = request.body.recipient_tel;
+    // let taker_addr = request.body.recipient_address;
+    // let order_com_tel = request.session.pay.ORDER_COM_TEL;
+    // let order_memo = request.body.recipient_place;
+    // let order_status = 1;
+    // let pay_date = Date().getTime();
+    // let pay_code = 'card';
 
-    conn.connect();
-    let sql = "INSERT INTO `ORDER` VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-    conn.query(sql, [id, prd_no, seller_code, total_price, taker_nm, taker_tel, taker_addr, order_com_tel, ,order_memo,
-                    order_status, pay_date, pay_code ], function(err, rows){
-        console.log(rows);
-        if(!err){
-            console.log("결제 성공, db입력 성공");
-        } else {
-            console.log("결제 성공, db입력 실패");
-        }
+    // conn.connect();
+    // let sql = "INSERT INTO `ORDER` VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+    // conn.query(sql, [id, prd_no, seller_code, total_price, taker_nm, taker_tel, taker_addr, order_com_tel, ,order_memo,
+    //                 order_status, pay_date, pay_code ], function(err, rows){
+    //     console.log(rows);
+    //     if(!err){
+    //         console.log("결제 성공, db입력 성공");
+    //     } else {
+    //         console.log("결제 성공, db입력 실패");
+    //     }
         response.render("main");
-    });
-});
-
-router.post("/pay_f", function(request,response){
-    console.log("결제 실패")
-    console.log(request.session.info);
-    console.log(request.session.order);
-    console.log(request.session.pay);
-
-    let id = request.session.pay.ID;
-    let prd_no = request.session.pay.PRD_NO;
-    let seller_code = request.session.pay.SELLER_CODE;
-    let total_price = request.session.pay.TOTAL_PRICE;
-    let taker_nm = request.body.recipient_name;
-    let taker_tel = request.body.recipient_tel;
-    let taker_addr = request.body.recipient_address;
-    let order_com_tel = request.session.pay.ORDER_COM_TEL;
-    let order_memo = request.body.recipient_place;
-    let order_status = 0;
-    let pay_date = '';
-    let pay_code = '';
-
-    conn.connect();
-    let sql = 'INSERT INTO \`ORDER\` VALUES ( (select ORDER_NO from SEQUENCES), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )';
-    conn.query(sql, [id, prd_no, seller_code, total_price, taker_nm, taker_tel, taker_addr, order_com_tel, ,order_memo,
-                    order_status, pay_date, pay_code ], function(err, rows){
-        console.log(rows);
-        if(!err){
-            console.log("db입력 성공");
-            let sql2 = 'update SEQUENCES set ORDER_NO = ORDER_NO + 1 where 1=1';
-            conn.query(sql2, function(err, rows){
-                if(!err){
-                    console.log("db업데이트 성공");
-                } else {
-                    console.log("db업데이트 실패");
-                }
-            });
-        } else {
-            console.log("db입력 실패");
-        }
-        response.render("main");
-    });
+    // });
 });
 
 router.post("/cart", function(request,response){
-    
+
 })
 
 module.exports = router;
