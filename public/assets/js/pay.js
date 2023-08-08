@@ -1,9 +1,26 @@
 const orderForm = document.getElementById("order-form");
 const submitButton = document.getElementById("check_module");
 
+function inserToDB (info){
+    const express = require("express");
+    const router = express.Router();
+    const db = require("../../../config/database");
+    let conn = db.init();
+    conn.connect();
+    let name = info.;
+    let addr = request.body.recipient_address;
+    let memo = request.body.recipient_place;
+
+    let sql = `update MEMBER set pw=?, nick=? where id=?`;
+    conn.query(sql, function(err, rows){
+
+    });
+};
+
 console.log(submitButton)
 
 submitButton.addEventListener("click", function (event) {
+    let info = [];
     const inputFields = orderForm.querySelectorAll("input[required]");
     for (const inputField of inputFields) {
         if (!inputField.value) {
@@ -20,7 +37,7 @@ submitButton.addEventListener("click", function (event) {
         pg: 'inicis',
         pay_method: 'card',
         merchant_uid: 'merchant_' + new Date().getTime(),
-        name: '주문명:결제테스트',
+        name: '주문명:결제',
         //결제창에서 보여질 이름
         amount: 1000,
         //가격 
@@ -40,10 +57,12 @@ submitButton.addEventListener("click", function (event) {
                 msg += '상점 거래ID : ' + rsp.merchant_uid;
                 msg += '결제 금액 : ' + rsp.paid_amount;
                 msg += '카드 승인번호 : ' + rsp.apply_num;
+                alert(msg); 
             } else {
                 var msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg); 
             }
-            alert(msg);
+            inserToDB()
         });
 });
