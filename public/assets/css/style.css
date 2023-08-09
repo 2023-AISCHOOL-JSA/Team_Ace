@@ -849,3 +849,39 @@ h1,h2,h3,h4,h5,h6 {
     top: 21px;
   }
 }
+#topButton {
+  display: none; /* 초기에는 보이지 않게 설정 */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  background-color: #3498db;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+#topButton:hover {
+  background-color: #2980b9;
+}
+
+.sidebar{
+  display: flex;
+  align-items: center;
+
+  position: fixed;
+  right: 0;
+  width: 120px;
+  height: 50%;
+  border-radius: 20px 20px 20px 20px;
+  background-color: bisque;
+}
+.sidebar ul li{
+  list-style: none;
+  margin: 20px 0 20px 0;
+}
+.sidebar ul li a{
+  text-decoration: none;
+}

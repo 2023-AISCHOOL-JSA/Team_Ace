@@ -1,0 +1,12 @@
+body{margin: 0; padding: 0; box-sizing: border-box;}
+header{text-align: center;}
+.container{display: flex; justify-content: center;}
+table {border-top: 3px solid #222;}
+th{background-color: antiquewhite;}
+input, select{width: 150px; height: 30px; font-size: 20px;}
+td, th{border-bottom: 1px solid #222; font-size: 20px;}
+.phone_container{display: flex;}
+.button-container{display: flex; justify-content: center; height: 200px;}
+.button-container button{background-color: skyblue; font-size: 20px;  margin: 20px 170px 1700px; width: 200px; height: 50px;}
+.inputBox{width: 300px;}
+textarea{font-size: 20px;}
