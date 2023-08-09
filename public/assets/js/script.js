@@ -161,3 +161,20 @@
   }); // End of a document
 
 })(jQuery);
+window.onscroll = function() {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("topButton").style.display = "block";
+  } else {
+      document.getElementById("topButton").style.display = "none";
+  }
+}
+
+// 페이지 상단으로 스크롤 이동
+function scrollToTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}

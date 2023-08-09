@@ -58,7 +58,7 @@ router.get('/', function (request, response) {
                 console.log(err);
             }
         });
-        
+
     }
     const query3 = () => {
 
