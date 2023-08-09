@@ -396,20 +396,16 @@
 
                         <div class="categories mb-3 pb-3">베스트 상품</div>
                         <h3 class="banner-title">합리적인 가격으로 렌탈해보세요</h3>
-                        <P>{{best}}</P>
                         <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
                         <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                           살펴보기</a>
                       </div>
                       <div class="img-wrapper col-md-5">
-                        <img id="best_image" src="/assets/img/3.jpg" class="img-fluid">
-                        <!-- <script type="text/javascript">
-                          document.getElementById("best_image").src = best1;
-                        </script> -->
+                        <img id="best_image" src="{{best[0].IMG_PATH}}" class="img-fluid">
                       </div>
                     </div>
                   </div>
-                  <!-- 메인 슬라이드2 -->{{best}}
+                  <!-- 메인 슬라이드2 -->
                   <div class="swiper-slide">
                     <div class="row banner-content p-5">
                       <div class="content-wrapper col-md-7">
@@ -420,10 +416,7 @@
                           살펴보기</a>
                       </div>
                       <div class="img-wrapper col-md-5">
-                        <img id="sale_image" src="/assets/img/2.jpg" class="img-fluid">
-                        <!-- <script type="text/javascript">
-                          document.getElementById("sale_image").src = sale1;
-                        </script> -->
+                        <img id="sale_image" src="{{sale[0].IMG_PATH}}" class="img-fluid">
                       </div>
                     </div>
                   </div>
@@ -438,10 +431,7 @@
                           collection</a>
                       </div>
                       <div class="img-wrapper col-md-5">
-                        <img id="new_image" src="/assets/img/1.jpg" class="img-fluid">
-                        <!-- <script type="text/javascript">
-                          document.getElementById("new_image").src = new1;
-                        </script> -->
+                        <img id="new_image" src="{{new[0].IMG_PATH}}" class="img-fluid">
                       </div>
                     </div>
                   </div>
