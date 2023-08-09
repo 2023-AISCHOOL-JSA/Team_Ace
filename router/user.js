@@ -4,6 +4,9 @@ const router = express.Router();
 const db = require("../config/database");
 let conn = db.init();
 
+// 로그인 시 ID 값이 들어감 userId 변수
+let userId;
+
 router.get("/", function(request, response){
     console.log("접속 확인");
     response.render("Main")
@@ -30,22 +33,50 @@ router.get("/logout", function(request, response){
 
 router.get("/basket", function(request, response){
     console.log("장바구니");
-    let id = request.session.info.ID;
-    conn.connect();
-    let sql = "select * from BASKET where ID=?";
-    conn.query(sql, [id], function(err, rows){
-        console.log(err);
-        console.log(rows);
-        if (!err){
-            request.session.basket = rows[0];
-            console.log(request.session.basket);
-            response.redirect("/page/basket");
-        } else {
-            console.log(err);
-            response.redirect("/page/");
-        }
-        
-    });
+    // let id = request.session.info.ID;
+    // userId는 로그인 성공 시 저장
+    if(userId){
+        let id = userId;
+        let prdRow = [];
+        conn.connect();
+        let sql = "select * from BASKET where ID=?";
+        // BASKET 테이블에서 ID로 찾은 데이터 쿼리
+        conn.query(sql, [id], function(err, rows){
+            // console.log(err);
+            // console.log(rows);
+            if (!err){
+                if(rows.length > 0){
+                    let prdNo;
+                    // 한 명의 고객은 여러개의 상품을 장바구니에 담음
+                    // 반복문으로 장바구니에 담은 상품을 PRD테이블에서 찾아 쿼리문을 보냄
+                    for(let i in rows){
+                        console.log(rows[i].PRD_NO)
+                        prdNo = rows[i].PRD_NO;
+                        let prdsql = "select * from PRD where PRD_NO=?";
+                        conn.query(prdsql, [prdNo], function(err2, prdrows){
+                            // 쿼리 보내기가 성공했을 시
+                            if(!err2){
+                                prdRow.push(prdrows);
+                                console.log(prdRow);
+                            }
+                            else{
+                                console.log(err2);
+                                response.redirect("/page")
+                            }
+                        })
+                    }
+                }
+            } else {
+                console.log(err);
+                response.redirect("/page/");
+            }
+        });
+        // console.log(prdRow);
+        request.session.basket = prdRow;
+        // 에러가 없을 경우 페이지를 장바구니로 리다이렉트 
+        console.log("리다이렉트 바스켓");
+        response.redirect("/page/basket");
+    }
 });
 
 router.get("/login", function(request, response){
@@ -56,7 +87,6 @@ router.get("/login", function(request, response){
 router.post("/login", function(request, response){
     let id = request.body.inputId;
     let pw = request.body.inputPw;
-    
     conn.connect();
 
     let sql = "select * from MEMBER where ID=? and PW=?";
@@ -75,7 +105,7 @@ router.post("/login", function(request, response){
                 console.log(request.session.info);
 
                 request.session.loginFlag = 1;
-
+                userId = id;
                 response.redirect("/page/");
             }
             else{
