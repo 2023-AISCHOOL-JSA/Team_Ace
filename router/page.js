@@ -27,7 +27,7 @@ router.get('/', function(request,response){
             console.log(rows);
             if (!err){
                 request.session.best = rows;
-                console.log(request.session.best[0].PRD_NO);
+                // console.log(request.session.best[0].PRD_NO);
             } else {
                 console.log(err);
             }
