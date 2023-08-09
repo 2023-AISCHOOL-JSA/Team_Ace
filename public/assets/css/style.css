@@ -501,6 +501,17 @@ h1,h2,h3,h4,h5,h6 {
   width: 1200px
 }
 
+.img-fluid1{
+  max-width: 25%;
+  height: auto;
+  margin-left: 20%;
+}
+
+.imos{
+  width: 20%;
+  height: 20%;
+}
+
 .container-fluid {
   max-width: 1600px;
 }
