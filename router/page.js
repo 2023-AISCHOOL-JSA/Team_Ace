@@ -33,7 +33,6 @@ router.get('/', function (request, response) {
             console.log(rows);
             if (!err) {
                 request.session.best = rows;
-                console.log(request.session.best[0].PRD_NO);
                 query2()
             } else {
                 console.log(err);
@@ -58,7 +57,7 @@ router.get('/', function (request, response) {
                 console.log(err);
             }
         });
-        
+
     }
     const query3 = () => {
         console.log("실행1")
