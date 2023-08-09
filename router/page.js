@@ -20,8 +20,8 @@ router.get('/', function (request, response) {
     // }
 
     const query1 = () => {
-        let sql = `SELECT D.IMG_PATH, C.PRD_NO, C.CNT
-                     FROM (SELECT A.PRD_NO, A.PRD_RP/COUNT(*) AS CNT
+        let sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.CNT
+                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_RP/COUNT(*) AS CNT
                              FROM PRD A, PRD_ST B
                             WHERE A.PRD_NO = B.PRD_NO
                             GROUP BY B.PRD_NO) C , PRD_IMG D
@@ -40,8 +40,8 @@ router.get('/', function (request, response) {
         });
     }
     const query2 = () => {
-        let sql2 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_SIGN
-                      FROM (SELECT PRD_NO, PRD_SIGN
+        let sql2 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_SIGN
+                      FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM
                               FROM PRD
                              WHERE PRD_SIGN > CURDATE()-100) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
@@ -61,8 +61,8 @@ router.get('/', function (request, response) {
     }
     const query3 = () => {
         console.log("실행1")
-        let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_SALE
-                      FROM (SELECT PRD_NO, PRD_SALE
+        let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_SALE
+                      FROM (SELECT PRD_NO, PRD_NM, PRD_SALE
                               FROM PRD
                              WHERE PRD_SALE > 0) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
