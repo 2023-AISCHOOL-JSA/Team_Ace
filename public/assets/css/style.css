@@ -400,7 +400,7 @@ h1,h2,h3,h4,h5,h6 {
   width: 1600px;
   position: fixed;
   z-index: 10;
-  background-color: skyblue;
+  background-color: #8BDEFF;
   border-radius: 25px;
 }
 .head2{
