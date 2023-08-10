@@ -156,8 +156,8 @@ router.get('/selectOne', function (request, response) {
 });
 
 router.get('/basket', function (request, response) {
-    response.render('basket', { basket: request.session.basket });
     console.log(request.session.basket)
+    response.render('basket', { basket: request.session.basket });
 });
 
 

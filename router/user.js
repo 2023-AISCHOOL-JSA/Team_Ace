@@ -54,7 +54,15 @@ router.get("/basket", function(request, response){
                     // 쿼리 보내기가 성공했을 시
                     if (!err2) {
                         // html에 쓸 세션에 담음
+                        // response.cookie('basket', prdrows);
                         request.session.basket = prdrows;
+
+                        // 세션 데이터 저장
+                        request.session.save(function (err){
+                            if(err){
+                                console.log(err)
+                            }
+                        })
                     }
                     else {
                         console.log(err2);
