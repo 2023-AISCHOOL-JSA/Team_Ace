@@ -113,6 +113,30 @@
         },
       }
     });
+
+    var products_swiper2 = new Swiper(".products-carousel2", {
+      slidesPerView: 5,
+      spaceBetween: 30,
+      speed: 500,
+      navigation: {
+        nextEl: ".products-carousel-next2",
+        prevEl: ".products-carousel-prev2",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+        991: {
+          slidesPerView: 4,
+        },
+        1500: {
+          slidesPerView: 6,
+        },
+      }
+    });
   }
 
   var initProductQty = function(){

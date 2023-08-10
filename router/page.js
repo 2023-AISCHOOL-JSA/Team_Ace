@@ -10,25 +10,18 @@ let conn = db.init();
 router.get('/', function (request, response) {
     console.log("메인");
     conn.connect();
-    // let id = '';
-    // if (request.session.info != null){
-    //     id = request.session.info.ID
-    // } else {
-
-
-
-    // }
-
     const query1 = () => {
-        let sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.CNT
-                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_RP/COUNT(*) AS CNT
+        let sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.CNT
+                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_RP/COUNT(*) AS CNT
                              FROM PRD A, PRD_ST B
                             WHERE A.PRD_NO = B.PRD_NO
                             GROUP BY B.PRD_NO) C , PRD_IMG D
                     WHERE D.PRD_NO = C.PRD_NO
                     ORDER BY CNT DESC
                     LIMIT 10;`;
+        // rows.PRD_PRICE = String(rows.PRD_PRICE)[:-3]
         conn.query(sql, function (err, rows) {
+            console.log(String(rows[0].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
             console.log(err);
             console.log(rows);
             if (!err) {
@@ -40,8 +33,8 @@ router.get('/', function (request, response) {
         });
     }
     const query2 = () => {
-        let sql2 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_SIGN
-                      FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM
+        let sql2 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_SIGN
+                      FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM, PRD_PRICE, PRD_SCORE
                               FROM PRD
                              WHERE PRD_SIGN > CURDATE()-100) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
@@ -61,8 +54,8 @@ router.get('/', function (request, response) {
     }
     const query3 = () => {
         console.log("실행1")
-        let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_SALE
-                      FROM (SELECT PRD_NO, PRD_NM, PRD_SALE
+        let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_SALE
+                      FROM (SELECT PRD_NO, PRD_NM, PRD_PRICE, PRD_SCORE, PRD_SALE
                               FROM PRD
                              WHERE PRD_SALE > 0) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
@@ -75,6 +68,8 @@ router.get('/', function (request, response) {
             console.log(rows);
             if (!err) {
                 request.session.sale = rows;
+                console.log(String(rows[0].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+                console.log(parseInt('1234567,456'));
                 response.render('Main', {
                     info: request.cookies.info, best: request.session.best,
                     new: request.session.new, sale: request.session.sale
@@ -117,6 +112,30 @@ router.get('/Find', function (request, response) {
 
 router.get('/Cart', function (request, response) {
     response.render("Cart");
+});
+
+router.get('/detail', function (request, response) {
+    console.log(request.query.PRD_NO);
+    let PRD_NO = request.query.PRD_NO;
+
+    // conn.connect();
+    // let sql = `SELECT *
+    //              FROM (SELECT * FROM PRD where PRD_NO = ?) A,
+    //                   (SELECT IMG_PATH FROM PRD_IMG where PRD_NO = ?) B,
+    //                   (SELECT COUNT(*) FROM PRD_ST where PRD_NO = ? GROUP BY PRD_NO) C`;
+    
+    // // 쿼리 결과 
+    // conn.query(sql, PRD_NO, PRD_NO, PRD_NO, function(err, rows){
+    //     if(!err){
+    //         request.session.detail = rows[0];
+    //         console.log(rows);
+    //         response.render("detail", {detail: request.session.detail});
+    //     }
+    //     else{
+    //         console.log(err);
+    //     }
+    // })
+    response.render("detail");
 });
 
 router.get('/Pay', function (request, response) {
