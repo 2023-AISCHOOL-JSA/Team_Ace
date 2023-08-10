@@ -35,9 +35,9 @@ router.get("/basket", function(request, response){
     console.log("장바구니");
     // let id = request.session.info.ID;
     // userId는 로그인 성공 시 저장
+    let prdRow = [];
     if(userId){
         let id = userId;
-        let prdRow = [];
         conn.connect();
         let sql = "select * from BASKET where ID=?";
         // BASKET 테이블에서 ID로 찾은 데이터 쿼리
@@ -56,8 +56,10 @@ router.get("/basket", function(request, response){
                         conn.query(prdsql, [prdNo], function(err2, prdrows){
                             // 쿼리 보내기가 성공했을 시
                             if(!err2){
+                                // html 세션에 담기 위해 배열에 저장
                                 prdRow.push(prdrows);
-                                console.log(prdRow);
+                                // console.log(prdRow);
+                                // prdRow = JSON.parse(JSON.stringify(prdrows));
                             }
                             else{
                                 console.log(err2);
@@ -71,12 +73,12 @@ router.get("/basket", function(request, response){
                 response.redirect("/page/");
             }
         });
-        // console.log(prdRow);
+        console.log(prdRow);
         request.session.basket = prdRow;
-        // 에러가 없을 경우 페이지를 장바구니로 리다이렉트 
-        console.log("리다이렉트 바스켓");
-        response.redirect("/page/basket");
     }
+    // 에러가 없을 경우 페이지를 장바구니로 리다이렉트 
+    console.log("리다이렉트 바스켓");
+    response.redirect("/page/basket");
 });
 
 router.get("/login", function(request, response){
