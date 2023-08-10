@@ -35,49 +35,31 @@ router.get("/basket", function(request, response){
     console.log("장바구니");
     // let id = request.session.info.ID;
     // userId는 로그인 성공 시 저장
-    let prdRow = [];
-    if(userId){
-        let id = userId;
-        conn.connect();
-        let sql = "select * from BASKET where ID=?";
-        // BASKET 테이블에서 ID로 찾은 데이터 쿼리
-        conn.query(sql, [id], function(err, rows){
-            if (!err & rows.length > 0){
-                let prdNo = [];
-                // 한 명의 고객은 여러개의 상품을 장바구니에 담음
-                // 반복문으로 장바구니에 담은 상품을 PRD테이블에서 찾아 쿼리문을 보냄
-                let prdsql = "select * from PRD where PRD_NO IN (?)";
-                for(let i in rows){
-                    prdNo.push(rows[i].PRD_NO);
-                }              
-                conn.query(prdsql, [prdNo], function (err2, prdrows) {
-                    // 쿼리 보내기가 성공했을 시
-                    if (!err2) {
-                        // html에 쓸 세션에 담음
-                        // response.cookie('basket', prdrows);
-                        request.session.basket = prdrows;
-
-                        // 세션 데이터 저장
-                        request.session.save(function (err){
-                            if(err){
-                                console.log(err)
-                            }
-                        })
-                    }
-                    else {
-                        console.log(err2);
-                        response.redirect("/page")
-                    }
-                })
+    let id = request.session.info.ID;
+    console.log(request.session.info.ID);
+    console.log(id);
+    conn.connect();
+    let sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON A.PRD_NO=B.PRD_NO
+                WHERE A.PRD_NO IN (SELECT PRD_NO
+                                     FROM BASKET
+                                    WHERE ID = ?);`;
+    conn.query(sql, [id], function(err, rows){
+        // console.log(err);
+        // console.log(rows);
+        if (!err){
+            if (rows.length > 0){
+                request.session.basket = rows;
+                response.render('basket', { basket: request.session.basket });
             } else {
-                console.log(err);
-                response.redirect("/page/");
+                response.render('basket', { basket: null });
             }
-        });
-    }
-    // 에러가 없을 경우 페이지를 장바구니로 리다이렉트 
-    console.log("리다이렉트 바스켓");
-    response.redirect("/page/basket");
+        } else {
+            console.log(err);
+            response.redirect('/page');
+        }
+    });
 });
 
 router.get("/login", function(request, response){
