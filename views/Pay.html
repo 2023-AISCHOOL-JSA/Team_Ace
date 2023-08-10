@@ -13,7 +13,7 @@
 
 <body>
     <header>
-        <img src="/img/logo.jpg" alt="로고 이미지">
+        <img src="/assets/img/로고1.png" alt="로고 이미지" height="100%" width="30%">
     </header>
     <div class="payment-form">
         <h2>주문 결제</h2>
@@ -34,7 +34,7 @@
                 </tr>
                 <!-- 추가적인 구매자 정보를 이곳에 추가할 수 있습니다. -->
             </table>
-
+            {% if payflag == '0' %}
             <section>
                 <h3>받는 사람 정보</h3>
                 <div class="form-group">
@@ -54,10 +54,36 @@
                     <label for="recipient_memo">배송요청사항</label>
                     <input type="text" id="recipient_memo" name="recipient_memo" placeholder="요청사항을 입력하세요" required>
                 </div>
-
+            </section>
+            <div>
+                <button type="submit" onclick="location.href='/user/pay?payflag=1'">내 정보 입력</button>
+            </div>
+            {% else %}
+            <section>
+                <h3>받는 사람 정보</h3>
+                <div class="form-group">
+                    <label for="recipient_name">이름</label>
+                    <input type="text" id="recipient_name" name="recipient_name" value="{{info.NAME}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipient_tel">핸드폰번호</label>
+                    <input type="text" id="recipient_tel" name="recipient_tel" value="{{info.TEL}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipient_address">주소</label>
+                    <input type="text" id="recipient_address" name="recipient_address" value="{{info.ADDR}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipient_memo">배송요청사항</label>
+                    <input type="text" id="recipient_memo" name="recipient_memo" placeholder="요청사항을 입력하세요" required>
+                </div>
+                
                 <!-- 추가적인 받는 사람 정보 입력 항목들을 여기에 추가할 수 있습니다. -->
             </section>
-
+            <div>
+                <button type="submit" onclick="location.href='/user/pay?payflag=0'">입력창 비우기</button>
+            </div>
+            {% endif %}
             <h2>결제 정보</h2>
             <table>
                 <tr>
@@ -74,6 +100,7 @@
                 </tr>
                 <!-- 추가적인 결제 정보를 이곳에 추가할 수 있습니다. -->
             </table>
+            <button type="button" onclick="location.href='/page/basket'">뒤로 가기</button>
             <input type="submit" value="결제하기" id="check_module">
         </form>
     </div>

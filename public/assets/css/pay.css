@@ -52,6 +52,16 @@ select {
 }
 
 input[type="submit"] {
+    background-color: #5a5aff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button {
     background-color: #FF5A5F;
     color: white;
     padding: 10px 20px;
@@ -60,6 +70,7 @@ input[type="submit"] {
     border-radius: 3px;
     cursor: pointer;
 }
+
 table {
     border-collapse: collapse;
     width: 100%;

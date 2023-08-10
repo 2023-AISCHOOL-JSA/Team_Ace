@@ -32,6 +32,7 @@ router.get("/logout", function(request, response){
 });
 
 router.get("/basket", function(request, response){
+    request.session.payflag = 0;
     console.log("장바구니");
     // let id = request.session.info.ID;
     // userId는 로그인 성공 시 저장
@@ -292,10 +293,25 @@ router.post("/selectOne", function(request, response){
     });
 });
 
+
+router.get("/pay", function(request,response){
+    if (request.query.payflag == '1') {
+        response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '1'});
+    } else if (request.query.payflag == '0'){
+        response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '0'});
+    }
+});
+
 // 결제 시 결제 정보를 ORDER 테이블에 저장
 router.post("/pay", function(request,response){
     console.log("주문")
     console.log(request.body.selectedPrds);
+    console.log(request.body.cnt);
+    let o_cnt = request.body.cnt;
+    let n_cnt = o_cnt.filter(function(data) {
+        return data > 0;
+    });
+    console.log(n_cnt);
     let ordered = request.body.selectedPrds;
     conn.connect();
     let sql = "select PRD_PRICE from PRD where PRD_NO IN (?)";
@@ -308,12 +324,11 @@ router.post("/pay", function(request,response){
             for (let i = 0; i < rows.length; i++) {
                 console.log(rows[i].PRD_PRICE);
                 console.log(rows[i].PRD_PRICE+123);
-                price += rows[i].PRD_PRICE
+                price += rows[i].PRD_PRICE * n_cnt[i];
             }
             request.session.totalPrice = {totalprice :price, del:3000, sum:price+3000};
-            console.log(price);
-
-            response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info});
+            response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '0'});
+            
         } else {
             console.log("조회 실패");
             response.redirect("/user/basket");
