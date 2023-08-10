@@ -44,37 +44,35 @@ router.get("/basket", function(request, response){
         conn.query(sql, [id], function(err, rows){
             // console.log(err);
             // console.log(rows);
-            if (!err){
-                if(rows.length > 0){
-                    let prdNo;
-                    // 한 명의 고객은 여러개의 상품을 장바구니에 담음
-                    // 반복문으로 장바구니에 담은 상품을 PRD테이블에서 찾아 쿼리문을 보냄
-                    for(let i in rows){
-                        console.log(rows[i].PRD_NO)
-                        prdNo = rows[i].PRD_NO;
-                        let prdsql = "select * from PRD where PRD_NO=?";
-                        conn.query(prdsql, [prdNo], function(err2, prdrows){
-                            // 쿼리 보내기가 성공했을 시
-                            if(!err2){
-                                // html 세션에 담기 위해 배열에 저장
-                                prdRow.push(prdrows);
-                                // console.log(prdRow);
-                                // prdRow = JSON.parse(JSON.stringify(prdrows));
-                            }
-                            else{
-                                console.log(err2);
-                                response.redirect("/page")
-                            }
-                        })
-                    }
+            if (!err & rows.length > 0){
+                let prdNo = [];
+                // 한 명의 고객은 여러개의 상품을 장바구니에 담음
+                // 반복문으로 장바구니에 담은 상품을 PRD테이블에서 찾아 쿼리문을 보냄
+                let prdsql = "select * from PRD where PRD_NO IN (?)";
+                for(let i in rows){
+                    prdNo.push(rows[i].PRD_NO);
                 }
+                console.log(prdNo)
+                console.log(prdsql)
+                // console.log(rows)
+                // console.log(prdNo)
+                conn.query(prdsql, [prdNo], function (err2, prdrows) {
+                    // 쿼리 보내기가 성공했을 시
+                    if (!err2) {
+                        console.log(prdrows);
+                        // html 세션에 담음
+                        request.session.basket = prdrows;
+                    }
+                    else {
+                        console.log(err2);
+                        response.redirect("/page")
+                    }
+                })
             } else {
                 console.log(err);
                 response.redirect("/page/");
             }
         });
-        console.log(prdRow);
-        request.session.basket = prdRow;
     }
     // 에러가 없을 경우 페이지를 장바구니로 리다이렉트 
     console.log("리다이렉트 바스켓");
