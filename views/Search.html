@@ -183,11 +183,10 @@
         </div>
 
         <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
-          <form id="search-form" class="text-center" action="/page/Search" method="post">
           <div class="search-bar row bg-light p-2 my-2 rounded-4">
             <div class="col-md-4 d-none d-md-block">
               <!-- 검색창 옵션 -->
-              <select class="form-select border-0 bg-transparent" name="option">
+              <select class="form-select border-0 bg-transparent">
                 <option>카테고리 선택</option>
                 <option>침대</option>
                 <option>의자</option>
@@ -195,18 +194,19 @@
               </select>
             </div>
             <div class="col-11 col-md-7">
+              <form id="search-form" class="text-center" action="" method="">
                 <!-- 검색창 -->
-                <input type="text" class="form-control border-0 bg-transparent" name="searching" placeholder="검색어를 입력해주세요." />
-              </div>
-              <div class="col-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" >
-                  <path fill="currentColor"
-                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"  />
-                </svg>
-              </div>
+                <input type="text" class="form-control border-0 bg-transparent" placeholder="검색어를 입력해주세요." />
+              </form>
             </div>
-          </form>
+            <div class="col-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
+              </svg>
+            </div>
           </div>
+        </div>
 
         <div
           class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
@@ -377,145 +377,6 @@
         </div>
       </div>
   </header>
-
-  <section class="py-3"
-    style="background-image: url('/assets/img/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="banner-blocks">
-
-            <div class="banner-ad large bg-info block-1">
-              <div class="swiper main-swiper">
-                <div class="swiper-wrapper">
-                  <!-- 메인 슬라이드1 -->
-                  <div class="swiper-slide">
-                    <div class="row banner-content p-5">
-                      <div class="content-wrapper col-md-7">
-
-                        <div class="categories mb-3 pb-3">베스트 상품</div>
-                        <h3 class="banner-title">합리적 가격으로 렌탈해보세요</h3>
-                        <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                          살펴보기</a>
-                      </div>
-                      <div class="img-wrapper col-md-5">
-                        <img id="best_image" src="{{best[0].IMG_PATH}}" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 메인 슬라이드2 -->
-                  <div class="swiper-slide">
-                    <div class="row banner-content p-5">
-                      <div class="content-wrapper col-md-7">
-                        <div class="categories mb-3 pb-3">할인 상품</div>
-                        <h3 class="banner-title">구매임박! 서두르세요</h3>
-                        <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
-                          살펴보기</a>
-                      </div>
-                      <div class="img-wrapper col-md-5">
-                        <img id="sale_image" src="{{sale[0].IMG_PATH}}" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 메인 슬라이드3 -->
-                  <div class="swiper-slide">
-                    <div class="row banner-content p-5">
-                      <div class="content-wrapper col-md-7">
-                        <div class="categories mb-3 pb-3">새로운 상품</div>
-                        <h3 class="banner-title">따끈따끈한 새 상품!</h3>
-                        <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
-                        <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">shop
-                          collection</a>
-                      </div>
-                      <div class="img-wrapper col-md-5">
-                        <img id="new_image" src="{{new[0].IMG_PATH}}" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="swiper-pagination"></div>
-
-              </div>
-            </div>
-            <div class="sidebar">
-              <ul>
-                <li><a href="https://www.naver.com/"><img src="/assets/img/장바구니.png">
-                    <p>장바구니</p>
-                  </a></li>
-                <li><a href="https://www.youtube.com/"><img src="/assets/img/수거신청.png">
-                    <p>수거신청</p>
-                  </a></li>
-                <li><a href="https://chat.openai.com/"><img src="/assets/img/Mypage.png">
-                    <p>Mypage</p>
-                  </a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- / Banner Blocks -->
-
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Top버튼 -->
-  <button id="topButton" onclick="scrollToTop()">
-    <span class="buttonText">Top</span>
-  </button>
-
-  <section class="py-5 overflow-hidden">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="section-header d-flex justify-content-between mb-5">
-            <h2 class="section-title">Category</h2>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-
-        <div class="category-carousel swiper">
-          <div class="swiper-wrapper loo">
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티1.png" class="imos">
-              <h3 class="category-title">장기렌탈</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티2.png" class="imos">
-              <h3 class="category-title">단기렌탈</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티3.png" class="imos">
-              <h3 class="category-title">세트상품</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티4.png" class="imos">
-              <h3 class="category-title">브랜드 별 가구</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티5.png" class="imos">
-              <h3 class="category-title">수거신청</h3>
-            </a>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-    </div>
-  </section>
-
-
-
-
 
   <section class="py-5">
     <div class="container-fluid">

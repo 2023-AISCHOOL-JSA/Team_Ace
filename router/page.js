@@ -160,5 +160,24 @@ router.get('/basket', function (request, response) {
     response.render('basket', { basket: request.session.basket });
 });
 
+router.post('/Search', function(request,response){
+    let option = request.body.option;
+    let searching = request.body.searching;
 
+
+    conn.connect();
+    let sql = "select * from PRD A JOIN PRD_IMG B ON (A.PRD_NO = B.PRD_NO) where (PRD_NM LIKE %?% OR PRD_DT LIKE %?%) AND A.PRD_CODE = ?";
+    conn.query(sql, [searching, searching, option], function(err, rows){
+        console.log(rows);
+
+        if(!err){
+            console.log("조회 성공");
+            response.render("Search", {searched: rows});
+        } else {
+            console.log("조회 실패");
+            response.redirect("/page/");
+        }
+
+    });
+})
 module.exports = router;

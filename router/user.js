@@ -32,6 +32,7 @@ router.get("/logout", function(request, response){
 });
 
 router.get("/basket", function(request, response){
+    request.session.payflag = 0;
     console.log("장바구니");
     // let id = request.session.info.ID;
     // userId는 로그인 성공 시 저장
@@ -292,27 +293,48 @@ router.post("/selectOne", function(request, response){
     });
 });
 
+
+router.get("/pay", function(request,response){
+    if (request.query.payflag == '1') {
+        response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '1'});
+    } else if (request.query.payflag == '0'){
+        response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '0'});
+    }
+});
+
 // 결제 시 결제 정보를 ORDER 테이블에 저장
 router.post("/pay", function(request,response){
     console.log("주문")
-    console.log(request.session.info);
-    console.log(request.session.basket);
-    console.log(request.session.info.ID);
+    console.log(request.body.selectedPrds);
+    console.log(request.body.cnt);
+    let o_cnt = request.body.cnt;
+    let n_cnt = o_cnt.filter(function(data) {
+        return data > 0;
+    });
+    console.log(n_cnt);
+    let ordered = request.body.selectedPrds;
+    conn.connect();
+    let sql = "select PRD_PRICE from PRD where PRD_NO IN (?)";
+    conn.query(sql, [ordered], function(err, rows){
+        console.log(err);
+        console.log(rows);
+        if(!err){
+            console.log(rows);
+            let price = 0;
+            for (let i = 0; i < rows.length; i++) {
+                console.log(rows[i].PRD_PRICE);
+                console.log(rows[i].PRD_PRICE+123);
+                price += rows[i].PRD_PRICE * n_cnt[i];
+            }
+            request.session.totalPrice = {totalprice :price, del:3000, sum:price+3000};
+            response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '0'});
+            
+        } else {
+            console.log("조회 실패");
+            response.redirect("/user/basket");
+        }
 
-    // request.session.pay.ID = request.session.info.ID;
-    // request.session.pay.PRD_NO = request.session.order.PRD_NO;
-    // request.session.pay.SELLER_CODE = request.session.order.SELLER_CODE;
-    // request.session.pay.TOTAL_PRICE = request.session.order.TOTAL_PRICE;
-    // request.session.pay.TAKER_NM;
-    // request.session.pay.TAKER_TEL;
-    // request.session.pay.TAKER_ADDR;
-    // request.session.pay.ORDER_COM_TEL = request.session.order.ORDER_COM_TEL;
-    // request.session.pay.ORDER_MEMO;
-    // request.session.pay.ORDER_STATUS;
-    // request.session.pay.PAY_DATE;
-    // request.session.pay.PAY_CODE;
-
-    response.render("pay", {info: request.cookies.info, order:request.session.order});
+    });
 });
 
 router.post("/pay_c", function(request,response){
