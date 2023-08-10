@@ -31,15 +31,13 @@
                 </thead>
                 <!-- 테이블 바디 -->
                 <tbody>
-                    {% for item in basket %}
-                    a
-                    {% endfor %}
+                    {% for item in basket -%}
                     <tr class="cart__list__detail">
                         <td><input type="checkbox"></td>
                         <!-- 상품이미지 -->
-                        <td><a href=""><img src="/img/가구.jpg"></a></td>
+                        <td><a href=""><img src="{{item.IMG_PATH}}"></a></td>
                         <td>
-                            <p>아임 홈리빙 클랙식 목재 가구</p>
+                            <p>{{item.PRD_NM}}</p>
                             <span class="price">8/9도착 보장</span>
                         </td>
                         <td>
@@ -52,11 +50,12 @@
                                 <option>5</option>
                             </select>
                         </td>
-                        <td><span class="price">300000원</span><br>
+                        <td><span class="price">{{item.PRD_PRICE}}원</span><br>
                         </td>
                         <td>무료</td>
                     </tr>
                 </tbody>
+                {%- endfor %}
                 <tfoot>
                     <tr>
                         <td colspan="6">

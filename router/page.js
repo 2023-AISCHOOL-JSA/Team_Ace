@@ -6,7 +6,7 @@ const router = express.Router();
 const db = require("../config/database");
 let conn = db.init();
 
-// http://localhost:3000/page
+// http://localhost:8787/page
 router.get('/', function (request, response) {
     console.log("메인");
     conn.connect();
@@ -86,22 +86,22 @@ router.get('/', function (request, response) {
 
 });
 
-// http://localhost:3000/page/Login
+// http://localhost:8787/page/Login
 router.get('/Login', function (request, response) {
     response.render("Login", { loginFlag: request.session.loginFlag });
 });
 
-// http://localhost:3000/page/Join
+// http://localhost:8787/page/Join
 router.get('/Join', function (request, response) {
     response.render("Join");
 });
 
-// http://localhost:3000/page/Delete
+// http://localhost:8787/page/Delete
 router.get('/Delete', function (request, response) {
     response.render("Delete");
 });
 
-// http://localhost:3000/page/Update
+// http://localhost:8787/page/Update
 router.get('/Update', function (request, response) {
     response.render("Update");
 });
@@ -145,19 +145,18 @@ router.get('/Pay', function (request, response) {
     });
 });
 
-// http://localhost:3000/page/selectAll
+// http://localhost:8787/page/selectAll
 router.get('/selectAll', function (request, response) {
     response.render("selectAll");
 });
 
-// http://localhost:3000/page/selectOne
+// http://localhost:8787/page/selectOne
 router.get('/selectOne', function (request, response) {
     response.render('selectOne', { info: request.cookies.info });
 });
 
 router.get('/basket', function (request, response) {
     response.render('basket', { basket: request.session.basket });
-    
 });
 
 
