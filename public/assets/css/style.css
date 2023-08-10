@@ -399,8 +399,8 @@ h1,h2,h3,h4,h5,h6 {
 .head{
   width: 1600px;
   position: fixed;
-  z-index: 2;
-  background-color: skyblue;
+  z-index: 10;
+  background-color: #8BDEFF;
   border-radius: 25px;
 }
 .head2{
@@ -873,6 +873,7 @@ h1,h2,h3,h4,h5,h6 {
   color: white;
   font-size: 20px;
   cursor: pointer;
+  z-index: 10;
 }
 #topButton:hover {
   background-color: #2980b9;
@@ -888,6 +889,7 @@ h1,h2,h3,h4,h5,h6 {
   height: 50%;
   border-radius: 20px 20px 20px 20px;
   background-color: bisque;
+  z-index: 10;
 }
 .sidebar ul li{
   list-style: none;
@@ -895,4 +897,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 .sidebar ul li a{
   text-decoration: none;
+}
+
+.h_icon{
+  text-align: center;
+  margin: 0 20px 0 20px;
 }

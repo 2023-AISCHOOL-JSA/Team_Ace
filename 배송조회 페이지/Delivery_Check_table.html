@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height:100vh; margin:0; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+        #title{
+            height: 70px; background-color: #4682A9; width: 100%;
+            font-size: 35px; font-family: 'omyu_pretty'; color: whitesmoke;
+            display: flex; justify-content: center; align-items: center;
+        }
+        #delivery{
+            margin-top: 20px; margin-bottom: 20px; height: 200px; display: flex; justify-content: center; align-items: center;
+        }
+        #deliveryState{
+            border: 2px solid #4682A9; border-radius: 15px;
+            height: 100px; width: 600px; display:flex; justify-content: center; align-items: center;
+            font-family: 'omyu_pretty'; font-size: 40px; text-align: center;
+        }
+        .product{
+            height: 100px; 
+            display: flex; justify-content:center; align-items: center;
+            font-family: 'omyu_pretty';
+        }
+        img{
+            position:relative; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        #product{
+            border: 2px solid #4682A9; border-radius: 15px;  height: 100px; width: 600px; display: flex; background-color: ;
+        }
+        #productImage{
+            
+            width:80px;  margin: 10px; display: flex; justify-content: center; align-items: center;
+        }
+        #productName{
+            width:400px; margin:10px; margin-left: 50px;   display: flex;  align-items: center; 
+        }
+        #deliveryInfo{
+            margin-top: 20px; margin-bottom: 20px; border: 2px solid #4682A9; border-radius: 15px;
+            width: 600px; height: 70px;  display:flex; justify-content: center; align-items: center; 
+            font-family: 'omyu_pretty';
+        }
+        table{
+            width:600px; border-collapse: collapse; font-family: 'omyu_pretty'; height: 20px;
+        }
+        td{
+            padding: 3px;  column-width: 300px;
+        }
+        th{
+            font-size: large; background-color: #4682A9; color:whitesmoke;
+        }
+        #deliveryCheck{
+            height: 1000px;  display: flex; justify-content: center;
+        }
+        #deliveryCheck td{text-align: center;}
+
+        @font-face {
+            font-family: 'omyu_pretty';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            }
+    </style>
+
+</head>
+<body>
+    <div id="title">배 송 조 회</div>
+    <div id="delivery">
+        <div id="deliveryState" > 고객님의 상품이 배송 중 입니다 </div>
+    </div>  
+    <!-- 주문 상품 -->
+    <div class="product">
+        <div id="product">
+            <div id="productImage"><img src="./img/img.png" alt="img"></div>
+            <div id="productName">[주문번호] [상품번호] 1인 가구를 위한 푹신한 블루 체어 </div>
+        </div>
+    </div>
+    <!-- 택배회사, 판매자 정보 -->
+    <div id="deliveryInfo">
+        <table>
+            <tr>
+                <td>택배회사 : 한진택배</td>
+                <td>송장번호 : 23928491010</td> 
+                
+            </tr>
+            <tr>
+                <td>판매자 : 에이스</td>
+                <td>판매자 번호 : 02-1234-5959</td>
+            </tr>
+        </table>
+        
+    </div>  
+    <!-- 배송 현황  -->
+    <hr>
+    <div id="deliveryCheck">
+        <table>
+            <tr>
+                <th>시간</th>
+                <th>현재위치</th>
+                <th>배송완료</th>
+            </tr>
+            <tr>
+                <td>7.5.12:25</td>
+                <td>광주 북구 용봉</td>
+                <td>배달완료</td>
+            </tr>
+            <tr>
+                <td>7.5.11:45</td>
+                <td>광주 북구 용봉</td>
+                <td>배달중</td>
+            </tr>
+            <tr>
+                <td>7.5.11:45</td>
+                <td>광주 북구 용봉</td>
+                <td>배달중</td>
+            </tr>
+            <tr>
+                <td>7.4.21:47</td>
+                <td>인천중Sub</td>
+                <td>배송중(출고)</td>
+            </tr>
+        </table>
+    </div>
+
+<script>
+
+/*tr 태그 안에 td가 공백이면 상품준비중 공백이 아니면 배송 중  */
+
+const  deliveryState = document.getElementById('deliveryState')
+const tableContent = document.getElementById('deliveryCheck').innerHTML
+
+
+if(tableContent.includes('배달완료')){
+    deliveryState.innerText =  '고객님의 상품이 배송 완료되었습니다'
+}
+else if(tableContent.includes('배달중')){
+    deliveryState.innerText =  '고객님의 상품이 배송 중입니다'
+}
+
+
+
+
+</script>
+</body>
+</html>
