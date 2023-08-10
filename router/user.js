@@ -42,8 +42,6 @@ router.get("/basket", function(request, response){
         let sql = "select * from BASKET where ID=?";
         // BASKET 테이블에서 ID로 찾은 데이터 쿼리
         conn.query(sql, [id], function(err, rows){
-            // console.log(err);
-            // console.log(rows);
             if (!err & rows.length > 0){
                 let prdNo = [];
                 // 한 명의 고객은 여러개의 상품을 장바구니에 담음
@@ -51,16 +49,11 @@ router.get("/basket", function(request, response){
                 let prdsql = "select * from PRD where PRD_NO IN (?)";
                 for(let i in rows){
                     prdNo.push(rows[i].PRD_NO);
-                }
-                console.log(prdNo)
-                console.log(prdsql)
-                // console.log(rows)
-                // console.log(prdNo)
+                }              
                 conn.query(prdsql, [prdNo], function (err2, prdrows) {
                     // 쿼리 보내기가 성공했을 시
                     if (!err2) {
-                        console.log(prdrows);
-                        // html 세션에 담음
+                        // html에 쓸 세션에 담음
                         request.session.basket = prdrows;
                     }
                     else {
