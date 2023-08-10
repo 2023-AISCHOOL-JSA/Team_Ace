@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>basket</title>
-    <link rel="stylesheet" href="/assets/css/basket.css">
+    <title>장바구니</title>
+    <link rel="stylesheet" href="/assets/css/Cart.css">
 </head>
 
 <body>
     <header>
         <!-- 로고이미지 -->
         <div class="logo">
-            <a href="https://naver.com"><img src="/assets/img/가구.jpg" alt="로고"></a>
+            <a href="https://naver.com"><img src="/img/가구.jpg" alt="로고"></a>
         </div>
     </header>
     <!-- 섹션 -->
     <section class="cart">
-        <form action="/user/pay" method="post">
+        <form action="#" method="post">
             <table class="cart__list">
                 <!-- 테이블 헤드 -->
                 <thead>
@@ -31,12 +31,30 @@
                 </thead>
                 <!-- 테이블 바디 -->
                 <tbody>
-                    {% for item in basket %}
-                    a
-                    {% endfor %}
                     <tr class="cart__list__detail">
                         <td><input type="checkbox"></td>
                         <!-- 상품이미지 -->
+                        <td><a href=""><img src="/img/가구.jpg"></a></td>
+                        <td>
+                            <p>아임 홈리빙 클랙식 목재 가구</p>
+                            <span class="price">8/9도착 보장</span>
+                        </td>
+                        <td>
+                            <span>수량</span>
+                            <select>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </td>
+                        <td><span class="price">300000원</span><br>
+                        </td>
+                        <td>무료</td>
+                    </tr>
+                    <tr class="cart__list__detail">
+                        <td><input type="checkbox"></td>
                         <td><a href=""><img src="/img/가구.jpg"></a></td>
                         <td>
                             <p>아임 홈리빙 클랙식 목재 가구</p>
@@ -76,8 +94,8 @@
         </form>
     </section>
     <!-- js연결 -->
-    <script src="/assets/js/basket.js"></script>
-    <script src="/assets/js/basket2.js"></script>
+    <script src="/assets/js/장바구니.js"></script>
+    <script src="/assets/js/cart.js"></script>
 </body>
 
 </html>
