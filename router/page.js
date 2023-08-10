@@ -20,20 +20,19 @@ router.get('/', function (request, response) {
     // }
 
     const query1 = () => {
-        let sql = `SELECT IMG_PATH, C.PRD_NO, C.CNT
-                     FROM (SELECT A.PRD_NO, A.PRD_RP/COUNT(*) AS CNT
+        let sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.CNT
+                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_RP/COUNT(*) AS CNT
                              FROM PRD A, PRD_ST B
                             WHERE A.PRD_NO = B.PRD_NO
-                            GROUP BY B.PRD_NO
-                            LIMIT 10) C , PRD_IMG D
+                            GROUP BY B.PRD_NO) C , PRD_IMG D
                     WHERE D.PRD_NO = C.PRD_NO
-                    ORDER BY CNT DESC;`;
+                    ORDER BY CNT DESC
+                    LIMIT 10;`;
         conn.query(sql, function (err, rows) {
             console.log(err);
             console.log(rows);
             if (!err) {
                 request.session.best = rows;
-                console.log(request.session.best[0].PRD_NO);
                 query2()
             } else {
                 console.log(err);
@@ -41,13 +40,13 @@ router.get('/', function (request, response) {
         });
     }
     const query2 = () => {
-        let sql2 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_SIGN
-                      FROM (SELECT PRD_NO, PRD_SIGN
+        let sql2 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_SIGN
+                      FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM
                               FROM PRD
-                             WHERE PRD_SIGN > CURDATE()-100
-                             LIMIT 10) A, PRD_IMG B
+                             WHERE PRD_SIGN > CURDATE()-100) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
-                     ORDER BY PRD_SIGN DESC;`;
+                     ORDER BY PRD_SIGN DESC
+                     LIMIT 10;`;
         conn.query(sql2, function (err, rows) {
             console.log(err);
             console.log(rows);
@@ -61,15 +60,17 @@ router.get('/', function (request, response) {
 
     }
     const query3 = () => {
-
-        let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_SALE
-                      FROM (SELECT PRD_NO, PRD_SALE
+        console.log("실행1")
+        let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_SALE
+                      FROM (SELECT PRD_NO, PRD_NM, PRD_SALE
                               FROM PRD
-                             WHERE PRD_SALE > 0
-                             LIMIT 10) A, PRD_IMG B
+                             WHERE PRD_SALE > 0) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
-                     ORDER BY PRD_SALE DESC`;
+                     ORDER BY PRD_SALE DESC
+                     LIMIT 10;`;
+                     
         conn.query(sql3, function (err, rows) {
+            console.log("실행2")
             console.log(err);
             console.log(rows);
             if (!err) {
@@ -78,12 +79,14 @@ router.get('/', function (request, response) {
                     info: request.cookies.info, best: request.session.best,
                     new: request.session.new, sale: request.session.sale
                 });
+                // response.render('Main');
             } else {
                 console.log(err);
+                
             }
         });
     }
-
+    
     query1()
 
 });

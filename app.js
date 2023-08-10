@@ -30,8 +30,9 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(session({
     httpOnly : true,     // httpOnly : http 통신일 때 허용?
-    secret : 'secrekey', // secret : 암호와키는?
-    resave : false       // resave : 요청이 들어왔을때 수정사항이 없어도 저장?
+    secret : 'secretkey', // secret : 암호와키는?
+    resave : false,       // resave : 요청이 들어왔을때 수정사항이 없어도 저장?
+    saveUninitialized : false
 }));
 app.use('/s',routerSession);
 
