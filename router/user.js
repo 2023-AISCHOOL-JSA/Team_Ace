@@ -7,6 +7,9 @@ let conn = db.init();
 // 로그인 시 ID 값이 들어감 userId 변수
 let userId;
 
+
+
+
 router.get("/", function(request, response){
     console.log("접속 확인");
     response.render("Main")
