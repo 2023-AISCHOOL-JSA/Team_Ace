@@ -160,19 +160,69 @@ router.get('/basket', function (request, response) {
     response.render('basket', { basket: request.session.basket });
 });
 
+router.get("/delPrds", function(request, response){
+    console.log("접근완");
+    let delPrds = request.query.PRD_NO;
+    let id = request.session.info.ID;
+    console.log(delPrds);
+    conn.connect();
+    const query1 = () => {
+        let sql = "delete from BASKET where ID = ? and PRD_NO =?";
+        conn.query(sql, [id, delPrds], function(err, rows){
+            console.log(rows);
+
+            if(!err){
+                console.log("장바구니 항목 삭제 성공");
+                query2()
+            } else {
+                console.log("장바구니 항목 삭제 실패");
+                response.render('basket', { basket: request.session.basket });
+            }
+        });
+    }
+    const query2 = () => {
+        let sql2 = `SELECT *
+                    FROM PRD A JOIN PRD_IMG B
+                    ON A.PRD_NO=B.PRD_NO
+                    WHERE A.PRD_NO IN (SELECT PRD_NO
+                                        FROM BASKET
+                                        WHERE ID = ?);`;
+        conn.query(sql2, [id], function(err, rows){
+            console.log(err);
+            console.log(rows);
+            if (!err){
+                if (rows.length > 0){
+                    request.session.basket = rows;
+                    response.render('basket', { basket: request.session.basket });
+                } else {
+                    response.render('basket', { basket: null });
+                }
+            } else {
+                console.log(err);
+                response.redirect('/page');
+            }
+        });
+    }
+    query1();
+});
+
 router.post('/Search', function(request,response){
     let option = request.body.option;
     let searching = request.body.searching;
 
 
     conn.connect();
-    let sql = "select * from PRD A JOIN PRD_IMG B ON (A.PRD_NO = B.PRD_NO) where (PRD_NM LIKE %?% OR PRD_DT LIKE %?%) AND A.PRD_CODE = ?";
-    conn.query(sql, [searching, searching, option], function(err, rows){
+    let sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON (A.PRD_NO = B.PRD_NO)
+                WHERE (PRD_NM LIKE ? OR PRD_DETAIL LIKE ?)
+                  AND A.PRD_CODE = ?;`;
+    conn.query(sql, ['%'+searching+'%', '%'+searching+'%', option], function(err, rows){
         console.log(rows);
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows});
+            response.render("Search", {searched: rows, info: request.cookies.info});
         } else {
             console.log("조회 실패");
             response.redirect("/page/");

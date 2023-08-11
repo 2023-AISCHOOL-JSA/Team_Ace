@@ -293,7 +293,6 @@ router.post("/selectOne", function(request, response){
     });
 });
 
-
 router.get("/pay", function(request,response){
     if (request.query.payflag == '1') {
         response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '1'});

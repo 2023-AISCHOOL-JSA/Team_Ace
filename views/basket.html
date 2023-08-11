@@ -12,7 +12,7 @@
     <header>
         <!-- 로고이미지 -->
         <div class="logo">
-            <a href="https://naver.com"><img src="/assets/img/가구.jpg" alt="로고"></a>
+            <a href="/page/"><img src="/assets/img/로고2.png" alt="로고" width="80px"></a>
         </div>
     </header>
     <!-- 섹션 -->
@@ -27,6 +27,7 @@
                         <td>옵션</td>
                         <td>상품금액</td>
                         <td>배송비</td>
+                        <td>관리</td>
                     </tr>
                 </thead>
                 <!-- 테이블 바디 -->
@@ -52,17 +53,10 @@
                         <td><span class="price">{{item.PRD_PRICE}}원</span><br>
                         </td>
                         <td>무료</td>
+                        <td><button type="button" onclick="location.href='/page/delPrds?PRD_NO={{item.PRD_NO}}'">삭제하기</button></td>
                     </tr>
                 </tbody>
                 {%- endfor %}
-                <tfoot>
-                    <tr>
-                        <td colspan="6">
-                            <button class="cart__list__optionbtn" id="deleteButton">선택상품 삭제</button>
-                        </td>
-                    </tr>
-                </tfoot>
-
             </table>
             <div>
             </div>
