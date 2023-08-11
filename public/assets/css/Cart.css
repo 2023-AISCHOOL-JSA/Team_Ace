@@ -1,29 +1,4 @@
-body {
-    margin: 0;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-header {
-    width: 80%;
-    margin: auto;
-    background-color: skyblue;
-    padding: 10px;
-}
-
-.logo img {
-    width: 100px;
-    height: 50;
-}
-
-img {
-    height: 80px;
-    margin: auto;
-}
-
-.cart {
+.cart_section {
     width: 80%;
     margin: auto;
     background-color: whitesmoke;
