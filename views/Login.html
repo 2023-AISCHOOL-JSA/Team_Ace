@@ -24,13 +24,16 @@
                         <span class="label">비밀번호</span>
                         <input type="password" id="inputPw" name="inputPw" placeholder="  비밀번호를 입력하세요" minlength="1" size="30" autocomplete="off">
                     </div>
-
+                    {%if loginFlag == 0%}
                     <div id="err">  
                         <h6 id="errMsg">아이디 또는 비밀번호를 잘못 입력했습니다<br>
                             입력하신 내용을 다시 확인해주세요.
                         </h6>
                     </div>
-                    
+                    {%else%}
+                    <div id="err">  
+                    </div>
+                    {%endif%}
                     <input type="submit" id="loginButton" value="로그인">
                 </form>
                 <a href="/page/Join"><button>회원가입</button></a>
@@ -38,8 +41,6 @@
             </div>
         </div>
     </div>
-<!-- {%if loginFlag !== 0%}  {%endif%} -->
-    <script src="/assets/js/Login.js"></script>
 
 </body>
 </html>
