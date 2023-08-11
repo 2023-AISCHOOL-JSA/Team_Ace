@@ -900,3 +900,7 @@ td {
   border: none;
 }
 
+.img-box{margin-right:  20px;}
+
+footer{text-align: center;}
+.footer_list{display: flex; justify-content: center;}
