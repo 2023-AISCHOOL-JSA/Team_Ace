@@ -833,3 +833,70 @@ h1,h2,h3,h4,h5,h6 {
 .product_view table th{ font-size: 15px; text-align: left;}
 .product_view h2{padding: 0 0 20px; border-bottom: 2px solid black;font-size: 24px; line-height: 26px;display: inline;}
 .img-box ul li{list-style-type: none;}
+.cart_section {
+  width: 80%;
+  margin: auto;
+  background-color: whitesmoke;
+}
+
+.cart ul {
+  background-color: whitesmoke;
+  padding: 30px;
+  margin-bottom: 50px;
+  border: whitesmoke solid 1px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+table {
+  border-top: solid 1.5px black;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+thead {
+  font-weight: bold;
+}
+
+td {
+  padding: 15px 0px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.cart__list__optionbtn {
+  background-color: white;
+  font-size: 10px;
+  border: lightgrey solid 1px;
+  padding: 7px;
+}
+
+.cart__mainbtns {
+  width: 420px;
+  height: 200px;
+  padding-top: 40px;
+  display: block;
+  margin: auto;
+}
+
+.cart__bigorderbtn {
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.cart__bigorderbtn.left {
+  background-color: white;
+  border: 3px skyblue solid;
+  
+}
+
+.cart__bigorderbtn.right {
+  background-color: skyblue;
+  color: white;
+  border: none;
+}
+
