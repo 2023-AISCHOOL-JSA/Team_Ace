@@ -183,10 +183,11 @@
         </div>
 
         <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
+          <form id="search-form" class="text-center" action="/page/Search" method="post">
           <div class="search-bar row bg-light p-2 my-2 rounded-4">
             <div class="col-md-4 d-none d-md-block">
               <!-- 검색창 옵션 -->
-              <select class="form-select border-0 bg-transparent">
+              <select class="form-select border-0 bg-transparent" name="option">
                 <option>카테고리 선택</option>
                 <option>침대</option>
                 <option>의자</option>
@@ -194,19 +195,18 @@
               </select>
             </div>
             <div class="col-11 col-md-7">
-              <form id="search-form" class="text-center" action="" method="">
                 <!-- 검색창 -->
-                <input type="text" class="form-control border-0 bg-transparent" placeholder="검색어를 입력해주세요." />
-              </form>
+                <input type="text" class="form-control border-0 bg-transparent" name="searching" placeholder="검색어를 입력해주세요." />
+              </div>
+              <div class="col-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" >
+                  <path fill="currentColor"
+                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"  />
+                </svg>
+              </div>
             </div>
-            <div class="col-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-              </svg>
-            </div>
+          </form>
           </div>
-        </div>
 
         <div
           class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
@@ -378,34 +378,71 @@
       </div>
   </header>
 
-  <section class="py-5">
+  <section class="py-3"
+    style="background-image: url('/assets/img/background-pattern.jpg');background-repeat: no-repeat;background-size: cover;">
     <div class="container-fluid">
-
       <div class="row">
         <div class="col-md-12">
 
+          <div class="banner-blocks">
+            <div class="sidebar">
+              <ul>
+                <li><a href="https://www.naver.com/"><img src="/assets/img/장바구니.png">
+                    <p>장바구니</p>
+                  </a></li>
+                <li><a href="https://www.youtube.com/"><img src="/assets/img/수거신청.png">
+                    <p>수거신청</p>
+                  </a></li>
+                <li><a href="https://chat.openai.com/"><img src="/assets/img/Mypage.png">
+                    <p>Mypage</p>
+                  </a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- / Banner Blocks -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Top버튼 -->
+  <button id="topButton" onclick="scrollToTop()">
+    <span class="buttonText">Top</span>
+  </button>
+
+  
+  
+  
+  
+  
+  <section class="py-5">
+    <div class="container-fluid">
+      
+      <div class="row">
+        <div class="col-md-12">
+          
           <div class="bootstrap-tabs product-tabs">
             <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-              <h3>BEST Product</h3>
+              <h3>검색 결과</h3>
               <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                   <a class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab"
                     data-bs-target="#nav-all" type="button">All</a>
-                  <a class="nav-link text-uppercase fs-6" id="nav-fruits-tab" data-bs-toggle="tab"
+                    <a class="nav-link text-uppercase fs-6" id="nav-fruits-tab" data-bs-toggle="tab"
                     data-bs-target="#nav-fruits" type="button">대형 가구</a>
-                  <a class="nav-link text-uppercase fs-6" id="nav-juices-tab" data-bs-toggle="tab"
+                    <a class="nav-link text-uppercase fs-6" id="nav-juices-tab" data-bs-toggle="tab"
                     data-bs-target="#nav-juices" type="button">소형 가구</a>
-                </div>
-              </nav>
-            </div>
-            <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-
-                <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                  {% for i in best -%}
-                  <div class="col">
-                    <div class="product-item">
-                      <a href="#" class="btn-wishlist"><svg width="24" height="24">
+                  </div>
+                </nav>
+              </div>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                  
+                  <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                    {% for i in searched -%}
+                    <div class="col">
+                      <div class="product-item">
+                        <a href="#" class="btn-wishlist"><svg width="24" height="24">
                           <use xlink:href="#heart"></use>
                         </svg></a>
                       <figure>
@@ -423,18 +460,18 @@
                         <div class="input-group product-qty">
                           <span class="input-group-btn">
                             <button type="button" class="quantity-left-minus btn btn-danger btn-number"
-                              data-type="minus" data-field="">
-                              <svg width="16" height="16">
-                                <use xlink:href="#minus"></use>
+                            data-type="minus" data-field="">
+                            <svg width="16" height="16">
+                              <use xlink:href="#minus"></use>
                               </svg>
                             </button>
                           </span>
                           <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-                            min="1" max="100">
+                          min="1" max="100">
                           <span class="input-group-btn">
                             <button type="button" class="quantity-right-plus btn btn-success btn-number"
-                              data-type="plus" data-field="">
-                              <svg width="16" height="16">
+                            data-type="plus" data-field="">
+                            <svg width="16" height="16">
                                 <use xlink:href="#plus"></use>
                               </svg>
                             </button>
@@ -448,168 +485,64 @@
                   
                 </div>
                 <!-- / product-grid -->
-
+                
               </div>
-
+              
             </div>
           </div>
-
+          
         </div>
       </div>
     </div>
   </section>
-
-
-
+  
   <section class="py-5 overflow-hidden">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
 
-          <div class="section-header d-flex justify-content-between my-5">
+          <div class="section-header d-flex justify-content-between mb-5">
+            <h2 class="section-title">Category</h2>
 
-            <h2 class="section-title">SALE Product</h2>
-
-            <div class="d-flex align-items-center">
-              <a href="#" class="btn-link text-decoration-none">View All Categories →</a>
-              <div class="swiper-buttons">
-                <button class="swiper-prev products-carousel-prev btn btn-primary">❮</button>
-                <button class="swiper-next products-carousel-next btn btn-primary">❯</button>
-              </div>
-            </div>
           </div>
-
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
 
-          <div class="products-carousel swiper">
-            <div class="swiper-wrapper">
-              {% for i in sale -%}
-              <div class="product-item swiper-slide">
-                <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                    <use xlink:href="#heart"></use>
-                  </svg></a>
-                <figure>
-                  <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
-                    <img src="{{i.IMG_PATH}}" class="tab-image">
-                  </a>
-                </figure>
-                <h3>{{i.PRD_NM}}</h3>
-                <span class="rating"><svg width="24" height="24" class="text-primary">
-                    <use xlink:href="#star-solid"></use>
-                  </svg> {{i.PRD_SCORE}}</span>
-                <span class="price">{{i.PRD_PRICE}}￦</span>
-                <div class="d-flex align-items-center justify-content-between">
-                  <div class="input-group product-qty">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#minus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-                      min="1" max="100">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#plus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                    
-                  </div>
-                  <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
-                </div>
-              </div>
-              {%- endfor %}
-            </div>
-          </div>
-          <!-- / products-carousel -->
-
-        </div>
       </div>
     </div>
-  </section>
+    <div class="row">
+      <div class="col-md-12">
 
-  <section class="py-5 overflow-hidden">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
+        <div class="category-carousel swiper">
+          <div class="swiper-wrapper loo">
+            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티1.png" class="imos">
+              <h3 class="category-title">장기렌탈</h3>
+            </a>
+            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티2.png" class="imos">
+              <h3 class="category-title">단기렌탈</h3>
+            </a>
+            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티3.png" class="imos">
+              <h3 class="category-title">세트상품</h3>
+            </a>
+            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티4.png" class="imos">
+              <h3 class="category-title">브랜드 별 가구</h3>
+            </a>
+            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티5.png" class="imos">
+              <h3 class="category-title">수거신청</h3>
+            </a>
 
-          <div class="section-header d-flex justify-content-between my-5">
-
-            <h2 class="section-title">NEW Product</h2>
-
-            <div class="d-flex align-items-center">
-              <a href="#" class="btn-link text-decoration-none">View All Categories →</a>
-              <div class="swiper-buttons">
-                <button class="swiper-prev products-carousel-prev2 btn btn-primary">❮</button>
-                <button class="swiper-next products-carousel-next2 btn btn-primary">❯</button>
-              </div>
-            </div>
           </div>
-
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
 
-          <div class="products-carousel2 swiper">
-            <div class="swiper-wrapper">
-              {% for i in new -%}
-              <div class="product-item swiper-slide">
-                <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                    <use xlink:href="#heart"></use>
-                  </svg></a>
-                <figure>
-                  <a href="/page/detail" title="Product Title">
-                    <img src="{{i.IMG_PATH}}" class="tab-image">
-                  </a>
-                </figure>
-                <h3>{{i.PRD_NM}}</h3>
-                <span class="rating"><svg width="24" height="24" class="text-primary">
-                    <use xlink:href="#star-solid"></use>
-                  </svg> {{i.PRD_SCORE}}</span>
-                <span class="price">{{i.PRD_PRICE}}￦</span>
-                <div class="d-flex align-items-center justify-content-between">
-                  <div class="input-group product-qty">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#minus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-                      min="1" max="100">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#plus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                  </div>
-                  <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
-                </div>
-              </div>
-              {%- endfor %}
-            </div>
-          </div>
-          <!-- / products-carousel -->
-
-        </div>
       </div>
     </div>
+    </div>
   </section>
-
+  
   <footer class="py-5">
     <div class="container-fluid">
       <div class="row">

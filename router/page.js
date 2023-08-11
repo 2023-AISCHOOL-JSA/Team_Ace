@@ -214,14 +214,14 @@ router.post('/Search', function(request,response){
     let sql = `SELECT *
                  FROM PRD A JOIN PRD_IMG B
                    ON (A.PRD_NO = B.PRD_NO)
-                WHERE (PRD_NM LIKE '%?%' OR PRD_DETAIL LIKE '%?%')
+                WHERE (PRD_NM LIKE ? OR PRD_DETAIL LIKE ?)
                   AND A.PRD_CODE = ?;`;
-    conn.query(sql, [searching, searching, option], function(err, rows){
+    conn.query(sql, ['%'+searching+'%', '%'+searching+'%', option], function(err, rows){
         console.log(rows);
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows});
+            response.render("Search", {searched: rows, info: request.cookies.info});
         } else {
             console.log("조회 실패");
             response.redirect("/page/");
