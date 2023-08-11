@@ -7,6 +7,9 @@ let conn = db.init();
 // 로그인 시 ID 값이 들어감 userId 변수
 let userId;
 
+
+
+
 router.get("/", function(request, response){
     console.log("접속 확인");
     response.render("Main")
@@ -23,7 +26,7 @@ router.get("/nextPage", function(request, response){
     response.redirect(addr);
 });
 
-router.get("/logout", function(request, response){
+router.get("/Logout", function(request, response){
     response.clearCookie('info');
     console.log("쿠키 삭제");
     request.session.destroy();
@@ -40,7 +43,7 @@ router.get("/basket", function(request, response){
     console.log(request.session.info.ID);
     console.log(id);
     conn.connect();
-    let sql = `SELECT *
+    let sql = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') AS D
                  FROM PRD A JOIN PRD_IMG B
                    ON A.PRD_NO=B.PRD_NO
                 WHERE A.PRD_NO IN (SELECT PRD_NO
@@ -304,8 +307,6 @@ router.get("/pay", function(request,response){
 // 결제 시 결제 정보를 ORDER 테이블에 저장
 router.post("/pay", function(request,response){
     console.log("주문")
-    console.log(request.body.selectedPrds);
-    console.log(request.body.cnt);
     let o_cnt = request.body.cnt;
     let n_cnt = o_cnt.filter(function(data) {
         return data > 0;
@@ -313,20 +314,27 @@ router.post("/pay", function(request,response){
     console.log(n_cnt);
     let ordered = request.body.selectedPrds;
     conn.connect();
-    let sql = "select PRD_PRICE from PRD where PRD_NO IN (?)";
+    let sql = "select PRD_PRICE, DEL_PRICE, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL DEL_TIME DAY), '%y%m%d') AS M from PRD where PRD_NO IN (?)";
     conn.query(sql, [ordered], function(err, rows){
         console.log(err);
         console.log(rows);
         if(!err){
-            console.log(rows);
             let price = 0;
+            let deliverdDay = 0;
+            let deliverPrice = 0;
             for (let i = 0; i < rows.length; i++) {
-                console.log(rows[i].PRD_PRICE);
-                console.log(rows[i].PRD_PRICE+123);
+                if (deliverdDay < parseInt(rows[i].M)){
+                    deliverdDay = parseInt(rows[i].M);
+                };
+                if(deliverPrice < rows[i].DEL_PRICE){
+                    deliverPrice = rows[i].DEL_PRICE;
+                };
                 price += rows[i].PRD_PRICE * n_cnt[i];
             }
-            request.session.totalPrice = {totalprice :price, del:3000, sum:price+3000};
-            response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '0'});
+            let mo = parseInt((deliverdDay%10000)/100);
+            let da = deliverdDay%100;
+            request.session.payInfo = {totalprice :price, del:deliverPrice, sum:price+deliverPrice, m:mo,d:da};
+            response.render("pay", {payInfo: request.session.payInfo, info: request.session.info, payflag: '0'});
             
         } else {
             console.log("조회 실패");

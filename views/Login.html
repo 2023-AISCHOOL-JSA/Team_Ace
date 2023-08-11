@@ -14,23 +14,26 @@
     <div id = "container">
         <div id ="login_main">
             <div id = "top"><h2>LOGiN</h2></div>
-            {%if loginFlag == 0 %}
-                <div id="err" style="color: red;">   
-                    <h6 id="errMsg">아이디 또는 비밀번호를 잘못 입력했습니다<br>
-                        입력하신 내용을 다시 확인해주세요.
-                    </h6>
-                </div>
-            {%endif%}
             <div id="loginForm">
                 <form action="/user/login" method="post">
                     <div id="id">
                         <span class="label">아이디</span>
-                        <input type="text" name="inputId" placeholder="  아이디를 입력하세요" size="30" autocomplete="off">
+                        <input type="text" id="inputId" name="inputId" placeholder="  아이디를 입력하세요" size="30" autocomplete="off">
                     </div>
                     <div id="pw">
                         <span class="label">비밀번호</span>
-                        <input type="password" name="inputPw" placeholder="  비밀번호를 입력하세요" minlength="1" size="30" autocomplete="off">
+                        <input type="password" id="inputPw" name="inputPw" placeholder="  비밀번호를 입력하세요" minlength="1" size="30" autocomplete="off">
                     </div>
+                    {%if loginFlag == 0%}
+                    <div id="err">  
+                        <h6 id="errMsg">아이디 또는 비밀번호를 잘못 입력했습니다<br>
+                            입력하신 내용을 다시 확인해주세요.
+                        </h6>
+                    </div>
+                    {%else%}
+                    <div id="err">  
+                    </div>
+                    {%endif%}
                     <input type="submit" id="loginButton" value="로그인">
                 </form>
                 <a href="/page/Join"><button>회원가입</button></a>
@@ -38,8 +41,6 @@
             </div>
         </div>
     </div>
-
-    <script src="/assets/js/Login.js"></script>
 
 </body>
 </html>

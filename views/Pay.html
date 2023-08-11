@@ -13,7 +13,7 @@
 
 <body>
     <header>
-        <img src="/assets/img/로고1.png" alt="로고 이미지" height="100%" width="30%">
+        <a href="/page/"><img src="/assets/img/로고2.png" alt="로고" width="80px"></a>
     </header>
     <div class="payment-form">
         <h2>주문 결제</h2>
@@ -88,15 +88,19 @@
             <table>
                 <tr>
                     <th>총상품가격</th>
-                    <td>{{ totalPrice.totalprice }}</td>
+                    <td>{{ payInfo.totalprice }}</td>
                 </tr>
                 <tr>
                     <th>배송비</th>
-                    <td>{{ totalPrice.del}}</td>
+                    <td>{{ payInfo.del }}</td>
+                </tr>
+                <tr>
+                    <th>예상 도착일</th>
+                    <td>{{ payInfo.m }}월 {{ payInfo.d }}일</td>
                 </tr>
                 <tr>
                     <th>총결제금액</th>
-                    <td>{{ totalPrice.sum }}</td>
+                    <td>{{ payInfo.sum }}</td>
                 </tr>
                 <!-- 추가적인 결제 정보를 이곳에 추가할 수 있습니다. -->
             </table>
