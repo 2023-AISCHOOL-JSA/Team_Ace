@@ -23,7 +23,7 @@ router.get("/nextPage", function(request, response){
     response.redirect(addr);
 });
 
-router.get("/logout", function(request, response){
+router.get("/Logout", function(request, response){
     response.clearCookie('info');
     console.log("쿠키 삭제");
     request.session.destroy();

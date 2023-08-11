@@ -26,7 +26,7 @@ router.get('/', function (request, response) {
             console.log(rows);
             if (!err) {
                 request.session.best = rows;
-                query2()
+                query2();
             } else {
                 console.log(err);
             }
@@ -45,7 +45,7 @@ router.get('/', function (request, response) {
             console.log(rows);
             if (!err) {
                 request.session.new = rows;
-                query3()
+                query3();
             } else {
                 console.log(err);
             }
@@ -68,20 +68,71 @@ router.get('/', function (request, response) {
             console.log(rows);
             if (!err) {
                 request.session.sale = rows;
-                console.log(String(rows[0].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-                console.log(parseInt('1234567,456'));
-                response.render('Main', {
-                    info: request.cookies.info, best: request.session.best,
-                    new: request.session.new, sale: request.session.sale
-                });
-                // response.render('Main');
+                query4();
             } else {
                 console.log(err);
-                
             }
         });
     }
-    
+    const query4 = () => {
+        request.session.payflag = 0;
+        console.log("장바구니?????");
+        // let id = request.session.info.ID;
+        // userId는 로그인 성공 시 저장
+        let prc = [];
+        let tpr = 0;
+        let bpl = [];
+        let l = 0;
+        if (request.session.info != null){
+            let id = request.session.info.ID;
+            console.log(request.session.info.ID);
+            console.log(id);
+            conn.connect();
+            let sql = `SELECT *
+                         FROM PRD A JOIN PRD_IMG B
+                           ON A.PRD_NO=B.PRD_NO
+                        WHERE A.PRD_NO IN (SELECT PRD_NO
+                                             FROM BASKET
+                                            WHERE ID = ?);`;
+            conn.query(sql, [id], function(err, rows){
+                // console.log(err);
+                // console.log(rows);
+                if (!err){
+                    if (rows.length > 0){
+                        l = rows.length;
+                        request.session.basket = rows;
+                        for (let i = 0; i<rows.length; i++){
+                            prc.push(String(rows[i].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+                            tpr += rows[i].PRD_PRICE;
+                            bpl.push(i);
+                        }
+                        tpr = String(tpr).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+                        console.log(prc);
+                        console.log(tpr);
+                        console.log(bpl);
+                        console.log(l);
+                        console.log(request.session.basket[0]);
+                        response.render('Main', {
+                            info: request.cookies.info, best: request.session.best, basket: request.session.basket,
+                            new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l
+                        });
+                    }
+                } else {
+                    console.log(err);
+                    response.render('Main', {
+                        info: request.cookies.info, best: request.session.best,
+                        new: request.session.new, sale: request.session.sale
+                    });
+                }
+            });
+        } else {
+            response.render('Main', {
+                info: request.cookies.info, best: request.session.best, basket: [],
+                new: request.session.new, sale: request.session.sale, p: [], tp: 0, arr: [], length: 0
+            });
+        }
+    }
+
     query1()
 
 });

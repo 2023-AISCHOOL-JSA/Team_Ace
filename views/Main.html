@@ -110,35 +110,27 @@
     </div>
     <div class="offcanvas-body">
       <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">장바구니</span>
-          <span class="badge bg-primary rounded-pill">3</span>
-        </h4>
+          <span class="badge bg-primary rounded-pill">{{length}}</span>
+        </h3>
         <ul class="list-group mb-3">
+            {% for i in arr -%}
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h6 class="my-0">Growers cider</h6>
-                <small class="text-body-secondary">Brief description</small>
+                <h4 class="my-0">{{basket[i].PRD_NM}}</h4>
+                <small class="text-body-secondary">{{basket[i].PRD_DETAIL}}</small>
               </div>
-              <span class="text-body-secondary">$12</span>
+              <span class="text-body-secondary">{{p[i]}}￦</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Fresh grapes</h6>
-                <small class="text-body-secondary">Brief description</small>
-              </div>
-              <span class="text-body-secondary">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Heinz tomato ketchup</h6>
-                <small class="text-body-secondary">Brief description</small>
-              </div>
-              <span class="text-body-secondary">$5</span>
-            </li>
+            {%- endfor%}
             <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
+              {% if info != Null %}
+                <span>Total (KOR)</span>
+                <strong>{{tp}}￦</strong>
+              {% else %}
+                <span>로그인 해주세요!</span>
+              {% endif %}
             </li>
         </ul>
 
@@ -288,7 +280,7 @@
             <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
               <span class="fs-6 text-muted dropdown-toggle">장바구니</span>
-              <h5 class="mb-0"><span class="cart-total">50000원</span></h5>
+              <h5 class="mb-0"><span class="cart-total">{{tp}}원</span></h5>
             </button>
           </div>
 
@@ -319,15 +311,19 @@
                     <option>침대</option>
                     <option>의자</option>
                     <option>가구</option>
+                    <option>옷장</option>
                   </select>
 
                   <!-- 네비게이션 바 -->
                   <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
                     <li class="nav-item active">
-                      <a href="#" class="nav-link">베스트상품</a>
+                      <a href="#" class="nav-link">베스트 상품</a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="#" class="nav-link">할인상품</a>
+                      <a href="#" class="nav-link">할인 상품</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#sale" class="nav-link">새 상품</a>
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">구매후기</a>
@@ -358,9 +354,6 @@
                     </li>
                     <li class="nav-item">
                       <a href="#brand" class="nav-link">Brand</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#sale" class="nav-link">Sale</a>
                     </li>
                     <li class="nav-item">
                       <a href="#blog" class="nav-link">Blog</a>
@@ -559,7 +552,7 @@
                         </svg> {{i.PRD_SCORE}}</span>
                       <span class="price">{{i.PRD_PRICE}}￦</span>
                       <div class="d-flex align-items-center justify-content-between">
-                        <div class="input-group product-qty">
+                        <!-- <div class="input-group product-qty">
                           <span class="input-group-btn">
                             <button type="button" class="quantity-left-minus btn btn-danger btn-number"
                               data-type="minus" data-field="">
@@ -578,8 +571,8 @@
                               </svg>
                             </button>
                           </span>
-                        </div>
-                        <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
+                        </div> -->
+                        <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
                       </div>
                     </div>
                   </div>
@@ -641,28 +634,7 @@
                   </svg> {{i.PRD_SCORE}}</span>
                 <span class="price">{{i.PRD_PRICE}}￦</span>
                 <div class="d-flex align-items-center justify-content-between">
-                  <div class="input-group product-qty">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#minus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-                      min="1" max="100">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#plus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                    
-                  </div>
-                  <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
+                  <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
                 </div>
               </div>
               {%- endfor %}
@@ -716,27 +688,7 @@
                   </svg> {{i.PRD_SCORE}}</span>
                 <span class="price">{{i.PRD_PRICE}}￦</span>
                 <div class="d-flex align-items-center justify-content-between">
-                  <div class="input-group product-qty">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#minus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
-                      min="1" max="100">
-                    <span class="input-group-btn">
-                      <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus"
-                        data-field="">
-                        <svg width="16" height="16">
-                          <use xlink:href="#plus"></use>
-                        </svg>
-                      </button>
-                    </span>
-                  </div>
-                  <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
+                  <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
                 </div>
               </div>
               {%- endfor %}
