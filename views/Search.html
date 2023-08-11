@@ -423,15 +423,24 @@
           
           <div class="bootstrap-tabs product-tabs">
             <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-              <h3>검색 결과</h3>
+              
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <h4>"{{os.option}}+{{os.searching}}"에 대한 검색 결과</h4>
+              </div>
               <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                   <a class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab"
                     data-bs-target="#nav-all" type="button">All</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-fruits-tab" data-bs-toggle="tab"
+                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
                     data-bs-target="#nav-fruits" type="button">대형 가구</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-juices-tab" data-bs-toggle="tab"
+                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
                     data-bs-target="#nav-juices" type="button">소형 가구</a>
+                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-all" type="button">판매량 순</a>
+                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-fruits" type="button">높은 가격 순</a>
+                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-fruits" type="button">낮은 가격 순</a>
                   </div>
                 </nav>
               </div>

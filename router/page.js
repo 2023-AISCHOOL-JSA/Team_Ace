@@ -272,7 +272,7 @@ router.post('/Search', function(request,response){
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows, info: request.cookies.info});
+            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':option,'searching':searching}});
         } else {
             console.log("조회 실패");
             response.redirect("/page/");
