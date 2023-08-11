@@ -188,7 +188,7 @@
             <div class="col-md-4 d-none d-md-block">
               <!-- 검색창 옵션 -->
               <select class="form-select border-0 bg-transparent" name="option">
-                <option>카테고리 선택</option>
+                <option value="">전체</option>
                 <option>침대</option>
                 <option>의자</option>
                 <option>책상</option>
@@ -425,7 +425,11 @@
             <div class="tabs-header d-flex justify-content-between border-bottom my-5">
               
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <h4>"{{os.option}}+{{os.searching}}"에 대한 검색 결과</h4>
+                {% if option.length > 0 %}
+                  <h4>"{{os.option}}+{{os.searching}}"에 대한 검색 결과</h4>
+                {% else %}
+                  <h4>"{{os.searching}}"에 대한 검색 결과</h4>
+                {% endif %}
               </div>
               <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">

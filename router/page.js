@@ -259,15 +259,27 @@ router.get("/delPrds", function(request, response){
 router.post('/Search', function(request,response){
     let option = request.body.option;
     let searching = request.body.searching;
-
-
+    console.log(option);
+    console.log(searching);
     conn.connect();
-    let sql = `SELECT *
+    let sql = "";
+    let val = [];
+    if (option.length < 1){
+        sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON (A.PRD_NO = B.PRD_NO)
+                WHERE PRD_NM LIKE ? OR PRD_DETAIL LIKE ?;`;
+        val = ['%'+searching+'%', '%'+searching+'%']
+    } else {
+        sql = `SELECT *
                  FROM PRD A JOIN PRD_IMG B
                    ON (A.PRD_NO = B.PRD_NO)
                 WHERE (PRD_NM LIKE ? OR PRD_DETAIL LIKE ?)
                   AND A.PRD_CODE = ?;`;
-    conn.query(sql, ['%'+searching+'%', '%'+searching+'%', option], function(err, rows){
+        val = ['%'+searching+'%', '%'+searching+'%', option]
+    }
+    
+    conn.query(sql, val, function(err, rows){
         console.log(rows);
 
         if(!err){

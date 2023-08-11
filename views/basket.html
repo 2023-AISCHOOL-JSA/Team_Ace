@@ -39,7 +39,7 @@
                         <td><a href=""><img src="{{item.IMG_PATH}}"></a></td>
                         <td>
                             <p>{{item.PRD_NM}}</p>
-                            <span class="price">8/9도착 보장</span>
+                            <span class="price">{{item.M}}/{{item.D}}</span>
                         </td>
                         <td>
                             <span>수량</span>
@@ -52,7 +52,7 @@
                         </td>
                         <td><span class="price">{{item.PRD_PRICE}}원</span><br>
                         </td>
-                        <td>무료</td>
+                        <td>{{item.DEL_PRICE}}</td>
                         <td><button type="button" onclick="location.href='/page/delPrds?PRD_NO={{item.PRD_NO}}'">삭제하기</button></td>
                     </tr>
                 </tbody>
