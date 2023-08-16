@@ -67,6 +67,23 @@ router.get("/basket", function(request, response){
     });
 });
 
+// 장바구니에 상품을 넣는 우회하는 라우터
+router.get('/updatebasket', function(request,response){
+    let id = request.session.info.ID
+    let prd_no = request.session.detail.PRD_NO;
+    console.log(prd_no)
+    conn.connect();
+    let sql = "INSERT INTO BASKET (ID, PRD_NO) VALUES (?, ?);"
+    conn.query(sql, [id, prd_no], function(err, rows){
+        if(!err){
+            console.log(rows);
+        }
+        else{
+            console.log(err);
+        }
+    })
+    response.redirect('/user/basket')
+})
 router.get("/login", function(request, response){
     request.session.loginFlag = 1;
     response.redirect("/page/login");
