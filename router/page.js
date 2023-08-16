@@ -346,6 +346,46 @@ router.post('/autoSearch', function(request,response){
     });
 })
 
+router.get('/rentType', function(request,response){
+    let rentType = request.query.rt;
+    console.log(rentType);
+    conn.connect();
+    let sql = "";
+    let val = [];
+    if (rentType == 'Long'){
+        sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON (A.PRD_NO = B.PRD_NO)
+                WHERE A.RENT_TYPE = 'L';`;
+        val = []
+    } else if (rentType == 'Short'){
+        sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON (A.PRD_NO = B.PRD_NO)
+                WHERE A.RENT_TYPE = 'S';`;
+        val = []
+    } else if (rentType == 'Brand'){
+        sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON (A.PRD_NO = B.PRD_NO)
+                WHERE PRD_NM LIKE ?;`;
+        val = ['%'+searching+'%']
+    }
+    
+    conn.query(sql, val, function(err, rows){
+        console.log(rows);
+
+        if(!err){
+            console.log("조회 성공");
+            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':option,'searching':searching}});
+        } else {
+            console.log("조회 실패");
+            response.redirect("/page/");
+        }
+
+    });
+})
+
 router.post('/Search', function(request,response){
     let option = request.body.option;
     let searching = request.body.searching;
