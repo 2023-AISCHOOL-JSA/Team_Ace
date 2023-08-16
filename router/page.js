@@ -169,24 +169,24 @@ router.get('/detail', function (request, response) {
     console.log(request.query.PRD_NO);
     let PRD_NO = request.query.PRD_NO;
 
-    // conn.connect();
-    // let sql = `SELECT *
-    //              FROM (SELECT * FROM PRD where PRD_NO = ?) A,
-    //                   (SELECT IMG_PATH FROM PRD_IMG where PRD_NO = ?) B,
-    //                   (SELECT COUNT(*) FROM PRD_ST where PRD_NO = ? GROUP BY PRD_NO) C`;
+    conn.connect();
+    let sql = `SELECT A.*, B.IMG_PATH
+                 FROM PRD A JOIN PRD_IMG B
+                   ON A.PRD_NO = B.PRD_NO
+                WHERE A.PRD_NO = ?`;
     
-    // // 쿼리 결과 
-    // conn.query(sql, PRD_NO, PRD_NO, PRD_NO, function(err, rows){
-    //     if(!err){
-    //         request.session.detail = rows[0];
-    //         console.log(rows);
-    //         response.render("detail", {detail: request.session.detail});
-    //     }
-    //     else{
-    //         console.log(err);
-    //     }
-    // })
-    response.render("detail");
+    // 쿼리 결과 
+    conn.query(sql, PRD_NO, function(err, rows){
+        if(!err){
+            request.session.detail = rows[0];
+            console.log(rows);
+            response.render("detail", {detail: request.session.detail});
+        }
+        else{
+            console.log(err);
+            response.redirect("/page/");
+        }
+    });
 });
 
 router.get('/Pay', function (request, response) {
@@ -207,7 +207,6 @@ router.get('/selectOne', function (request, response) {
 });
 
 router.get('/basket', function (request, response) {
-    console.log(request.session.basket)
     response.render('basket', { basket: request.session.basket });
 });
 
@@ -369,7 +368,7 @@ router.get('/rentType', function(request,response){
         sql = `SELECT *
                  FROM PRD A JOIN PRD_IMG B
                    ON (A.PRD_NO = B.PRD_NO)
-                WHERE PRD_NM LIKE ?;`;
+                WHERE SELLER_CODE = 1;`;
         val = ['%'+searching+'%']
     }
     
@@ -422,13 +421,5 @@ router.post('/Search', function(request,response){
         }
 
     });
-})
-
-router.get('/recall', function(request,response){
-    response.render('recall')
-})
-
-router.get('/mypage', function(request, response){
-    response.render('mypage')
 })
 module.exports = router;
