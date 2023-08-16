@@ -10,14 +10,17 @@
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-    <div id="header">회원가입시 등록한 이름,전화번호,ID를 입력하세요</div>
-    <hr>
+    <div id="logo">
+        <a href="http://www.naver.com"><img src="/assets/img/로오고.png"></a>
+    </div>
+
     <div id="bodyContain">
         <div id="container">
             <!-- ID찾기 -->
             <div id="findId"> 
                 <div class="findText">아이디 찾기</div>
                     <div class="userInput">
+                    <div class="answer">당신의 아이디는 "" 입니다</div>
                     <div id="findIdForm">
                     <form action="/user/findId" method="post">
                         <div class="name">  
@@ -29,7 +32,7 @@
                             <input name="phone">
                         </div>
                         
-                        <input type="submit" value="아이디 찾기">
+                        <input class="btn" type="submit" value="아이디 찾기">
                     </form>
                     </div>
                 </div>
@@ -39,6 +42,7 @@
             <div id="findPw"> 
                 <div class="findText">비밀번호 찾기</div>
                     <div class="userInput">
+                    <div class="answer">당신의 비밀번호는 ***입니다</div>
                     <div id="findPwForm">
                 <form action="/user/findPw" method="post">
                     <div class="name">  
@@ -53,7 +57,7 @@
                         <span class="label">아이디</span>
                         <input name="id">
                     </div>
-                    <input type="submit" value="비밀번호 찾기">
+                    <input class="btn" type="submit" value="비밀번호 찾기">
                 </form>
                 </div>
             </div>
@@ -61,10 +65,6 @@
         </div>
         </div>
     </div>
-    
-  
- 
-
     
 </body>
 </html>
