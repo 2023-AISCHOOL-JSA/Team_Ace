@@ -84,6 +84,7 @@ router.get('/updatebasket', function(request,response){
     })
     response.redirect('/user/basket')
 })
+
 router.get("/login", function(request, response){
     request.session.loginFlag = 1;
     response.redirect("/page/login");

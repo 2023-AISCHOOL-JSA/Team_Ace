@@ -74,8 +74,10 @@
             </div>
             <div>
                 <!-- 버튼 -->
+                {%if info != Null%}
                 <button class="product_btn" onclick="location.href='/user/updatebasket'" type="submit">장바구니</button>
                 <button class="product_btn">구매하기</button> <!-- submit -->
+                {%endif%}
             </div>
             <!-- </form> -->
         </div>
