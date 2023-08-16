@@ -256,6 +256,96 @@ router.get("/delPrds", function(request, response){
     query1();
 });
 
+router.post('/autoSearch', function(request,response){
+    let autoSearch = request.body.autoSearch;
+    let as = request.body.as;
+    console.log(autoSearch);
+    console.log("!!!");
+    console.log(as);
+    console.log("!!!");
+
+    conn.connect();
+    let sql = "";
+    let val = [];
+    if (autoSearch.length < 1){
+        if (as == 'best'){
+            sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.PRD_DETAIL, C.CNT
+                    FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_RP/COUNT(*) AS CNT
+                            FROM PRD A, PRD_ST B
+                            WHERE A.PRD_NO = B.PRD_NO
+                            GROUP BY B.PRD_NO) C , PRD_IMG D
+                    WHERE D.PRD_NO = C.PRD_NO
+                    ORDER BY CNT DESC
+                    LIMIT 20;`;
+            val = []
+        } else if (as == 'sale'){
+            sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SALE
+                     FROM (SELECT PRD_NO, PRD_NM, PRD_PRICE, PRD_SCORE, PRD_DETAIL, PRD_SALE
+                             FROM PRD
+                            WHERE PRD_SALE > 0) A, PRD_IMG B
+                    WHERE A.PRD_NO = B.PRD_NO
+                    ORDER BY PRD_SALE DESC
+                    LIMIT 20;`;
+            val = []
+        } else if (as == 'new'){
+            sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SIGN
+                     FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM, PRD_PRICE, PRD_DETAIL, PRD_SCORE
+                             FROM PRD
+                            WHERE PRD_SIGN > CURDATE()-100) A, PRD_IMG B
+                    WHERE A.PRD_NO = B.PRD_NO
+                    ORDER BY PRD_SIGN DESC
+                    LIMIT 20;`;
+            val = []
+        }
+    } else {
+        if (as == 'best'){
+            sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.PRD_DETAIL, C.CNT
+                    FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_RP/COUNT(*) AS CNT
+                            FROM PRD A, PRD_ST B
+                            WHERE A.PRD_NO = B.PRD_NO
+                            GROUP BY B.PRD_NO) C , PRD_IMG D
+                    WHERE D.PRD_NO = C.PRD_NO
+                    AND A.PRD_CODE = ?
+                    ORDER BY CNT DESC
+                    LIMIT 20;`;
+            val = [autoSearch]
+        } else if (as == 'sale'){
+            sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SALE
+                     FROM (SELECT PRD_NO, PRD_NM, PRD_PRICE, PRD_SCORE, PRD_DETAIL, PRD_SALE
+                             FROM PRD
+                            WHERE PRD_SALE > 0) A, PRD_IMG B
+                    WHERE A.PRD_NO = B.PRD_NO
+                      AND A.PRD_CODE = ?
+                    ORDER BY PRD_SALE DESC
+                    LIMIT 20;`;
+            val = [autoSearch]
+        } else if (as == 'new'){
+            sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SIGN
+                     FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM, PRD_PRICE, PRD_DETAIL, PRD_SCORE
+                             FROM PRD
+                            WHERE PRD_SIGN > CURDATE()-100) A, PRD_IMG B
+                    WHERE A.PRD_NO = B.PRD_NO
+                      AND A.PRD_CODE = ?
+                    ORDER BY PRD_SIGN DESC
+                    LIMIT 20;`;
+            val = [autoSearch]
+        }
+    }
+    
+    conn.query(sql, val, function(err, rows){
+        console.log(rows);
+
+        if(!err){
+            console.log("조회 성공");
+            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':autoSearch,'searching':as}});
+        } else {
+            console.log("조회 실패");
+            response.redirect("/page/");
+        }
+
+    });
+})
+
 router.post('/Search', function(request,response){
     let option = request.body.option;
     let searching = request.body.searching;

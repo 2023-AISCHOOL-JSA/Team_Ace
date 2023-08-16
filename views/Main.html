@@ -134,8 +134,7 @@
             </li>
         </ul>
 
-        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니
-          보기</button>
+        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니 보기</button>
       </div>
     </div>
   </div>
@@ -184,6 +183,7 @@
                 <option>침대</option>
                 <option>의자</option>
                 <option>책상</option>
+                <option>옷장</option>
               </select>
             </div>
             <div class="col-11 col-md-7">
@@ -216,51 +216,7 @@
               <a href="/user/Logout">로그아웃</a><br>
             </li>
             {%else %}
-            <li>
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#user"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#heart"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#cart"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
+            
             <li>
               <a href="/user/Logout">로그아웃</a><br>
             </li>
@@ -304,10 +260,11 @@
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
+                <form action="/page/autoSearch" method="post">
                 <div class="offcanvas-body">
                   <!-- 검색창 카테고리 옵션 -->
-                  <select class="filter-categories border-0 mb-0 me-5">
-                    <option>찾아보기</option>
+                  <select class="filter-categories border-0 mb-0 me-5" name="autoSearch">
+                    <option value="">찾아보기</option>
                     <option>침대</option>
                     <option>의자</option>
                     <option>가구</option>
@@ -317,51 +274,25 @@
                   <!-- 네비게이션 바 -->
                   <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
                     <li class="nav-item active">
-                      <a href="#" class="nav-link">베스트 상품</a>
+                      <button type="submit" class="nav-link" name="as" value="best">베스트 상품</button>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="#" class="nav-link">할인 상품</a>
+                      <button type="submit" class="nav-link" name="as" value="sale">할인 상품</button>
                     </li>
                     <li class="nav-item">
-                      <a href="#sale" class="nav-link">새 상품</a>
+                      <button type="submit" class="nav-link" name="as" value="new">새 상품</button>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="nav-link">구매후기</a>
+                      <button type="submit" class="nav-link" name="as" value="review">구매후기</button>
                     </li>
                     <li class="nav-item">
-                      <a href="#accessories" class="nav-link">Accessories</a>
+                      <button type="submit" class="nav-link" name="as" value="acce">Accessories</button>
                     </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown"
-                        aria-expanded="false">Pages</a>
-                      <ul class="dropdown-menu" aria-labelledby="pages">
-                        <li><a href="/assets/html/about.html" class="dropdown-item">About Us</a></li>
-                        <li><a href="/assets/html/shop.html" class="dropdown-item">Shop<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/single-product.html" class="dropdown-item">Single Product<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/cart.html" class="dropdown-item">Cart<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/checkout.html" class="dropdown-item">Checkout<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/blog.html" class="dropdown-item">Blog</a></li>
-                        <li><a href="/assets/html/single-post.html" class="dropdown-item">Single Post</a></li>
-                        <li><a href="/assets/html/styles.html" class="dropdown-item">Styles</a></li>
-                        <li><a href="/assets/html/contact.html" class="dropdown-item">Contact<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/thank-you.html" class="dropdown-item">Thank You</a></li>
-                      </ul>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#brand" class="nav-link">Brand</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#blog" class="nav-link">Blog</a>
-                    </li>
+                    
                   </ul>
 
                 </div>
-
+              </form>
               </div>
 
             </nav>
@@ -436,7 +367,7 @@
             </div>
             <div class="sidebar">
               <ul>
-                <li><a href="https://www.naver.com/"><img src="/assets/img/장바구니.png">
+                <li><a href="/user/basket"><img src="/assets/img/장바구니.png">
                     <p>장바구니</p>
                   </a></li>
                 <li><a href="https://www.youtube.com/"><img src="/assets/img/수거신청.png">
