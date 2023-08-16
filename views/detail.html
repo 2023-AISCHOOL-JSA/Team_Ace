@@ -27,59 +27,60 @@
             </ul>
         </div>
         <div class="product_view">
-            <!-- <form action="/user/basket" method="get"> -->
-            <h2>{{detail.PRD_NM}}</h2>
-            <!-- 테이블 -->
-            <div class="porduct_tb">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>판매가</th>
-                            <td class="price">{{detail.PRD_PRICE}}</td>
-                        </tr>
-                        <tr>
-                            <th>상품코드</th>
-                            <td>{{detail.PRD_NO}}</td>
-                        </tr>
-                        <tr>
-                            <th>제조사/공급사</th>
-                            <td>{{detail.SELLER_CODE}}</td>
-                        </tr>
-                        <tr>
-                            <th>구매수량</th>
-                            <td>
-                                <input type="number">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>옵션선택</th>
-                            <td>
-                                <select>
-                                    <option>기본</option>
-                                    <option>프리미엄</option>
-                                    <option>으아아아</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>배송비</th>
-                            <td>{{detail.DEL_PRICE}}</td>
-                        </tr>
-                        <tr>
-                            <th>결제금액</th>
-                            <td class="total">{{detail.PRD_PRICE + detail.DEL_PRICE}}원</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <!-- 버튼 -->
-                {%if info != Null%}
-                <button class="product_btn" onclick="location.href='/user/updatebasket'" type="submit">장바구니</button>
-                <button class="product_btn">구매하기</button> <!-- submit -->
-                {%endif%}
-            </div>
-            <!-- </form> -->
+            <form method="post">
+                <h2>{{detail.PRD_NM}}</h2>
+                <!-- 테이블 -->
+                <div class="porduct_tb">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>판매가</th>
+                                <td class="price">{{detail.PRD_PRICE}}</td>
+                            </tr>
+                            <tr>
+                                <th>상품코드</th>
+                                <td>{{detail.PRD_NO}}</td>
+                            </tr>
+                            <tr>
+                                <th>제조사/공급사</th>
+                                <td>{{detail.SELLER_CODE}}</td>
+                            </tr>
+                            <tr>
+                                <th>구매수량</th>
+                                <td>
+                                    <input type="number" name="cnt[]" value="1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>옵션선택</th>
+                                <td>
+                                    <select>
+                                        <option>기본</option>
+                                        <option>프리미엄</option>
+                                        <option>으아아아</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>배송비</th>
+                                <td>{{detail.DEL_PRICE}}</td>
+                            </tr>
+                            <tr>
+                                <th>결제금액</th>
+                                <td class="total">{{detail.PRD_PRICE + detail.DEL_PRICE}}원</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <!-- 버튼 -->
+                    {%if info != Null%}
+                    <button class="product_btn" formaction="/user/updatebasket">장바구니</button>
+                    <button class="product_btn" name="selectedPrds" value="{{detail.PRD_NO}}" type="submit" formaction="/user/pay">구매하기</button>
+                    <!-- submit -->
+                    {%endif%}
+                </div>
+            </form>
         </div>
         </div>
 
