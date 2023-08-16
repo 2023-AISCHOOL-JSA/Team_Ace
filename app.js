@@ -29,10 +29,6 @@ app.use(express.json());
 
 app.use(express.static(__dirname + "/public"));
 
-app.use('/page',page);
-
-app.use('/user',user);
-
 app.use(session({
     httpOnly : true,     // httpOnly : http 통신일 때 허용?
     secret : 'secretkey', // secret : 암호와키는?
