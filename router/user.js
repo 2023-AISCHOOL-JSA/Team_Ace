@@ -67,6 +67,23 @@ router.get("/basket", function(request, response){
     });
 });
 
+// 장바구니에 상품을 넣는 우회하는 라우터
+router.post('/updatebasket', function(request,response){
+    let id = request.session.info.ID
+    let prd_no = request.session.detail.PRD_NO;
+    console.log(prd_no)
+    conn.connect();
+    let sql = "INSERT INTO BASKET (ID, PRD_NO) VALUES (?, ?);"
+    conn.query(sql, [id, prd_no], function(err, rows){
+        if(!err){
+            console.log(rows);
+        }
+        else{
+            console.log(err);
+        }
+    })
+    response.redirect('/user/basket')
+})
 router.get("/login", function(request, response){
     request.session.loginFlag = 1;
     response.redirect("/page/login");
@@ -314,6 +331,7 @@ router.post("/pay", function(request,response){
     });
     console.log(n_cnt);
     let ordered = request.body.selectedPrds;
+    console.log(request.body.selectedPrds);
     conn.connect();
     let sql = "select PRD_PRICE, DEL_PRICE, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL DEL_TIME DAY), '%y%m%d') AS M from PRD where PRD_NO IN (?)";
     conn.query(sql, [ordered], function(err, rows){
@@ -335,6 +353,7 @@ router.post("/pay", function(request,response){
             let mo = parseInt((deliverdDay%10000)/100);
             let da = deliverdDay%100;
             request.session.payInfo = {totalprice :price, del:deliverPrice, sum:price+deliverPrice, m:mo,d:da};
+            console.log(request.session.payInfo)
             response.render("pay", {payInfo: request.session.payInfo, info: request.session.info, payflag: '0'});
             
         } else {

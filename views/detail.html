@@ -17,7 +17,7 @@
         <!-- 상품 이미지 -->
         <div class="img-box">
             <!-- 메인 이미지 -->
-            <img class="main-img" src="/assets/img/BED.jpg">
+            <img class="main-img" src="{{detail.IMG_PATH}}">
             <!-- 서브이미지 -->
             <ul>
                 <li><img class="sub-img" src="/assets/img/BED.jpg"></li>
@@ -27,7 +27,7 @@
             </ul>
         </div>
         <div class="product_view">
-            <form action="" method="post">
+            <form method="post">
                 <h2>{{detail.PRD_NM}}</h2>
                 <!-- 테이블 -->
                 <div class="porduct_tb">
@@ -35,20 +35,20 @@
                         <tbody>
                             <tr>
                                 <th>판매가</th>
-                                <td class="price">129,000</td>
+                                <td class="price">{{detail.PRD_PRICE}}</td>
                             </tr>
                             <tr>
                                 <th>상품코드</th>
-                                <td>AB21513</td>
+                                <td>{{detail.PRD_NO}}</td>
                             </tr>
                             <tr>
                                 <th>제조사/공급사</th>
-                                <td>ACE / 침대조아</td>
+                                <td>{{detail.SELLER_CODE}}</td>
                             </tr>
                             <tr>
                                 <th>구매수량</th>
                                 <td>
-                                    <input type="number">
+                                    <input type="number" name="cnt[]" value="1">
                                 </td>
                             </tr>
                             <tr>
@@ -63,23 +63,26 @@
                             </tr>
                             <tr>
                                 <th>배송비</th>
-                                <td>무료배송</td>
+                                <td>{{detail.DEL_PRICE}}</td>
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td class="total">129,000원</td>
+                                <td class="total">{{detail.PRD_PRICE + detail.DEL_PRICE}}원</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div>
                     <!-- 버튼 -->
-                    <button class="product_btn">장바구니</button>
-                    <button class="product_btn">구매하기</button> <!-- submit -->
+                    {%if info != Null%}
+                    <button class="product_btn" formaction="/user/updatebasket">장바구니</button>
+                    <button class="product_btn" name="selectedPrds" value="{{detail.PRD_NO}}" type="submit" formaction="/user/pay">구매하기</button>
+                    <!-- submit -->
+                    {%endif%}
                 </div>
             </form>
         </div>
-    </div>
+        </div>
 
 
     <div class="product_table">
@@ -94,7 +97,7 @@
             <tbody>
                 <tr>
                     <th>품명 및 모델명</th>
-                    <td>프리미엄 디자인 ACE 침대</td>
+                    <td>{{detail.PRD_NM}}</td>
                     <th>인증/허가 사항</th>
                     <td>해당없음</td>
                 </tr>
@@ -102,7 +105,7 @@
                     <th>원산지</th>
                     <td>한국</td>
                     <th>제조자</th>
-                    <td>ACE</td>
+                    <td>{{detail.SELLER_CODE}}</td>
                 </tr>
                 <tr>
                     <th>소비자상담 관련 전화번호</th>

@@ -130,6 +130,10 @@ router.get('/', function (request, response) {
                         console.log(tpr);
                         console.log(bpl);
                         console.log(l);
+                        request.session.tpr = tpr;
+                        request.session.bpl = bpl;
+                        request.session.prc = prc;
+                        request.session.length = l;
                         console.log(request.session.basket[0]);
                         console.log(prd_size);
                         response.render('Main', {
@@ -201,7 +205,11 @@ router.get('/detail', function (request, response) {
         if(!err){
             request.session.detail = rows[0];
             console.log(rows);
-            response.render("detail", {detail: request.session.detail});
+            response.render("detail", {detail: request.session.detail, 
+                info : request.cookies.info,
+                basket: request.session.basket,
+                bpl: request.session.bpl, tpr: request.session.tpr,
+                prc: request.session.prc, length: request.session.length});
         }
         else{
             console.log(err);
@@ -539,5 +547,13 @@ router.post('/Search', function(request,response){
         }
 
     });
+})
+
+router.get('/recall', function(request, response){
+    response.render("recall")
+})
+
+router.get('/mypage', function(request, response){
+    response.render("mypage")
 })
 module.exports = router;

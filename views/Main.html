@@ -336,7 +336,7 @@
                         <div class="categories mb-3 pb-3">할인 상품</div>
                         <h3 class="banner-title">구매임박! 서두르세요</h3>
                         <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
-                        <a href="/page/detail" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
+                        <a href="/page/detail?PRD_NO={{sale[0].PRD_NO}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">
                           살펴보기</a>
                       </div>
                       <div class="img-wrapper col-md-5">
@@ -351,7 +351,7 @@
                         <div class="categories mb-3 pb-3">새로운 상품</div>
                         <h3 class="banner-title">따끈따끈한 새 상품!</h3>
                         <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
-                        <a href="/page/detail" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">shop
+                        <a href="/page/detail?PRD_NO={{new[0].PRD_NO}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">shop
                           collection</a>
                       </div>
                       <div class="img-wrapper col-md-5">
@@ -483,7 +483,7 @@
                           <use xlink:href="#heart"></use>
                         </svg></a>
                       <figure>
-                        <a href="/page/detail" title="Product Title">
+                        <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                           <img src="{{i.IMG_PATH}}" class="tab-image">
                         </a>
                       </figure>
@@ -620,7 +620,7 @@
                     <use xlink:href="#heart"></use>
                   </svg></a>
                 <figure>
-                  <a href="/page/detail" title="Product Title">
+                  <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                     <img src="{{i.IMG_PATH}}" class="tab-image">
                   </a>
                 </figure>
