@@ -269,7 +269,7 @@ router.post('/autoSearch', function(request,response){
     let sql = "";
     let val = [];
     if (autoSearch.length < 1){
-        if (as == 'best'){
+        if (as == 'b'){
             sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.PRD_DETAIL, C.CNT
                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_RP/COUNT(*) AS CNT
                             FROM PRD A, PRD_ST B
@@ -279,7 +279,7 @@ router.post('/autoSearch', function(request,response){
                     ORDER BY CNT DESC
                     LIMIT 20;`;
             val = []
-        } else if (as == 'sale'){
+        } else if (as == 's'){
             sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SALE
                      FROM (SELECT PRD_NO, PRD_NM, PRD_PRICE, PRD_SCORE, PRD_DETAIL, PRD_SALE
                              FROM PRD
@@ -288,7 +288,7 @@ router.post('/autoSearch', function(request,response){
                     ORDER BY PRD_SALE DESC
                     LIMIT 20;`;
             val = []
-        } else if (as == 'new'){
+        } else if (as == 'n'){
             sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SIGN
                      FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM, PRD_PRICE, PRD_DETAIL, PRD_SCORE
                              FROM PRD
@@ -299,7 +299,7 @@ router.post('/autoSearch', function(request,response){
             val = []
         }
     } else {
-        if (as == 'best'){
+        if (as == 'b'){
             sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.PRD_DETAIL, C.CNT
                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_RP/COUNT(*) AS CNT
                             FROM PRD A, PRD_ST B
@@ -310,7 +310,7 @@ router.post('/autoSearch', function(request,response){
                     ORDER BY CNT DESC
                     LIMIT 20;`;
             val = [autoSearch]
-        } else if (as == 'sale'){
+        } else if (as == 's'){
             sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SALE
                      FROM (SELECT PRD_NO, PRD_NM, PRD_PRICE, PRD_SCORE, PRD_DETAIL, PRD_SALE
                              FROM PRD
@@ -320,7 +320,7 @@ router.post('/autoSearch', function(request,response){
                     ORDER BY PRD_SALE DESC
                     LIMIT 20;`;
             val = [autoSearch]
-        } else if (as == 'new'){
+        } else if (as == 'n'){
             sql = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_DETAIL, A.PRD_SIGN
                      FROM (SELECT PRD_NO, PRD_SIGN, PRD_NM, PRD_PRICE, PRD_DETAIL, PRD_SCORE
                              FROM PRD
