@@ -313,62 +313,39 @@
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
-                <div class="offcanvas-body">
-                  <!-- 검색창 카테고리 옵션 -->
-                  <select class="filter-categories border-0 mb-0 me-5">
-                    <option>찾아보기</option>
-                    <option>침대</option>
-                    <option>의자</option>
-                    <option>가구</option>
-                  </select>
-
-                  <!-- 네비게이션 바 -->
-                  <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                    <li class="nav-item active">
-                      <a href="#" class="nav-link">베스트상품</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="#" class="nav-link">할인상품</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">구매후기</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#accessories" class="nav-link">Accessories</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown"
-                        aria-expanded="false">Pages</a>
-                      <ul class="dropdown-menu" aria-labelledby="pages">
-                        <li><a href="/assets/html/about.html" class="dropdown-item">About Us</a></li>
-                        <li><a href="/assets/html/shop.html" class="dropdown-item">Shop<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/single-product.html" class="dropdown-item">Single Product<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/cart.html" class="dropdown-item">Cart<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/checkout.html" class="dropdown-item">Checkout<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/blog.html" class="dropdown-item">Blog</a></li>
-                        <li><a href="/assets/html/single-post.html" class="dropdown-item">Single Post</a></li>
-                        <li><a href="/assets/html/styles.html" class="dropdown-item">Styles</a></li>
-                        <li><a href="/assets/html/contact.html" class="dropdown-item">Contact<span
-                              class="badge bg-success text-dark ms-2">PRO</span></a></li>
-                        <li><a href="/assets/html/thank-you.html" class="dropdown-item">Thank You</a></li>
-                      </ul>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#brand" class="nav-link">Brand</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#sale" class="nav-link">Sale</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#blog" class="nav-link">Blog</a>
-                    </li>
-                  </ul>
-
-                </div>
+                <form action="/page/autoSearch" method="post">
+                  <div class="offcanvas-body">
+                    <!-- 검색창 카테고리 옵션 -->
+                    <select class="filter-categories border-0 mb-0 me-5" name="autoSearch">
+                      <option value="">찾아보기</option>
+                      <option>침대</option>
+                      <option>의자</option>
+                      <option>가구</option>
+                      <option>옷장</option>
+                    </select>
+  
+                    <!-- 네비게이션 바 -->
+                    <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
+                      <li class="nav-item active">
+                        <button type="submit" class="nav-link" name="as" value="b">베스트 상품</button>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <button type="submit" class="nav-link" name="as" value="s">할인 상품</button>
+                      </li>
+                      <li class="nav-item">
+                        <button type="submit" class="nav-link" name="as" value="n">새 상품</button>
+                      </li>
+                      <li class="nav-item">
+                        <button type="submit" class="nav-link" name="as" value="review">구매후기</button>
+                      </li>
+                      <li class="nav-item">
+                        <button type="submit" class="nav-link" name="as" value="acce">Accessories</button>
+                      </li>
+                      
+                    </ul>
+  
+                  </div>
+                </form>
 
               </div>
 
@@ -426,10 +403,18 @@
             <div class="tabs-header d-flex justify-content-between border-bottom my-5">
               
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                {% if option.length > 0 %}
-                  <h4>"{{os.option}}+{{os.searching}}"에 대한 검색 결과</h4>
+                {% if os.searching == 'b' %}
+                  <h4>"BEST 상품" 검색 결과</h4>
+                {% elif os.searching == 'n' %}
+                  <h4>"NEW 상품" 검색 결과</h4>
+                {% elif os.searching == 's' %}
+                  <h4>"SALE 상품" 검색 결과</h4>
                 {% else %}
-                  <h4>"{{os.searching}}"에 대한 검색 결과</h4>
+                  {% if os.option.length > 0 %}
+                    <h4>"{{os.option}}+{{os.searching}}"에 대한 검색 결과</h4>
+                  {% else %}
+                    <h4>"{{os.searching}}"에 대한 검색 결과</h4>
+                  {% endif %}
                 {% endif %}
               </div>
               <nav>
