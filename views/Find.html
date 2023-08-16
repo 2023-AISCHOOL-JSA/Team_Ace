@@ -4,18 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/Find.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-    <form action="/user/findId" method="post">
-        name: <input name="name"><br>
-        phone: <input name="phone"><br>
-        <input type="submit" value="ID찾기">
-    </form>
-    <form action="/user/findPw" method="post">
-        name: <input name="name"><br>
-        phone: <input name="phone"><br>
-        id: <input name="id"><br>
-        <input type="submit" value="PW찾기">
-    </form>
+    <div id="header">회원가입시 등록한 이름,전화번호,ID를 입력하세요</div>
+    <hr>
+    <div id="bodyContain">
+        <div id="container">
+            <!-- ID찾기 -->
+            <div id="findId"> 
+                <div class="findText">아이디 찾기</div>
+                    <div class="userInput">
+                    <div id="findIdForm">
+                    <form action="/user/findId" method="post">
+                        <div class="name">  
+                            <span class="label">이름</span> 
+                            <input name="name">
+                        </div>
+                        <div class="number"> 
+                            <span class="label">휴대폰번호</span>
+                            <input name="phone">
+                        </div>
+                        
+                        <input type="submit" value="아이디 찾기">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- pw찾기 -->
+            <div id="findPw"> 
+                <div class="findText">비밀번호 찾기</div>
+                    <div class="userInput">
+                    <div id="findPwForm">
+                <form action="/user/findPw" method="post">
+                    <div class="name">  
+                        <span class="label">이름</span> 
+                        <input name="name">
+                    </div>
+                    <div class="number"> 
+                        <span class="label">휴대폰번호</span>
+                        <input name="phone">
+                    </div>
+                    <div id="id"> 
+                        <span class="label">아이디</span>
+                        <input name="id">
+                    </div>
+                    <input type="submit" value="비밀번호 찾기">
+                </form>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    
+  
+ 
+
+    
 </body>
 </html>
