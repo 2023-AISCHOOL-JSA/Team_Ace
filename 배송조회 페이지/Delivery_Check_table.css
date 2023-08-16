@@ -1,0 +1,59 @@
+body{
+    margin:0; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+#title{
+    height: 70px; background-color: #4682A9; width: 100%;
+    font-size: 50px; font-family: 'omyu_pretty'; color: whitesmoke;
+    display: flex; justify-content: center; align-items: center;
+}
+#delivery{
+    margin-top: 10px; margin-bottom: 10px; height: 200px; display: flex; justify-content: center; align-items: center;
+}
+#deliveryState{
+    border: 2px solid #4682A9; border-radius: 15px;
+    height: 100px; width: 1000px; display:flex; justify-content: center; align-items: center;
+    font-family: 'omyu_pretty'; font-size: 45px; text-align: center;
+}
+.product{
+    height: 100px; 
+    display: flex; justify-content:center; align-items: center;
+    font-family: 'omyu_pretty';
+}
+img{
+    position:relative; top: 0; left: 0; width: 100%; height: 100%;
+}
+#product{
+    border: 2px solid #4682A9; border-radius: 15px;  height: 100px; width: 1000px; display: flex; 
+}
+#productImage{
+    
+    width:100px;  margin: 10px; display: flex; justify-content: center; align-items: center; text-align: center;
+}
+#productName{
+    width:900px; margin:10px; margin-left: 50px;   display: flex; padding-left: 10%; align-items: center; font-size: 24px; 
+}
+#deliveryInfo{
+    margin-top: 20px; margin-bottom: 20px; border: 2px solid #4682A9; border-radius: 15px;
+    width: 1000px; height: 120px;  display:flex; justify-content: center; align-items: center; 
+    font-family: 'omyu_pretty'; font-size: 22px;
+}
+table{ 
+    width:600px; border-collapse: collapse; font-family: 'omyu_pretty'; height: 20px;
+}
+td{
+    padding: 3px;  column-width: 300px;
+}
+th{
+    font-size: 24px; background-color: #4682A9; color:whitesmoke;
+}
+#deliveryCheck{
+    height: auto;  display: flex; justify-content: center;
+}
+#deliveryCheck table{width: 1000px;}
+#deliveryCheck td{text-align: center; font-size: 22px;}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }

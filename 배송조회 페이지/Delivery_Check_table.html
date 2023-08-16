@@ -4,72 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body{
-            height:100vh; margin:0; display: flex; flex-direction: column; justify-content: center; align-items: center;}
-        #title{
-            height: 70px; background-color: #4682A9; width: 100%;
-            font-size: 35px; font-family: 'omyu_pretty'; color: whitesmoke;
-            display: flex; justify-content: center; align-items: center;
-        }
-        #delivery{
-            margin-top: 20px; margin-bottom: 20px; height: 200px; display: flex; justify-content: center; align-items: center;
-        }
-        #deliveryState{
-            border: 2px solid #4682A9; border-radius: 15px;
-            height: 100px; width: 600px; display:flex; justify-content: center; align-items: center;
-            font-family: 'omyu_pretty'; font-size: 40px; text-align: center;
-        }
-        .product{
-            height: 100px; 
-            display: flex; justify-content:center; align-items: center;
-            font-family: 'omyu_pretty';
-        }
-        img{
-            position:relative; top: 0; left: 0; width: 100%; height: 100%;
-        }
-        #product{
-            border: 2px solid #4682A9; border-radius: 15px;  height: 100px; width: 600px; display: flex; background-color: ;
-        }
-        #productImage{
-            
-            width:80px;  margin: 10px; display: flex; justify-content: center; align-items: center;
-        }
-        #productName{
-            width:400px; margin:10px; margin-left: 50px;   display: flex;  align-items: center; 
-        }
-        #deliveryInfo{
-            margin-top: 20px; margin-bottom: 20px; border: 2px solid #4682A9; border-radius: 15px;
-            width: 600px; height: 70px;  display:flex; justify-content: center; align-items: center; 
-            font-family: 'omyu_pretty';
-        }
-        table{
-            width:600px; border-collapse: collapse; font-family: 'omyu_pretty'; height: 20px;
-        }
-        td{
-            padding: 3px;  column-width: 300px;
-        }
-        th{
-            font-size: large; background-color: #4682A9; color:whitesmoke;
-        }
-        #deliveryCheck{
-            height: 1000px;  display: flex; justify-content: center;
-        }
-        #deliveryCheck td{text-align: center;}
-
-        @font-face {
-            font-family: 'omyu_pretty';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-            }
-    </style>
+    <link rel="stylesheet" href="./Delivery_Check_table.css">
+    <script src="./Delivery_Check_table.js"></script>
 
 </head>
 <body>
     <div id="title">배 송 조 회</div>
     <div id="delivery">
-        <div id="deliveryState" > 고객님의 상품이 배송 중 입니다 </div>
+        <div id="deliveryState">고객님의 상품이 배송 중 입니다</div>
     </div>  
     <!-- 주문 상품 -->
     <div class="product">
@@ -124,25 +66,5 @@
             </tr>
         </table>
     </div>
-
-<script>
-
-/*tr 태그 안에 td가 공백이면 상품준비중 공백이 아니면 배송 중  */
-
-const  deliveryState = document.getElementById('deliveryState')
-const tableContent = document.getElementById('deliveryCheck').innerHTML
-
-
-if(tableContent.includes('배달완료')){
-    deliveryState.innerText =  '고객님의 상품이 배송 완료되었습니다'
-}
-else if(tableContent.includes('배달중')){
-    deliveryState.innerText =  '고객님의 상품이 배송 중입니다'
-}
-
-
-
-
-</script>
 </body>
 </html>
