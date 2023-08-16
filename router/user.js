@@ -39,6 +39,7 @@ router.get("/basket", function(request, response){
     console.log("장바구니");
     // let id = request.session.info.ID;
     // userId는 로그인 성공 시 저장
+    
     let id = request.session.info.ID;
     console.log(request.session.info.ID);
     console.log(id);

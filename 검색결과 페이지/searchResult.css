@@ -1,29 +1,29 @@
-html,body{height: 100%; font-family: 'omyu_pretty';}
+html,body{height: 100%; font-family: 'Pretendard-Regular';}
 
 #nav{ width: 100%; height:10%;background-color: aliceblue;}
 
 #top{width: 100%; display:flex; justify-content: space-around;}
 #result{margin-left: 20%;}
-.top{font-family: 'omyu_pretty'; font-size:30px;}
+.top{font-family: 'Pretendard-Regular'; font-size:24px; box-sizing: border-box; padding: 5px 10px;}
 .orderBy{border-radius: 10px; background-color: #4682A9; color: azure;}
 #select{display: flex; width: 24%;justify-content: space-around;}
 
 #productArrCon{width: 100%; height:40%; display: flex;justify-content: center;margin-top: 4%;}
-#productArr{ width: 90%; height:100%; display: flex; justify-content: space-around;}
-#productBox{width: 15%; height: 100%; display: flex; justify-content: center; align-items: center;flex-direction: column;background-color: aliceblue;border-radius: 10px;box-shadow: 5px 5px 5px 5px gray; }
+#productArr{ width: 80%; height:100%; display: flex; justify-content: space-around;}
+#productBox{width: 15%; height: 100%; display: flex; justify-content: center; align-items: center;flex-direction: column;background-color: white;border-radius: 10px; border: 1px solid; }
 #productPhoto{ width:95%; height:60%}
 img{position:relative; top: 0; left: 0; width: 100%; height: 100%;}
 #productInfo{width: 95%; height:33%;}
-#name{width: 100%; height: 30%; font-size:28px;}
-#price{width: 100%; height: 40%;font-size:35px; text-align: end;}
+#name{width: 100%; height: 30%; font-size:22px;}
+#price{width: 100%; height: 40%;font-size:24px; text-align: end;}
 #star{width: 100%; height: 25%;}
 i {color: #4682A9;}
 
 
 
 @font-face {
-    font-family: 'omyu_pretty';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
     font-style: normal;
-    }
+}
