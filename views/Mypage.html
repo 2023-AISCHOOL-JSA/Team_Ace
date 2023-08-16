@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mypage</title>
+    <link rel="stylesheet" href="/assets/css/Mypage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/Mypage.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="tabs">
+            <li class="tab-link current" data-tab="tab-1">주문목록</li>
+            <li class="tab-link" data-tab="tab-2">환불/수거현황</li>
+            <li class="tab-link" data-tab="tab-3">회원정보수정</li>
+            <li class="tab-link" data-tab="tab-4">리뷰관리</li>
+        </ul>
+
+<!-- 주문목록 tap -->
+        <div id="tab-1" class="tab-content current">
+            <!-- 상품 목록 1개 -->
+            <div class="product">
+                <div id="product">
+                    <div id="productImage"><img src="../img/img.png" alt="img"></div>
+                    <div id="productName">
+                        <div id="orderNum">주문번호</div>
+                        <div id="orderProductName">1인 가구를 위한 푹신한 블루 체어 </div>
+                    </div>
+                    <div id="deliveryCheck"> <button class="Btn" onclick="location.href='#'">배송조회</button></div> <!-- 배송조회 버튼 클릭 시 배송조회 페이지로 넘어가기-->
+                    <div id="review"> <button class="Btn" id="reviewBtn">리뷰작성</button></div>
+                    <div id="reviewToggle">
+                        <span onclick="this.parentElement.style.display='none'" class="close">닫기</span> 
+                        <form action="/examples/media/action_target.php" method="get"></form>
+                        <div class="rating">
+                            <i class="rating__star fas fa-star"></i>
+                            <i class="rating__star fas fa-star"></i>
+                            <i class="rating__star fas fa-star"></i>
+                            <i class="rating__star fas fa-star"></i>
+                            <i class="rating__star fas fa-star"></i>
+
+                        </div>
+                            <textarea id="reviewText" name="opinion" cols="44" rows="3.5" ></textarea>
+                            <input id="reviewButton"  type="submit" value="리뷰 남기기">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- 환불/수거 현황 Tab -->
+        <div id="tab-2" class="tab-content">
+            <h1>수거 현황</h1> 
+            <table id="payBack">
+                <tr>
+                    <th >상품 주문번호</th>
+                    <th>상품명</th>
+                    <th>환불 금액</th>
+                    <th>진행 상태</th>
+                </tr>    
+                <tr>
+                    <td>202308090101</td>
+                    <td>지금까지 이런 가구는 없었다</td>
+                    <td>50000</td>
+                    <td>수거중</td>
+                </tr> 
+
+
+            </table>
+
+        </div>
+
+        
+<!-- 회원정보수정 tap -->
+        <div id="tab-3" class="tab-content">
+            <form action="#" name="#" method="post">
+                <h1>내 정보 수정하기</h1> <hr>
+                <h2>회원정보확인</h2>
+                <table id="infoCheck">
+                    <tr>
+                        <td>아이디</td>
+                        <td><input type="text" class="infoChange"></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td><input type="text" class="infoChange"></td>
+                    </tr>
+                </table>
+                <div id="hideBox"><h5 id="errMsg">회원 정보가 일치하지 않습니다. 확인 후 재입력해 주시길 바랍니다</h5></div>
+
+                
+                <h2>회원정보수정</h2>
+                <table id="infoChange">
+                    <tr>
+                        <td>신규비밀번호</td>
+                        <td><input type="text" class="infoChange"></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호확인</td>
+                        <td><input type="text" class="infoChange"></td>
+                    </tr>
+                    <tr>
+                        <td>휴대폰 번호</td>
+                        <td><input type="text" class="infoChange"></td>
+                    </tr>
+                    <tr>
+                        <td>배송지</td>
+                        <td><input type="text" class="infoChange"></td>
+                    </tr>
+                </table>
+                <div id="changeSubmitBox">
+                    <input id="changeSubmit" type="submit" value="수정완료">
+                </div>
+            </form>
+        </div>
+
+<!-- 리뷰 관리 Tab -->
+        <div id="tab-4" class="tab-content">
+            <h1>내가 작성한 리뷰</h1>
+            <div class="reviewBox">
+                <div id="reviewBox">
+                    <table id="reviewTable">
+                        <tr>
+                            <th>주문일자</th>
+                            <th>주문번호</th>
+                            <th>상품명</th>
+                            <th>별점</th>
+                            <th>리뷰</th>
+                        </tr>
+
+                        <tr>
+                            <td style="width:5%">20230809</td>
+                            <td style="width:10%">202308091010</td>
+                            <td style="width:18%">지금까지 이런 가구는 없었다</td>
+                            <td style="width:8%"><i class="rating__star fas fa-star"></i>
+                                <i class="rating__star fas fa-star"></i>
+                                <i class="rating__star fas fa-star"></i>
+                                <i class="rating__star fas fa-star"></i>
+                                <i class="rating__star fas fa-star"></i></td>
+                            <td style=width:30%></td>
+                            <td style=width:5%> <button class="reviewBtn" id='reviewChange'>수정</button></td>
+                            <td style=width:5%> <button class="reviewBtn" id='reviewDelete'>삭제</button></td>
+                        </tr>
+
+                    </table>
+                    
+                
+                    
+                    
+                </div>
+            </div>
+
+
+        </div>
+            
+    </div>
+</body>
+
+</html>

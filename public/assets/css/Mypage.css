@@ -1,0 +1,173 @@
+body {
+    margin-top: 100px;
+    font-family: 'omyu_pretty';
+    line-height: 1.6;
+    
+}
+
+.container {
+    background-color: #91C8E4;
+    width: 80%;
+    height: 700px;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+ul.tabs {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font-size: 25px;
+}
+
+ul.tabs li {
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.tabs li.current {
+    background: #F6F4EB;
+    color: #222;
+    border-top-left-radius:  10px;
+}
+
+.tab-content {
+    display: none;
+    background: #F6F4EB;
+    padding: 15px;
+}
+
+/* 주문목록Tab */
+.tab-content.current {
+    display: inherit;
+}
+#product{
+    border: 2px solid #4682A9; border-radius: 15px;  height: 100px; display: flex; margin-bottom: 5px;
+}
+#productImage{
+    
+    width:80px; margin: 10px 10px 10px 60px; display: flex; justify-content: center; align-items: center;
+}
+img{
+    position:relative; top: 0; left: 0; width: 100%; height: 100%;
+}
+#productName{
+    width:400px; margin:10px 10px 10px 20px; display: flex;  align-items: center; 
+}
+#orderNum{
+    width: 30%; font-size: 22px;
+}
+#orderProductName{
+    width:70%; font-size: 22px;
+}
+#deliveryCheck{
+    width:80px; margin: 10px 10px 10px 60px; display: flex; justify-content: center; align-items: center;
+}
+.Btn{
+    height: 40px; font-family: 'omyu_pretty'; width: 80px; border-color: #4682A9; border-radius: 10px; font-size: 20px; 
+}
+#review{
+    width:80px; margin: 10px 10px 10px 20px; display: flex; justify-content: center; align-items: center;
+}
+#reviewToggle{
+    display: none; position: absolute; border: 2px solid; border-radius: 3px; width: 300px; height: 120px; left: 63%; background-color: whitesmoke;
+
+}
+.close {
+    float: right;
+    cursor: pointer; content: "\00d7"; font-size:15pt;line-height:30px;
+}
+.rating {
+    width: 180px;
+}
+.rating__star.active {
+    color: yellow;
+}
+#reviewText{
+    font-family: 'omyu_pretty'; border: none ; resize: none;
+}
+#reviewButton{
+    font-family: 'omyu_pretty'; margin-left: 76%; 
+}
+
+/* 환불,수거 현황Tab */
+#payBack {
+    width: 100%; border-collapse: collapse; table-layout: fixed;
+} 
+
+#payBack th{
+    background-color:#D8D9DA; height: 40px; font-size: 24px;
+}
+
+#payBack td{
+    border-bottom: 1.5px solid gray; text-align: center; height: 80px; font-size: 22px;
+}
+
+
+/* 회원정보수정Tab */
+h1 {
+    text-align: center; font-size: 35px;
+}
+
+#infoCheck{
+    display:flex; justify-content: center; font-size: 24px;
+}
+#infoChange{
+    display: flex; justify-content: center; font-size: 24px;
+}
+#infoCheck td{ width: 120px;}
+#infoChange td {
+    width: 120px; text-align: left; height:30px;
+}
+#hideBox{
+    width: 100%;height: 50px;  display: flex; justify-content: center; align-items: center;
+}
+#errMsg{
+    color: red; display: none; 
+}
+.infoChange {
+    border: 2px solid; border-radius: 5px; 
+}
+#changeSubmitBox{
+    display: flex; justify-content: center; margin-top: 50px;
+}
+#changeSubmit{
+    font-family: 'omyu_pretty';
+    border:0; background-color:#D8D9DA; font-size: 30px; width: 180px; border-radius: 10px;
+    
+}
+/* 리뷰관리 Tab */
+#reviewBox{
+    border-top: 1px dashed  #4682A9; border-bottom: 1px dashed  #4682A9; height: 100px; display: flex;   margin-bottom: 5px; text-align: center;
+}
+#reviewTable {width:100%; height: 50%;}
+#reviewTable th{height:30px; font-size: 24px;}
+#reviewTable td{height:50px; text-align: center; font-size: 15px; border-collapse: collapse;font-size: 22px;}
+.reviewBtn{
+    height: 30px; font-family: 'omyu_pretty'; width: 50px; border-color: #4682A9; border-radius: 5px; font-size: 20px;
+}
+
+td>i {
+    color: #4682A9; font-size: 0.1px;
+}
+
+
+
+/* 탭 컨텐츠 숨기기 */
+.tab-content {
+    display: none;
+}
+
+/* 현재 탭 컨텐츠만 보이기 */
+.current {
+    display: block;
+}
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }

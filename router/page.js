@@ -207,6 +207,7 @@ router.get('/selectOne', function (request, response) {
 });
 
 router.get('/basket', function (request, response) {
+    console.log(request.session.basket)
     response.render('basket', { basket: request.session.basket });
 });
 
@@ -381,5 +382,13 @@ router.post('/Search', function(request,response){
         }
 
     });
+})
+
+router.get('/recall', function(request,response){
+    response.render('recall')
+})
+
+router.get('/mypage', function(request, response){
+    response.render('mypage')
 })
 module.exports = router;
