@@ -936,8 +936,8 @@ ul.tabs li.current {
   border-top-left-radius:  10px;
 }
 
-.tab-content {
-  /* display: none; */
+.container>.tab-content {
+  display: none;
   background: #F6F4EB;
   padding: 15px;
 }
