@@ -73,7 +73,6 @@ router.get('/', function (request, response) {
 
     }
     const query3 = () => {
-        console.log("실행1")
         let sql3 = `SELECT B.IMG_PATH, A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_SALE
                       FROM (SELECT PRD_NO, PRD_NM, PRD_PRICE, PRD_SCORE, PRD_SALE
                               FROM PRD
@@ -83,7 +82,6 @@ router.get('/', function (request, response) {
                      LIMIT 20;`;
                      
         conn.query(sql3, function (err, rows) {
-            console.log("실행2")
             console.log(rows);
             if (!err) {
                 request.session.sale = rows;
@@ -95,9 +93,6 @@ router.get('/', function (request, response) {
     }
     const query4 = () => {
         request.session.payflag = 0;
-        console.log("장바구니?????");
-        // let id = request.session.info.ID;
-        // userId는 로그인 성공 시 저장
         let prc = [];
         let tpr = 0;
         let bpl = [];
@@ -158,7 +153,7 @@ router.get('/', function (request, response) {
         }
     }
 
-    query1()
+    query1();
 
 });
 
@@ -517,10 +512,14 @@ router.post('/Search', function(request,response){
     let searching = request.body.searching;
     console.log(option);
     console.log(searching);
+    
     conn.connect();
     let sql = "";
     let val = [];
     if (option.length < 1){
+        // if (searching.length<1){
+        //     response.render("Main", {info: request.cookies.info});
+        // };
         sql = `SELECT *
                  FROM PRD A JOIN PRD_IMG B
                    ON (A.PRD_NO = B.PRD_NO)

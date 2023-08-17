@@ -192,10 +192,10 @@
                 <input type="text" class="form-control border-0 bg-transparent" name="searching" placeholder="검색어를 입력해주세요." />
               </div>
               <div class="col-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" >
+                <button type="submit" style="border: 0px; background-color:white;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" >
                   <path fill="currentColor"
                   d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"  />
-                </svg>
+                </svg></button>
               </div>
             </div>
           </form>
@@ -287,12 +287,12 @@
                     <li class="nav-item">
                       <button type="submit" class="nav-link" name="as" value="n">새 상품</button>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                       <button type="submit" class="nav-link" name="as" value="review">구매후기</button>
                     </li>
                     <li class="nav-item">
                       <button type="submit" class="nav-link" name="as" value="acce">Accessories</button>
-                    </li>
+                    </li> -->
                     
                   </ul>
 
@@ -522,7 +522,7 @@
                             </button>
                           </span>
                         </div> -->
-                        <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                        <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
                       </div>
                     </div>
                   </div>
@@ -584,7 +584,7 @@
                   </svg> {{i.PRD_SCORE}}</span>
                 <span class="price">{{i.PRD_PRICE}}￦</span>
                 <div class="d-flex align-items-center justify-content-between">
-                  <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                  <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}&pr=1" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
                 </div>
               </div>
               {%- endfor %}
@@ -638,7 +638,7 @@
                   </svg> {{i.PRD_SCORE}}</span>
                 <span class="price">{{i.PRD_PRICE}}￦</span>
                 <div class="d-flex align-items-center justify-content-between">
-                  <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                  <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}%pr=2" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
                 </div>
               </div>
               {%- endfor %}
@@ -805,6 +805,12 @@
     crossorigin="anonymous"></script>
   <script src="/assets/js/plugins.js"></script>
   <script src="/assets/js/script.js"></script>
+  {% if pr == 1 %}
+    <script> const point2 = document.querySelectorAll('.products-carousel{{pr}}')[0].offsetTop;
+      window.scrollBy({left:0, top:point2-550})
+    </script>
+  {% endif %}
+
   {% if ps != Null %}
     <script> const point = document.querySelectorAll('#best_prd')[0].offsetTop;
       window.scrollBy({left:0, top:point-550})
