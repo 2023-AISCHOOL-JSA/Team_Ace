@@ -989,7 +989,7 @@ ul.tabs li.current {
   color: yellow;
 }
 #reviewText{
-  font-family: 'omyu_pretty'; border: none ; resize: none;
+  font-family: 'omyu_pretty'; border: none ; resize: none; width: 295px;
 }
 #reviewButton{
   font-family: 'omyu_pretty'; margin-left: 76%; 
