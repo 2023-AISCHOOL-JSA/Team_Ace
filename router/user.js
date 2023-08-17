@@ -397,8 +397,18 @@ router.post("/pay_c", function(request,response){
     // });
 });
 
-router.post("/cart", function(request,response){
-
+router.post("/collection", function(request,response){
+    conn.connect()
+    let id = request.session.info.ID
+    let sql = 'SELECT * FROM PRD A JOIN `ORDER` B ON A.PRD_NO = B.PRD_NO WHERE ID=?;'
+    conn.query(sql, id, function(err, rows){
+        if(!err){
+            request.session.order = rows
+        }
+        else {
+            
+        }
+    })
 })
 
 module.exports = router;

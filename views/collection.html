@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>basket</title>
-    <link rel="stylesheet" href="/assets/css/basket.css">
+    <link rel="stylesheet" href="/assets/css/collection.css">
 </head>
 
 <body>
@@ -17,12 +17,12 @@
     </header>
     <!-- 섹션 -->
     <section class="cart">
-        <form action="/user/coll" method="post">
+        <form action="/user/recall" method="post">
             <table class="cart__list">
                 <!-- 테이블 헤드 -->
                 <thead>
                     <tr>
-                        <td><input type="checkbox">전체선택</td>
+                        <td><input type="checkbox" class="cart_checkbox">전체선택</td>
                         <td colspan="2">상품정보</td>
                         <td>옵션</td>
                         <td>상품금액</td>
@@ -32,9 +32,9 @@
                 </thead>
                 <!-- 테이블 바디 -->
                 <tbody>
-                    {% for item in basket -%}
+                    {% for item in order -%}
                     <tr class="cart__list__detail">
-                        <td><input type="checkbox" name="selectedPrds" value={{item.PRD_NO}}></td>
+                        <td><input type="checkbox" name="selectedPrds" value={{item.PRD_NO}} class="cart_checkbox"></td>
                         <!-- 상품이미지 -->
                         <td><a href=""><img src="{{item.IMG_PATH}}"></a></td>
                         <td>
@@ -43,7 +43,7 @@
                         </td>
                         <td>
                             <span>수량</span>
-                            <select name="cnt">
+                            <select name="cnt" class="cart_cnt">
                                 <option>0</option>
                                 <option>1</option>
                                 <option>2</option>
@@ -68,8 +68,7 @@
         </form>
     </section>
     <!-- js연결 -->
-    <script src="/assets/js/basket.js"></script>
-    <script src="/assets/js/basket2.js"></script>
+    <script src="/assets/js/collection.js"></script>
 </body>
 
 </html>
