@@ -48,11 +48,27 @@ table {
 
 thead {
     font-weight: bold;
+    font-size: 18px;
 }
 
 td {
     padding: 15px 0px;
     border-bottom: 1px solid lightgrey;
+}
+
+.cart__list__detail {
+    font-size: 18px;
+}
+
+.cart_checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.cart_cnt{
+    width: 60px;
+    height: 40px;
+    font-size: 20px;
 }
 
 .cart__list__optionbtn {

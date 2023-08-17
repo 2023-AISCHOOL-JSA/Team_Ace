@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detail</title>
+    <link rel="stylesheet" href="/assets/css/detail.css">
+    <script src="/assets/js/detail.js"></script>
+    
+</head>
+
+<body>
+    {% extends "Header.html" %}
+    {% block content %}
+    <div class="body_div">
+        <!-- 상품 이미지 -->
+        <div class="img-box">
+            <!-- 메인 이미지 -->
+            <img class="main-img" src="{{detail.IMG_PATH}}">
+            <!-- 서브이미지 -->
+            <ul>
+                <li><img class="sub-img" src="/assets/img/BED.jpg"></li>
+                <li><img class="sub-img" src="/assets/img/BED2.jpg"></li>
+                <li><img class="sub-img" src="/assets/img/BED3.jpg"></li>
+                <li><img class="sub-img" src="/assets/img/ACE.jpg"></li>
+            </ul>
+        </div>
+        <div class="product_view">
+            <!-- <form action="/user/basket" method="get"> -->
+            <h2>{{detail.PRD_NM}}</h2>
+            <!-- 테이블 -->
+            <div class="porduct_tb">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>판매가</th>
+                            <td class="price">{{detail.PRD_PRICE}}</td>
+                        </tr>
+                        <tr>
+                            <th>상품코드</th>
+                            <td>{{detail.PRD_NO}}</td>
+                        </tr>
+                        <tr>
+                            <th>제조사/공급사</th>
+                            <td>{{detail.SELLER_CODE}}</td>
+                        </tr>
+                        <tr>
+                            <th>구매수량</th>
+                            <td>
+                                <input type="number">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>옵션선택</th>
+                            <td>
+                                <select>
+                                    <option>기본</option>
+                                    <option>프리미엄</option>
+                                    <option>으아아아</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>배송비</th>
+                            <td>{{detail.DEL_PRICE}}</td>
+                        </tr>
+                        <tr>
+                            <th>결제금액</th>
+                            <td class="total">{{detail.PRD_PRICE + detail.DEL_PRICE}}원</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <!-- 버튼 -->
+                {%if info != Null%}
+                <button class="product_btn" onclick="location.href='/user/updatebasket'" type="submit">장바구니</button>
+                <button class="product_btn">구매하기</button> <!-- submit -->
+                {%endif%}
+            </div>
+            <!-- </form> -->
+        </div>
+        </div>
+
+
+    <div class="product_table">
+        <h4>필수 표기정보</h4>
+        <table>
+            <colgroup>
+                <col width="150px">
+                <col width="300px">
+                <col width="150px">
+                <col width="*">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>품명 및 모델명</th>
+                    <td>{{detail.PRD_NM}}</td>
+                    <th>인증/허가 사항</th>
+                    <td>해당없음</td>
+                </tr>
+                <tr>
+                    <th>원산지</th>
+                    <td>한국</td>
+                    <th>제조자</th>
+                    <td>{{detail.SELLER_CODE}}</td>
+                </tr>
+                <tr>
+                    <th>소비자상담 관련 전화번호</th>
+                    <td>5959-8282</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 제품 상세 이미지 -->
+    <div class="detail_img">
+        <div class="product_img">
+            <img src="/assets/img/BED.jpg" alt="">
+        </div>
+        <div class="product_img">
+            <img src="/assets/img//BED2.jpg" alt="">
+        </div>
+        <div class="product_img">
+            <img src="/assets/img//BED3.jpg" alt="">
+        </div>
+    </div>
+</body>
+{% endblock %}
+
+</html>

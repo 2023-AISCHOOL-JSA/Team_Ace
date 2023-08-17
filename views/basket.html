@@ -22,7 +22,7 @@
                 <!-- 테이블 헤드 -->
                 <thead>
                     <tr>
-                        <td><input type="checkbox">전체선택</td>
+                        <td><input type="checkbox" class="cart_checkbox">전체선택</td>
                         <td colspan="2">상품정보</td>
                         <td>옵션</td>
                         <td>상품금액</td>
@@ -34,7 +34,7 @@
                 <tbody>
                     {% for item in basket -%}
                     <tr class="cart__list__detail">
-                        <td><input type="checkbox" name="selectedPrds" value={{item.PRD_NO}}></td>
+                        <td><input type="checkbox" name="selectedPrds" value={{item.PRD_NO}} class="cart_checkbox"></td>
                         <!-- 상품이미지 -->
                         <td><a href=""><img src="{{item.IMG_PATH}}"></a></td>
                         <td>
@@ -43,7 +43,7 @@
                         </td>
                         <td>
                             <span>수량</span>
-                            <select name="cnt">
+                            <select name="cnt" class="cart_cnt">
                                 <option>0</option>
                                 <option>1</option>
                                 <option>2</option>
