@@ -603,7 +603,7 @@ router.get('/coll', function(request, response){
 });
 
 router.get('/mypage', function(request, response){
-    response.render("mypage", {info: request.cookies.info,
+    response.render("mypage", {info: request.cookies.info, basket: request.session.basket, order: request.session.order,
              p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size})
 })
 

@@ -96,7 +96,7 @@
       </symbol>
     </defs>
   </svg>
-
+  
   <div class="preloader-wrapper">
     <div class="preloader">
     </div>
@@ -108,32 +108,32 @@
     </div>
     <div class="offcanvas-body" style="overflow: scroll;">
       <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">장바구니</span>
           <span class="badge bg-primary rounded-pill">{{length}}</span>
-        </h4>
+        </h3>
         <ul class="list-group mb-3">
-          {% for i in tpr -%}
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h4 class="my-0">{{basket[i].PRD_NM}}</h4>
-              <small class="text-body-secondary">{{basket[i].PRD_DETAIL}}</small>
-            </div>
-            <span class="text-body-secondary">{{prc[i]}}￦</span>
-          </li>
-          {%- endfor%}
-          <li class="list-group-item d-flex justify-content-between">
-            {% if info != Null %}
-            <span>Total (KOR)</span>
-            <strong>{{tpr}}￦</strong>
-            {% else %}
-            <span>로그인 해주세요!</span>
-            {% endif %}
-          </li>
+            {% for i in arr -%}
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h4 class="my-0">{{basket[i].PRD_NM}}</h4>
+                <small class="text-body-secondary">{{basket[i].PRD_DETAIL}}</small>
+              </div>
+              <span class="text-body-secondary">{{p[i]}}￦</span>
+            </li>
+            {%- endfor%}
+            <li class="list-group-item d-flex justify-content-between">
+              {% if info != Null %}
+                <span>Total (KOR)</span>
+                <strong>{{tp}}￦</strong>
+              {% else %}
+                <span>로그인 해주세요!</span>
+              {% endif %}
+            </li>
         </ul>
-
-        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니
-          보기</button>
+        {% if info.ID != Null %}
+        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니 보기</button>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -174,30 +174,30 @@
 
         <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block">
           <form id="search-form" class="text-center" action="/page/Search" method="post">
-            <div class="search-bar row bg-light p-2 my-2 rounded-4">
-              <div class="col-md-4 d-none d-md-block">
-                <!-- 검색창 옵션 -->
-                <select class="form-select border-0 bg-transparent" name="option">
-                  <option>카테고리 선택</option>
-                  <option>침대</option>
-                  <option>의자</option>
-                  <option>책상</option>
-                </select>
-              </div>
-              <div class="col-11 col-md-7">
+          <div class="search-bar row bg-light p-2 my-2 rounded-4">
+            <div class="col-md-4 d-none d-md-block">
+              <!-- 검색창 옵션 -->
+              <select class="form-select border-0 bg-transparent" name="option" style="height: 37px;">
+                <option value="">전체</option>
+                <option>침대</option>
+                <option>의자</option>
+                <option>책상</option>
+                <option>옷장</option>
+              </select>
+            </div>
+            <div class="col-11 col-md-7">
                 <!-- 검색창 -->
-                <input type="text" class="form-control border-0 bg-transparent" name="searching"
-                  placeholder="검색어를 입력해주세요." />
+                <input type="text" class="form-control border-0 bg-transparent" name="searching" placeholder="검색어를 입력해주세요." />
               </div>
               <div class="col-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <button type="submit" style="border: 0px; background-color:white;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" >
                   <path fill="currentColor"
-                    d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
-                </svg>
+                  d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"  />
+                </svg></button>
               </div>
             </div>
           </form>
-        </div>
+          </div>
 
         <div
           class="col-sm-8 col-lg-4 d-flex justify-content-end gap-5 align-items-center mt-4 mt-sm-0 justify-content-center justify-content-sm-end">
@@ -207,53 +207,30 @@
 
           <!-- 헤더 아이콘  -->
           <ul class="d-flex justify-content-end list-unstyled m-0">
-            {%if info != Null %}
+            {%if info.ID != Null %}
             {%if info.ID == 'admin' %}
-            <li>
+            <li class="nav-item active h_icon">
               <p>관리자님 환영합니다!</p>
-              <a href="/user/selectAll">회원 전체 보기</a><br>
-              <a href="/user/Logout">로그아웃</a><br>
+            </li>
+            <li>
+              <a href="/user/selectAll">회원 전체 보기</a>
+            </li>
+            <li>
+              <a href="/user/Logout"><img src="/assets/img/로그아웃.png"><p>로그아웃</p></a>
             </li>
             {%else %}
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#cart"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="/user/Logout"><img src="/assets/img/로그아웃.png" width="48px" height="48px"><p>로그아웃</p></a><br>
+            
+            <li class="nav-item active h_icon">
+              <a href="/user/Logout"><img src="/assets/img/로그아웃.png"><p>로그아웃</p></a>
             </li>
             {%endif%}
             {%else %}
             <li class="nav-item active h_icon">
-              <a href="/page/Join"><img src="/assets/img/회원가입.png">
-                <p>회원 가입</p>
-              </a>
+              <a href="/page/Join"><img src="/assets/img/회원가입.png"><p>회원 가입</p></a>
             </li>
 
             <li class="nav-item active h_icon">
-              <a href="/user/Login"><img src="/assets/img/로그인.png">
-                <p>로그인</p>
-              </a>
+              <a href="/user/Login"><img src="/assets/img/로그인.png"><p>로그인</p></a>
             </li>
             {%endif%}
           </ul>
@@ -262,9 +239,10 @@
             <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
               <span class="fs-6 text-muted dropdown-toggle">장바구니</span>
-              <h5 class="mb-0"><span class="cart-total"> {{tpr}}원</span></h5>
+              <h5 class="mb-0"><span class="cart-total">{{tp}}원</span></h5>
             </button>
           </div>
+
         </div>
       </div>
       <!-- 헤더 -->
@@ -285,13 +263,15 @@
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
+                <form action="/page/autoSearch" method="post">
                 <div class="offcanvas-body">
                   <!-- 검색창 카테고리 옵션 -->
-                  <select class="filter-categories border-0 mb-0 me-5">
-                    <option>찾아보기</option>
+                  <select class="filter-categories border-0 mb-0 me-5" name="autoSearch">
+                    <option value="">찾아보기</option>
                     <option>침대</option>
                     <option>의자</option>
                     <option>가구</option>
+                    <option>옷장</option>
                   </select>
 
                   <!-- 네비게이션 바 -->
@@ -305,8 +285,17 @@
                     <li class="nav-item">
                       <button type="submit" class="nav-link" name="as" value="n">새 상품</button>
                     </li>
-                </div>
+                    <!-- <li class="nav-item">
+                      <button type="submit" class="nav-link" name="as" value="review">구매후기</button>
+                    </li>
+                    <li class="nav-item">
+                      <button type="submit" class="nav-link" name="as" value="acce">Accessories</button>
+                    </li> -->
+                    
+                  </ul>
 
+                </div>
+              </form>
               </div>
 
             </nav>
