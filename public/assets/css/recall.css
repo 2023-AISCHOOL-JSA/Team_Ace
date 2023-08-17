@@ -10,3 +10,4 @@ td, th{border-bottom: 1px solid #222; font-size: 20px;}
 .button-container button{background-color: skyblue; font-size: 20px;  margin: 20px 170px 1700px; width: 200px; height: 50px;}
 .inputBox{width: 300px;}
 textarea{font-size: 20px;}
+.custom-date {width: 500px; height: 50px}
