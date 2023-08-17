@@ -108,42 +108,34 @@
     <div class="offcanvas-header justify-content-center">
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
+    <div class="offcanvas-body" style="overflow: scroll;">
       <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">장바구니</span>
-          <span class="badge bg-primary rounded-pill">3</span>
-        </h4>
+          <span class="badge bg-primary rounded-pill">{{length}}</span>
+        </h3>
         <ul class="list-group mb-3">
+            {% for i in arr -%}
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h6 class="my-0">Growers cider</h6>
-                <small class="text-body-secondary">Brief description</small>
+                <h4 class="my-0">{{basket[i].PRD_NM}}</h4>
+                <small class="text-body-secondary">{{basket[i].PRD_DETAIL}}</small>
               </div>
-              <span class="text-body-secondary">$12</span>
+              <span class="text-body-secondary">{{p[i]}}￦</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Fresh grapes</h6>
-                <small class="text-body-secondary">Brief description</small>
-              </div>
-              <span class="text-body-secondary">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Heinz tomato ketchup</h6>
-                <small class="text-body-secondary">Brief description</small>
-              </div>
-              <span class="text-body-secondary">$5</span>
-            </li>
+            {%- endfor%}
             <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
+              {% if info != Null %}
+                <span>Total (KOR)</span>
+                <strong>{{tp}}￦</strong>
+              {% else %}
+                <span>로그인 해주세요!</span>
+              {% endif %}
             </li>
         </ul>
-
-        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니
-          보기</button>
+        {% if info.ID != Null %}
+        <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니 보기</button>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -168,6 +160,7 @@
       </div>
     </div>
   </div>
+
 
   <header>
     <div class="container-fluid">
@@ -217,61 +210,21 @@
 
           <!-- 헤더 아이콘  -->
           <ul class="d-flex justify-content-end list-unstyled m-0">
-            {%if info != Null %}
+            {%if info.ID != Null %}
             {%if info.ID == 'admin' %}
-            <li>
+            <li class="nav-item active h_icon">
               <p>관리자님 환영합니다!</p>
-              <a href="/user/selectAll">회원 전체 보기</a><br>
-              <a href="/user/Logout">로그아웃</a><br>
+            </li>
+            <li>
+              <a href="/user/selectAll">회원 전체 보기</a>
+            </li>
+            <li>
+              <a href="/user/Logout"><img src="/assets/img/로그아웃.png"><p>로그아웃</p></a>
             </li>
             {%else %}
-            <li>
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#user"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#heart"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#cart"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li class="d-lg-none">
-              <a href="https://www.naver.com/" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <use xlink:href="#search"></use>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="/user/Logout">로그아웃</a><br>
+            
+            <li class="nav-item active h_icon">
+              <a href="/user/Logout"><img src="/assets/img/로그아웃.png"><p>로그아웃</p></a>
             </li>
             {%endif%}
             {%else %}
@@ -289,7 +242,7 @@
             <button class="border-0 bg-transparent" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
               <span class="fs-6 text-muted dropdown-toggle">장바구니</span>
-              <h5 class="mb-0"><span class="cart-total">50000원</span></h5>
+              <h5 class="mb-0"><span class="cart-total">{{tp}}원</span></h5>
             </button>
           </div>
 
@@ -314,39 +267,38 @@
                 </div>
 
                 <form action="/page/autoSearch" method="post">
-                  <div class="offcanvas-body">
-                    <!-- 검색창 카테고리 옵션 -->
-                    <select class="filter-categories border-0 mb-0 me-5" name="autoSearch">
-                      <option value="">찾아보기</option>
-                      <option>침대</option>
-                      <option>의자</option>
-                      <option>가구</option>
-                      <option>옷장</option>
-                    </select>
-  
-                    <!-- 네비게이션 바 -->
-                    <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                      <li class="nav-item active">
-                        <button type="submit" class="nav-link" name="as" value="b">베스트 상품</button>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <button type="submit" class="nav-link" name="as" value="s">할인 상품</button>
-                      </li>
-                      <li class="nav-item">
-                        <button type="submit" class="nav-link" name="as" value="n">새 상품</button>
-                      </li>
-                      <!-- <li class="nav-item">
-                        <button type="submit" class="nav-link" name="as" value="review">구매후기</button>
-                      </li>
-                      <li class="nav-item">
-                        <button type="submit" class="nav-link" name="as" value="acce">Accessories</button>
-                      </li> -->
-                      
-                    </ul>
-  
-                  </div>
-                </form>
+                <div class="offcanvas-body">
+                  <!-- 검색창 카테고리 옵션 -->
+                  <select class="filter-categories border-0 mb-0 me-5" name="autoSearch">
+                    <option value="">찾아보기</option>
+                    <option>침대</option>
+                    <option>의자</option>
+                    <option>가구</option>
+                    <option>옷장</option>
+                  </select>
 
+                  <!-- 네비게이션 바 -->
+                  <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
+                    <li class="nav-item active">
+                      <button type="submit" class="nav-link" name="as" value="b">베스트 상품</button>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <button type="submit" class="nav-link" name="as" value="s">할인 상품</button>
+                    </li>
+                    <li class="nav-item">
+                      <button type="submit" class="nav-link" name="as" value="n">새 상품</button>
+                    </li>
+                    <!-- <li class="nav-item">
+                      <button type="submit" class="nav-link" name="as" value="review">구매후기</button>
+                    </li>
+                    <li class="nav-item">
+                      <button type="submit" class="nav-link" name="as" value="acce">Accessories</button>
+                    </li> -->
+                    
+                  </ul>
+
+                </div>
+              </form>
               </div>
 
             </nav>
@@ -365,13 +317,13 @@
           <div class="banner-blocks">
             <div class="sidebar">
               <ul>
-                <li><a href="https://www.naver.com/"><img src="/assets/img/장바구니.png">
+                <li><a href="/user/basket"><img src="/assets/img/장바구니.png">
                     <p>장바구니</p>
                   </a></li>
-                <li><a href="https://www.youtube.com/"><img src="/assets/img/수거신청.png">
+                <li><a href="/page/recall"><img src="/assets/img/수거신청.png">
                     <p>수거신청</p>
                   </a></li>
-                <li><a href="https://chat.openai.com/"><img src="/assets/img/Mypage.png">
+                <li><a href="/page/mypage"><img src="/assets/img/Mypage.png">
                     <p>Mypage</p>
                   </a></li>
               </ul>
@@ -418,7 +370,7 @@
               <img src="/assets/img/임티4.png" class="imos">
               <h3 class="category-title">브랜드 별 가구</h3>
             </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+            <a href="/page/recall" class="nav-link category-item swiper-slide">
               <img src="/assets/img/임티5.png" class="imos">
               <h3 class="category-title">수거신청</h3>
             </a>
@@ -527,7 +479,7 @@
                           <use xlink:href="#heart"></use>
                         </svg></a>
                       <figure>
-                        <a href="/page/detail" title="Product Title">
+                        <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                           <img src="{{i.IMG_PATH}}" class="tab-image">
                         </a>
                       </figure>
@@ -625,7 +577,9 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="footer-menu">
             <!-- footer 로고 -->
-            <img src="/assets/img/로오고.png" alt="logo" style="width: 240; height:55px;">
+            <a href="/page/">
+              <img src="/assets/img/로오고.png" alt="logo" style="width: 240; height:55px;">
+            </a>
             <div class="social-links mt-5">
               <ul class="d-flex list-unstyled gap-2">
                 <li>
