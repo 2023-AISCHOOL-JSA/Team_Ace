@@ -557,9 +557,10 @@
     </div>
   </section>
   {% else %}
-  {% for i in row -%}
   <section class="py-5 overflow-hidden">
     <div class="container-fluid">
+      <div><h2 class="section-title"> "브랜드 별 가구" 검색 결과 </h2></div>
+      {% for i in row -%}
       <div class="row">
         <div class="col-md-12">
 
@@ -613,9 +614,9 @@
 
         </div>
       </div>
+      {%- endfor %}
     </div>
   </section>
-  {%- endfor %}
   {% endif %}
   <footer class="py-5">
     <div class="container-fluid">
