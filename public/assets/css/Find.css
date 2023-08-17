@@ -1,20 +1,27 @@
-body{height:100vh; margin:0; font-family: 'Open Sans', sans-serif; }
+body{height:100vh; margin:0; font-family: 'omyu_pretty';}
 /* div{border: 1px solid;} */
 
 #logo{width: 100%; height:15%; display: flex; justify-content: center; align-items: center;}
 #bodyContain{width: 100%;height: 80%; display: flex; justify-content: center; align-items: center;}
 #container{width: 70%; height: 80%; display: flex; justify-content: space-between;}
 #findId{width: 48%; height:100%;}
-.findText{font-size: 30px; border-bottom: 2px solid; height: 15%; display: flex; align-items: center;}
+.findText{font-size: 40px; border-bottom: 2px solid; height: 15%; display: flex; align-items: center;}
 .userInput{ width: 100%;height: 90%;} 
-.answer{width: 100%; height: 20%; color: white;}
+.answer{width: 100%; height: 20%;}
 #findIdForm{width: 100%; height: 40%; text-align: center; display: flex; justify-content: center;}
 #findPwForm{width: 100%; height: 40%; text-align: center; display: flex; justify-content: center;}
-.name{margin-bottom: 10px;}
-.number{margin-bottom: 10px;}
-#id{margin-bottom: 10px;}
+.name{margin-bottom: 20px;}
+.number{margin-bottom: 20px;}
+#id{margin-bottom: 20px;}
 #findPw{width: 48%; height:100%; }
 form{font-size: 30px;}
-input{height:30px; border-radius: 10px 10px 10px 10px; font-family: 'Open Sans', sans-serif; font-size: 20px;}
-.label{display:inline-block; width:100px;font-size: 20px;}
-.btn{width: 230px; height: 40px; margin-left: 33%; margin-top: 10px;  border: 2px solid; font-size: 18px;}
+input{height:30px; border-radius: 10px 10px 10px 10px; font-family: 'omyu_pretty'; font-size: 20px;}
+.label{display:inline-block; width:100px;font-size: 25px;}
+.btn{width: 150px; height: 40px; margin-left: 20%; margin-top: 10px;  border: 2px solid;}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }
