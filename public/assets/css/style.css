@@ -937,7 +937,7 @@ ul.tabs li.current {
 }
 
 .tab-content {
-  display: none;
+  /* display: none; */
   background: #F6F4EB;
   padding: 15px;
 }
@@ -1059,12 +1059,12 @@ td>i {
 
 
 /* 탭 컨텐츠 숨기기 */
-.tab-content {
+.container>.tab-content {
   display: none;
 }
 
 /* 현재 탭 컨텐츠만 보이기 */
-.current {
+.container>.current {
   display: block;
 }
 @font-face {
