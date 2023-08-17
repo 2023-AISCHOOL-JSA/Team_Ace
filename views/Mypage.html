@@ -25,12 +25,13 @@
 <!-- 주문목록 tap -->
         <div id="tab-1" class="tab-content current">
             <!-- 상품 목록 1개 -->
+            {% for i in order -%}
             <div class="product">
                 <div id="product">
-                    <div id="productImage"><img class="myImg" src="/assets/img/img.png" alt="img"></div>
+                    <div id="productImage"><img class="myImg" src="{{i.IMG_PATH}}" alt="img"></div>
                     <div id="productName">
-                        <div id="orderNum">주문번호</div>
-                        <div id="orderProductName">1인 가구를 위한 푹신한 블루 체어 </div>
+                        <div id="orderNum">{{i.ORDER_NO}}</div>
+                        <div id="orderProductName">{{i.PRD_NM}} </div>
                     </div>
                     <div id="deliveryCheck"> <button class="Btn" onclick="location.href='/page/Delivery_Check_table'">배송조회</button></div> <!-- 배송조회 버튼 클릭 시 배송조회 페이지로 넘어가기-->
                     <div id="review"> <button class="Btn" id="reviewBtn">리뷰작성</button></div>
@@ -51,6 +52,7 @@
                     </div>
                 </div>
             </div>
+            {%- endfor %}
         </div>
 
 <!-- 환불/수거 현황 Tab -->

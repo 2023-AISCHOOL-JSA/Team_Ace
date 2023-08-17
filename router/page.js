@@ -550,7 +550,6 @@ router.post('/Search', function(request,response){
 })
 
 router.get('/recall', function(request, response){
-    conn.connect();
     if (request.session.info != null){
         let id = request.session.info.ID;
         console.log(request.session.info.ID);
@@ -589,12 +588,34 @@ router.get('/coll', function(request, response){
 });
 
 router.get('/mypage', function(request, response){
-<<<<<<< HEAD
-    response.render("mypage", {info: request.cookies.info, basket: request.session.basket, order: request.session.order,
-             p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size})
-=======
-    response.render("mypage")
->>>>>>> a4bed600f084440f4e829c212bfe31edf53951a9
+    conn.connect();
+    if (request.session.info != null){
+        let id = request.session.info.ID;
+        // let sql = "SELECT * FROM COLL WHERE ID = ?";
+        // conn.query(sql, [id], function(err, rows){
+        //     request.session.coll = rows;
+        // });
+        let sql = "SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') FROM PRD A JOIN PRD_IMG B ON A.PRD_NO=B.PRD_NO WHERE A.PRD_NO IN (SELECT PRD_NO FROM `ORDER` WHERE ID = ?);";
+        conn.query(sql, [id], function(err, rows){
+            console.log(err);
+            console.log(rows);
+            if (!err){
+                request.session.order = rows;
+                console.log("조회 성공");
+                response.render("Mypage", {info: request.cookies.info, basket: request.session.basket, order: request.session.order, coll: request.session.coll,
+                    p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size})
+       
+            } else {
+                console.log("조회 실패");
+                response.render("Main", {info: request.cookies.info,
+                    p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
+            }
+        });
+    } else {
+        response.render("Main", {info: request.cookies.info,
+            p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
+    } 
+    
 })
 
 router.post('/addcoll', function(request, response){
