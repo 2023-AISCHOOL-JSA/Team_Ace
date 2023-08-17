@@ -84,6 +84,24 @@ router.post('/updatebasket', function(request,response){
     })
     response.redirect('/user/basket')
 })
+
+router.get('/updatebasket', function(request,response){
+    let id = request.query.id;
+    let prd_no = request.query.no;
+    let pr = request.query.pr;
+    conn.connect();
+    let sql = "INSERT INTO BASKET (ID, PRD_NO) VALUES (?, ?);"
+    conn.query(sql, [id, prd_no], function(err, rows){
+        if(!err){
+            console.log(rows);
+        }
+        else{
+            console.log(err);
+        }
+    })
+    response.redirect(`/page/?pr=${pr}`);
+})
+
 router.get("/login", function(request, response){
     request.session.loginFlag = 1;
     response.redirect("/page/login");
