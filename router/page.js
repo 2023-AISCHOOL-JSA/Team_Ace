@@ -555,4 +555,8 @@ router.get('/recall', function(request, response){
 router.get('/mypage', function(request, response){
     response.render("mypage")
 })
+
+router.get('/collection', function(request, response){
+    response.render('collection', {collection: request.session.collection})
+})
 module.exports = router;
