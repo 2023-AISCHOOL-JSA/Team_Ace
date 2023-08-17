@@ -16,7 +16,7 @@
         <h1>수거신청</h1>
     </header>
     <div class="recall_body">
-    <form action="/page/addcoll">
+    <form action="/page/addcoll" method="post">
         <div class="recall_container">
             <table>
                 <tbody>
@@ -55,7 +55,7 @@
                         <th>수거 희망일자</th>
                         <td>
                             <div>
-                                <input type="date" id="date" required>
+                                <input type="date" id="date" class="inputBox" required>
                             </div>
                         </td>
                     </tr>

@@ -309,6 +309,7 @@ justify-content: center;
 }
 .head{
 width: 1600px;
+height: 129px;
 position: fixed;
 z-index: 10;
 background-color: #8BDEFF;
