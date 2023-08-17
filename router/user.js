@@ -99,7 +99,7 @@ router.get('/updatebasket', function(request,response){
             console.log(err);
         }
     })
-    response.redirect(`/page/?pr=${pr}`);
+    response.redirect("/user/basket");
 })
 
 router.get("/login", function(request, response){
