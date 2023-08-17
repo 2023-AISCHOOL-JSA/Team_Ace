@@ -260,12 +260,12 @@ router.get("/delPrds", function(request, response){
         });
     }
     const query2 = () => {
-        let sql2 = `SELECT *
-                    FROM PRD A JOIN PRD_IMG B
-                    ON A.PRD_NO=B.PRD_NO
-                    WHERE A.PRD_NO IN (SELECT PRD_NO
-                                        FROM BASKET
-                                        WHERE ID = ?);`;
+        let sql2 = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') AS D
+                      FROM PRD A JOIN PRD_IMG B
+                        ON A.PRD_NO=B.PRD_NO
+                     WHERE A.PRD_NO IN (SELECT PRD_NO
+                                          FROM BASKET
+                                         WHERE ID = ?);`;
         conn.query(sql2, [id], function(err, rows){
             console.log(err);
             console.log(rows);
