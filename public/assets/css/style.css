@@ -911,6 +911,8 @@ footer{text-align: center;}
   height: 900px;
   margin: 0 auto;
   border-radius: 10px;
+  font-family: 'omyu_pretty';
+  line-height: 1.6;
 }
 
 ul.tabs {
