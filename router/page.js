@@ -585,7 +585,7 @@ router.get('/recall', function(request, response){
             }
         });
     } else {
-        render("Main", {info: request.cookies.info,
+        response.render("Main", {info: request.cookies.info,
             p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
     } 
 });
@@ -607,8 +607,9 @@ router.get('/mypage', function(request, response){
              p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size})
 })
 
-router.get('/collection', function(request, response){
-    response.render('collection', {collection: request.session.collection})
+router.post('/addcoll', function(request, response){
+
+    response.redirect('/page/');
 })
 
 router.get("/Delivery_Check_table", function(request, response){

@@ -356,8 +356,7 @@
                         <div class="categories mb-3 pb-3">새로운 상품</div>
                         <h3 class="banner-title">따끈따끈한 새 상품!</h3>
                         <p>제품의 실물 상태를 잘 파악해주시기 바랍니다.</p>
-                        <a href="/page/detail?PRD_NO={{new[0].PRD_NO}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">shop
-                          collection</a>
+                        <a href="/page/detail?PRD_NO={{new[0].PRD_NO}}" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">살펴보기</a>
                       </div>
                       <div class="img-wrapper col-md-5">
                         <a href="/page/detail?PRD_NO={{new[0].PRD_NO}}"><img id="new_image" src="{{new[0].IMG_PATH}}" class="img-fluid"></a>
@@ -376,7 +375,7 @@
                 <li><a href="/user/basket"><img src="/assets/img/장바구니.png">
                     <p>장바구니</p>
                   </a></li>
-                <li><a href="/page/collection"><img src="/assets/img/수거신청.png">
+                <li><a href="/page/recall"><img src="/assets/img/수거신청.png">
                     <p>수거신청</p>
                   </a></li>
                 <li><a href="/page/mypage"><img src="/assets/img/Mypage.png">
@@ -428,7 +427,7 @@
               <h3 class="category-title">브랜드 별 가구</h3>
             </a>
             {% if info.ID != Null %}
-            <a href="/page/collection" class="nav-link category-item swiper-slide">
+            <a href="/page/recall" class="nav-link category-item swiper-slide">
               <img src="/assets/img/장바구니.png" class="imos">
               <h3 class="category-title">수거신청</h3>
             </a>
