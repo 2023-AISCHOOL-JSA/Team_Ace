@@ -17,7 +17,7 @@
     </header>
     <div class="payment-form">
         <h2>주문 결제</h2>
-        <form action="/page/" method="post" id="order-form">
+        <form method="get" id="order-form">
             <h3>구매자 정보</h3>
             <table>
                 <tr>
@@ -104,8 +104,9 @@
                 </tr>
                 <!-- 추가적인 결제 정보를 이곳에 추가할 수 있습니다. -->
             </table>
-            <button type="button" onclick="location.href='/page/basket'">뒤로 가기</button>
-            <input type="submit" formaction="/user/pay_c" value="결제하기" id="check_module">
+            <button formaction='/user/basket'>뒤로 가기</button>
+            <input type="submit" formaction='/user/pay_c' value="결제하기" id="check_module">
+            <button formaction="/user/pay_c">결제하기2</button>
         </form>
     </div>
     <script src="/assets/js/pay.js"></script>

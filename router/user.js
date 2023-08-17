@@ -334,9 +334,9 @@ router.post("/selectOne", function(request, response){
 
 router.get("/pay", function(request,response){
     if (request.query.payflag == '1') {
-        response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '1'});
+        response.render("pay", {payInfo: request.session.payInfo, info: request.session.info, payflag: '1'});
     } else if (request.query.payflag == '0'){
-        response.render("pay", {totalPrice: request.session.totalPrice, info: request.session.info, payflag: '0'});
+        response.render("pay", {payInfo: request.session.payInfo, info: request.session.info, payflag: '0'});
     }
 });
 
@@ -348,7 +348,8 @@ router.post("/pay", function(request,response){
         return data > 0;
     });
     console.log(n_cnt);
-    let ordered = request.body.selectedPrds;
+    let ordered = Object.values();
+    request.session.selectedPrds = request.body.selectedPrds;
     console.log(request.body.selectedPrds);
     conn.connect();
     let sql = "select PRD_PRICE, DEL_PRICE, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL DEL_TIME DAY), '%y%m%d') AS M from PRD where PRD_NO IN (?)";
@@ -382,37 +383,83 @@ router.post("/pay", function(request,response){
     });
 });
 
-router.post("/pay_c", function(request,response){
+router.get("/pay_c", function(request,response){
+    conn.connect();
     console.log("결제 성공")
-    console.log(request.session.info);
-    console.log(request.session.order);
-    console.log(request.session.pay);
+    console.log(request.session.selectedPrds)
+    let id = request.session.info.ID;
+    let selectedPrds = request.session.selectedPrds
+    let sql = "SELECT * FROM PRD WHERE PRD_NO IN (?)"
+    let prd_no;
+    let seller_code;
+    let total_price;
+    const query1 = ()=>{
+        conn.query(sql, [selectedPrds], function(err, rows){
+        if(!err){
+            console.log(rows)
+            request.session.prd = rows;
 
-    // let id = request.session.pay.ID;
-    // let prd_no = request.session.pay.PRD_NO;
-    // let seller_code = request.session.pay.SELLER_CODE;
-    // let total_price = request.session.pay.TOTAL_PRICE;
-    // let taker_nm = request.body.recipient_name;
-    // let taker_tel = request.body.recipient_tel;
-    // let taker_addr = request.body.recipient_address;
-    // let order_com_tel = request.session.pay.ORDER_COM_TEL;
-    // let order_memo = request.body.recipient_place;
-    // let order_status = 1;
-    // let pay_date = Date().getTime();
-    // let pay_code = 'card';
+            prd_no = request.session.prd[0].PRD_NO;
+            seller_code = request.session.prd[0].SELLER_CODE;
+            total_price = request.session.prd[0].PRD_PRICE;
 
-    // conn.connect();
-    // let sql = "INSERT INTO `ORDER` VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-    // conn.query(sql, [id, prd_no, seller_code, total_price, taker_nm, taker_tel, taker_addr, order_com_tel, ,order_memo,
-    //                 order_status, pay_date, pay_code ], function(err, rows){
-    //     console.log(rows);
-    //     if(!err){
-    //         console.log("결제 성공, db입력 성공");
-    //     } else {
-    //         console.log("결제 성공, db입력 실패");
-    //     }
-        response.render("main");
-    // });
+            query2();
+        }
+        else{
+            console.log(err)
+        }
+    })}
+    sql = "DELETE FROM BASKET WHERE ID=? AND PRD_NO IN (?)"
+    const query2 = ()=>{
+        conn.query(sql, [id, selectedPrds], function(err, rows){
+        if(!err){
+            console.log(rows)
+            query3();
+        }
+        else{
+
+        }
+    })}
+
+    // console.log(request.session.info);
+    console.log(request.session.prd);
+
+    
+    let taker_nm = request.query.recipient_name;
+    let taker_tel = request.query.recipient_tel;
+    let taker_addr = request.query.recipient_address;
+    let order_com_tel = request.session.info.TEL;
+    let order_memo = request.query.recipient_place;
+    let order_status = 1;
+    let pay_date = new Date().getTime();
+    let pay_code = 'card';
+
+    sql = "INSERT INTO `ORDER` VALUES ((select ORDER_NO FROM SEQUENCES), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+    const query3 = ()=>{
+        conn.query(sql, [id, prd_no, seller_code, total_price, taker_nm, taker_tel, taker_addr, order_com_tel, ,order_memo,
+                    order_status, pay_date, pay_code ], function(err, rows){
+        console.log(rows);
+        if(!err){
+            console.log("결제 성공, db입력 성공");
+            query4();
+        } else {
+            console.log("결제 성공, db입력 실패");
+        }
+        // response.render("main");
+    })}
+
+    sql = "UPDATE SEQUENCES SET ORDER_NO = ORDER_NO + 1"
+    const query4 = ()=>{
+        conn.query(sql, function(err, rows){
+        if(!err){
+            console.log(rows)
+        }
+        else{
+
+        }
+    })}
+
+    query1();
 });
 
 router.post("/collection", function(request,response){
@@ -421,7 +468,7 @@ router.post("/collection", function(request,response){
     let sql = 'SELECT * FROM PRD A JOIN `ORDER` B ON A.PRD_NO = B.PRD_NO WHERE ID=?;'
     conn.query(sql, id, function(err, rows){
         if(!err){
-            request.session.order = rows
+            request.session.collection = rows
         }
         else {
             

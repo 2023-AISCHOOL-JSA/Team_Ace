@@ -557,6 +557,6 @@ router.get('/mypage', function(request, response){
 })
 
 router.get('/collection', function(request, response){
-    response.render('collection', {order: request.session.order})
+    response.render('collection', {collection: request.session.collection})
 })
 module.exports = router;
