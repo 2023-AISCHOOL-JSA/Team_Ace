@@ -905,13 +905,6 @@ td {
 footer{text-align: center;}
 .footer_list{display: flex; justify-content: center;}
 
-body {
-  margin-top: 100px;
-  font-family: 'omyu_pretty';
-  line-height: 1.6;
-  
-}
-
 .container {
   background-color: #91C8E4;
   width: 80%;
