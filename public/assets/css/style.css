@@ -937,8 +937,8 @@ border-top-left-radius:  10px;
 }
 
 .tab-content {
-display: none;
-background: #F6F4EB;
+/* display: none; */
+background: #ffffff;
 padding: 15px;
 }
 
@@ -1059,9 +1059,9 @@ color: #4682A9; font-size: 0.1px;
 
 
 /* 탭 컨텐츠 숨기기 */
-.tab-content {
+/* .tab-content {
 display: none;
-}
+} */
 
 /* 현재 탭 컨텐츠만 보이기 */
 .current {
