@@ -44,7 +44,8 @@ router.get("/basket", function(request, response){
     console.log(request.session.info.ID);
     console.log(id);
     conn.connect();
-    let sql = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') AS D
+    let sql = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME DAY), '%m') AS M,
+                         DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME DAY), '%d') AS D
                  FROM PRD A JOIN PRD_IMG B
                    ON A.PRD_NO=B.PRD_NO
                 WHERE A.PRD_NO IN (SELECT PRD_NO
@@ -56,9 +57,9 @@ router.get("/basket", function(request, response){
         if (!err){
             if (rows.length > 0){
                 request.session.basket = rows;
-                response.render('basket', { basket: request.session.basket });
+                response.render('basket', { basket: request.session.basket, boro: 0 });
             } else {
-                response.render('basket', { basket: null });
+                response.render('basket', { basket: null, boro: 0  });
             }
         } else {
             console.log(err);
@@ -88,7 +89,6 @@ router.post('/updatebasket', function(request,response){
 router.get('/updatebasket', function(request,response){
     let id = request.query.id;
     let prd_no = request.query.no;
-    let pr = request.query.pr;
     conn.connect();
     let sql = "INSERT INTO BASKET (ID, PRD_NO) VALUES (?, ?);"
     conn.query(sql, [id, prd_no], function(err, rows){

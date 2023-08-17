@@ -1,6 +1,6 @@
 body {
     margin-top: 100px;
-    font-family: 'omyu_pretty';
+    font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     
 }
@@ -18,6 +18,7 @@ ul.tabs {
     padding: 0px;
     list-style: none;
     font-size: 25px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 ul.tabs li {
@@ -34,7 +35,7 @@ ul.tabs li.current {
     border-top-left-radius:  10px;
 }
 
-.tab-content {
+.container > .tab-content {
     display: none;
     background: #F6F4EB;
     padding: 15px;
@@ -67,7 +68,7 @@ img{
     width:80px; margin: 10px 10px 10px 60px; display: flex; justify-content: center; align-items: center;
 }
 .Btn{
-    height: 40px; font-family: 'omyu_pretty'; width: 80px; border-color: #4682A9; border-radius: 10px; font-size: 20px; 
+    height: 40px; font-family: 'Open Sans', sans-serif; width: 80px; border-color: #4682A9; border-radius: 10px; font-size: 20px; 
 }
 #review{
     width:80px; margin: 10px 10px 10px 20px; display: flex; justify-content: center; align-items: center;
@@ -87,10 +88,10 @@ img{
     color: yellow;
 }
 #reviewText{
-    font-family: 'omyu_pretty'; border: none ; resize: none;
+    font-family: 'Open Sans', sans-serif; border: none ; resize: none;
 }
 #reviewButton{
-    font-family: 'omyu_pretty'; margin-left: 76%; 
+    font-family: 'Open Sans', sans-serif; margin-left: 76%; 
 }
 
 /* 환불,수거 현황Tab */
@@ -135,7 +136,7 @@ h1 {
     display: flex; justify-content: center; margin-top: 50px;
 }
 #changeSubmit{
-    font-family: 'omyu_pretty';
+    font-family: 'Open Sans', sans-serif;
     border:0; background-color:#D8D9DA; font-size: 30px; width: 180px; border-radius: 10px;
     
 }
@@ -147,7 +148,7 @@ h1 {
 #reviewTable th{height:30px; font-size: 24px;}
 #reviewTable td{height:50px; text-align: center; font-size: 15px; border-collapse: collapse;font-size: 22px;}
 .reviewBtn{
-    height: 30px; font-family: 'omyu_pretty'; width: 50px; border-color: #4682A9; border-radius: 5px; font-size: 20px;
+    height: 30px; font-family: 'Open Sans', sans-serif; width: 50px; border-color: #4682A9; border-radius: 5px; font-size: 20px;
 }
 
 td>i {
@@ -165,9 +166,3 @@ td>i {
 .current {
     display: block;
 }
-@font-face {
-    font-family: 'omyu_pretty';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    }

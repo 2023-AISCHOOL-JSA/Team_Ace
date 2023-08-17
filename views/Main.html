@@ -520,7 +520,7 @@
                             </button>
                           </span>
                         </div> -->
-                        <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                        <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}" class="nav-link">장바구니에 추가 →<iconify-icon icon="uil:shopping-cart"></a>
                       </div>
                     </div>
                   </div>
@@ -567,9 +567,6 @@
             <div class="swiper-wrapper">
               {% for i in sale -%}
               <div class="product-item swiper-slide">
-                <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                    <use xlink:href="#heart"></use>
-                  </svg></a>
                 <figure>
                   <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                     <img src="{{i.IMG_PATH}}" class="tab-image">
@@ -581,7 +578,7 @@
                   </svg> {{i.PRD_SCORE}}</span>
                 <span class="price">{{i.PRD_PRICE}}￦</span>
                 <div class="d-flex align-items-center justify-content-between">
-                  <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}&pr=1" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                  <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}" class="nav-link">장바구니에 추가 →<iconify-icon icon="uil:shopping-cart"></a>
                 </div>
               </div>
               {%- endfor %}
@@ -621,9 +618,6 @@
             <div class="swiper-wrapper">
               {% for i in new -%}
               <div class="product-item swiper-slide">
-                <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                    <use xlink:href="#heart"></use>
-                  </svg></a>
                 <figure>
                   <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                     <img src="{{i.IMG_PATH}}" class="tab-image">
@@ -635,7 +629,7 @@
                   </svg> {{i.PRD_SCORE}}</span>
                 <span class="price">{{i.PRD_PRICE}}￦</span>
                 <div class="d-flex align-items-center justify-content-between">
-                  <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}%pr=2" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                  <a href="/user/updatebasket?id={{info.ID}}&no={{i.PRD_NO}}" class="nav-link">장바구니에 추가 →<iconify-icon icon="uil:shopping-cart"></a>
                 </div>
               </div>
               {%- endfor %}
@@ -655,7 +649,9 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="footer-menu">
             <!-- footer 로고 -->
-            <img src="/assets/img/로오고.png" alt="logo" style="width: 240; height:55px;">
+            <a href="/page/">
+              <img src="/assets/img/로오고.png" alt="logo" style="width: 240; height:55px;">
+            </a>
             <div class="social-links mt-5">
               <ul class="d-flex list-unstyled gap-2 footer_list">
                 <li>
