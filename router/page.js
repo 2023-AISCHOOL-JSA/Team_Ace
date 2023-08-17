@@ -113,7 +113,10 @@ router.get('/', function (request, response) {
                 // console.log(rows);
                 if (!err){
                     if (rows.length > 0){
-                        l = rows.length;
+                        request.session.length = rows.length;
+                        request.session.prd_size = prd_size;
+
+                        l = request.session.length;
                         request.session.basket = rows;
                         for (let i = 0; i<rows.length; i++){
                             prc.push(String(rows[i].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
@@ -133,7 +136,7 @@ router.get('/', function (request, response) {
                         console.log(prd_size);
                         response.render('Main', {
                             info: request.cookies.info, best: request.session.best, basket: request.session.basket,
-                            new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l, ps: prd_size
+                            new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l, ps: request.session.prd_size
                         });
                     }
                 } else {
@@ -204,7 +207,9 @@ router.get('/detail', function (request, response) {
                 info : request.cookies.info,
                 basket: request.session.basket,
                 bpl: request.session.bpl, tpr: request.session.tpr,
-                prc: request.session.prc, length: request.session.length});
+                prc: request.session.prc, length: request.session.length,
+                pr: String(rows[0].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'),
+                tpr:String(rows[0].PRD_PRICE + rows[0].DEL_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')});
         }
         else{
             console.log(err);
@@ -267,13 +272,14 @@ router.get("/delPrds", function(request, response){
             if (!err){
                 if (rows.length > 0){
                     request.session.basket = rows;
-                    response.render('basket', { basket: request.session.basket });
+                    response.render('basket', { basket: request.session.basket, boro: 0 });
                 } else {
                     response.render('basket', { basket: null });
                 }
             } else {
                 console.log(err);
-                response.redirect('/page');
+                response.render("Main", {info: request.cookies.info,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
             }
         });
     }
@@ -361,10 +367,13 @@ router.post('/autoSearch', function(request,response){
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':autoSearch,'searching':as}});
+            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':autoSearch,'searching':as},
+                                    p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size
+                                    });
         } else {
             console.log("조회 실패");
-            response.redirect("/page/");
+            render("Main", {info: request.cookies.info,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         }
 
     });
@@ -396,11 +405,13 @@ router.get('/brand', function (request, response) {
             }
             row.push(temp);
             console.log(row);
-            response.render("Search", {info: request.cookies.info, row: row});
+            response.render("Search", {info: request.cookies.info, row: row,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         }
         else{
             console.log(err);
-            response.redirect("/page/");
+            render("Main", {info: request.cookies.info,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         }
     });
 });
@@ -498,10 +509,12 @@ router.get('/rentType', function(request,response){
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows, info: request.cookies.info, rt: rentType, po: po});
+            response.render("Search", {searched: rows, info: request.cookies.info, rt: rentType, po: po,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         } else {
             console.log("조회 실패");
-            response.redirect("/page/");
+            render("Main", {info: request.cookies.info,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         }
 
     });
@@ -539,20 +552,66 @@ router.post('/Search', function(request,response){
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':option,'searching':searching}});
+            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':option,'searching':searching},
+            p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         } else {
             console.log("조회 실패");
-            response.redirect("/page/");
+            render("Main", {info: request.cookies.info,
+                p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
         }
 
     });
 })
 
 router.get('/recall', function(request, response){
-    response.render("recall")
-})
+    conn.connect();
+    if (request.session.info != null){
+        let id = request.session.info.ID;
+        console.log(request.session.info.ID);
+        console.log(id);
+        conn.connect();
+        let sql = "SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') FROM PRD A JOIN PRD_IMG B ON A.PRD_NO=B.PRD_NO WHERE A.PRD_NO IN (SELECT PRD_NO FROM `ORDER` WHERE ID = ?);";
+        conn.query(sql, [id], function(err, rows){
+            console.log(err);
+            console.log(rows);
+            if (!err){
+                request.session.order = rows;
+                console.log("조회 성공");
+                response.render("basket", { order: request.session.order, boro: 1 });
+            } else {
+                console.log("조회 실패");
+                response.render("Main", {info: request.cookies.info,
+                    p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
+            }
+        });
+    } else {
+        render("Main", {info: request.cookies.info,
+            p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
+    } 
+});
+
+router.get('/coll', function(request, response){
+    let info = request.session.info;
+    let tel1 = info.TEL[0] + info.TEL[1] + info.TEL[2];
+    let tel2 = info.TEL[3] + info.TEL[4] + info.TEL[5] + info.TEL[6];
+    let tel3 = info.TEL[7] + info.TEL[8] + info.TEL[9] + info.TEL[10];
+    console.log(tel1, tel2, tel3);
+    response.render("recall", {info: info, tel:[tel1,tel2,tel3]});
+        // response.render("recall", {info: request.cookies.info,
+        //     p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size});
+    
+});
 
 router.get('/mypage', function(request, response){
-    response.render("mypage")
+    response.render("mypage", {info: request.cookies.info,
+             p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size})
+})
+
+router.get('/collection', function(request, response){
+    response.render('collection', {collection: request.session.collection})
+})
+
+router.get("/Delivery_Check_table", function(request, response){
+    response.render("Delivery_Check_table")
 })
 module.exports = router;

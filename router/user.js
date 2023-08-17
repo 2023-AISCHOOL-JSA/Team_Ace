@@ -44,7 +44,8 @@ router.get("/basket", function(request, response){
     console.log(request.session.info.ID);
     console.log(id);
     conn.connect();
-    let sql = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') AS D
+    let sql = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME DAY), '%m') AS M,
+                         DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME DAY), '%d') AS D
                  FROM PRD A JOIN PRD_IMG B
                    ON A.PRD_NO=B.PRD_NO
                 WHERE A.PRD_NO IN (SELECT PRD_NO
@@ -56,9 +57,9 @@ router.get("/basket", function(request, response){
         if (!err){
             if (rows.length > 0){
                 request.session.basket = rows;
-                response.render('basket', { basket: request.session.basket });
+                response.render('basket', { basket: request.session.basket, boro: 0 });
             } else {
-                response.render('basket', { basket: null });
+                response.render('basket', { basket: null, boro: 0  });
             }
         } else {
             console.log(err);
@@ -88,7 +89,6 @@ router.post('/updatebasket', function(request,response){
 router.get('/updatebasket', function(request,response){
     let id = request.query.id;
     let prd_no = request.query.no;
-    let pr = request.query.pr;
     conn.connect();
     let sql = "INSERT INTO BASKET (ID, PRD_NO) VALUES (?, ?);"
     conn.query(sql, [id, prd_no], function(err, rows){
@@ -349,6 +349,7 @@ router.post("/pay", function(request,response){
     });
     console.log(n_cnt);
     let ordered = request.body.selectedPrds;
+    request.session.selectedPrds = request.body.selectedPrds;
     console.log(request.body.selectedPrds);
     conn.connect();
     let sql = "select PRD_PRICE, DEL_PRICE, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL DEL_TIME DAY), '%y%m%d') AS M from PRD where PRD_NO IN (?)";
@@ -382,41 +383,36 @@ router.post("/pay", function(request,response){
     });
 });
 
-router.post("/pay_c", function(request,response){
+router.get("/pay_c", function(request,response){
+    conn.connect();
     console.log("결제 성공")
-    console.log(request.session.info);
-    console.log(request.session.order);
-    console.log(request.session.pay);
+    let id = request.session.info.ID;
+    let selectedPrds = request.session.selectedPrds
+    console.log(selectedPrds)
+    let sql = "DELETE FROM BASKET WHERE ID=? AND PRD_NO IN (?)"
+    
+    conn.query(sql, [id, selectedPrds], function (err, rows) {
+        if (!err) {
+            // console.log(rows)
+        }
+        else {
 
-    // let id = request.session.pay.ID;
-    // let prd_no = request.session.pay.PRD_NO;
-    // let seller_code = request.session.pay.SELLER_CODE;
-    // let total_price = request.session.pay.TOTAL_PRICE;
-    // let taker_nm = request.body.recipient_name;
-    // let taker_tel = request.body.recipient_tel;
-    // let taker_addr = request.body.recipient_address;
-    // let order_com_tel = request.session.pay.ORDER_COM_TEL;
-    // let order_memo = request.body.recipient_place;
-    // let order_status = 1;
-    // let pay_date = Date().getTime();
-    // let pay_code = 'card';
-
-    // conn.connect();
-    // let sql = "INSERT INTO `ORDER` VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-    // conn.query(sql, [id, prd_no, seller_code, total_price, taker_nm, taker_tel, taker_addr, order_com_tel, ,order_memo,
-    //                 order_status, pay_date, pay_code ], function(err, rows){
-    //     console.log(rows);
-    //     if(!err){
-    //         console.log("결제 성공, db입력 성공");
-    //     } else {
-    //         console.log("결제 성공, db입력 실패");
-    //     }
-        response.render("main");
-    // });
+        }
+    })
 });
 
-router.post("/cart", function(request,response){
-
+router.post("/collection", function(request,response){
+    conn.connect()
+    let id = request.session.info.ID
+    let sql = 'SELECT * FROM PRD A JOIN `ORDER` B ON A.PRD_NO = B.PRD_NO WHERE ID=?;'
+    conn.query(sql, id, function(err, rows){
+        if(!err){
+            request.session.collection = rows
+        }
+        else {
+            
+        }
+    })
 })
 
 module.exports = router;

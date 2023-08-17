@@ -20,10 +20,10 @@
             <img class="main-img" src="{{detail.IMG_PATH}}">
             <!-- 서브이미지 -->
             <ul>
-                <li><img class="sub-img" src="/assets/img/BED.jpg"></li>
-                <li><img class="sub-img" src="/assets/img/BED2.jpg"></li>
-                <li><img class="sub-img" src="/assets/img/BED3.jpg"></li>
-                <li><img class="sub-img" src="/assets/img/ACE.jpg"></li>
+                <li><img class="sub-img" src="/assets/img/임티1.png"></li>
+                <li><img class="sub-img" src="/assets/img/임티2.png"></li>
+                <li><img class="sub-img" src="/assets/img/임티3.png"></li>
+                <li><img class="sub-img" src="/assets/img/임티4.png"></li>
             </ul>
         </div>
         <div class="product_view">
@@ -35,7 +35,7 @@
                         <tbody>
                             <tr>
                                 <th>판매가</th>
-                                <td class="price">{{detail.PRD_PRICE}}</td>
+                                <td class="price">{{pr}} 원</td>
                             </tr>
                             <tr>
                                 <th>상품코드</th>
@@ -43,7 +43,13 @@
                             </tr>
                             <tr>
                                 <th>제조사/공급사</th>
-                                <td>{{detail.SELLER_CODE}}</td>
+                                {% if detail.SELLER_CODE == '1' %}
+                                    <td>이케아</td>
+                                {% elif detail.SELLER_CODE == '2' %}
+                                    <td>한샘</td>
+                                {% elif detail.SELLER_CODE == '3' %}
+                                    <td>리바트</td>
+                                {% endif%}
                             </tr>
                             <tr>
                                 <th>구매수량</th>
@@ -67,14 +73,14 @@
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td class="total">{{detail.PRD_PRICE + detail.DEL_PRICE}}원</td>
+                                <td class="total">{{tpr}}원</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div>
                     <!-- 버튼 -->
-                    {%if info != Null%}
+                    {%if info.ID != Null%}
                     <button class="product_btn" formaction="/user/updatebasket">장바구니</button>
                     <button class="product_btn" name="selectedPrds" value="{{detail.PRD_NO}}" type="submit" formaction="/user/pay">구매하기</button>
                     <!-- submit -->
@@ -105,10 +111,16 @@
                     <th>원산지</th>
                     <td>한국</td>
                     <th>제조자</th>
-                    <td>{{detail.SELLER_CODE}}</td>
+                    {% if detail.SELLER_CODE == '1' %}
+                        <td>이케아</td>
+                    {% elif detail.SELLER_CODE == '2' %}
+                        <td>한샘</td>
+                    {% elif detail.SELLER_CODE == '3' %}
+                        <td>리바트</td>
+                    {% endif%}
                 </tr>
                 <tr>
-                    <th>소비자상담 관련 전화번호</th>
+                    <th><p>소비자상담</p>전화번호</th>
                     <td>5959-8282</td>
                 </tr>
             </tbody>
@@ -117,13 +129,22 @@
     <!-- 제품 상세 이미지 -->
     <div class="detail_img">
         <div class="product_img">
-            <img src="/assets/img/BED.jpg" alt="">
+            <img src="{{detail.IMG_PATH}}" alt="">
         </div>
         <div class="product_img">
-            <img src="/assets/img//BED2.jpg" alt="">
+            <img src="/assets/img/임티1.png" alt="">
         </div>
         <div class="product_img">
-            <img src="/assets/img//BED3.jpg" alt="">
+            <img src="/assets/img/임티2.png" alt="">
+        </div>
+        <div class="product_img">
+            <img src="/assets/img/임티3.png" alt="">
+        </div>
+        <div class="product_img">
+            <img src="/assets/img/임티4.png" alt="">
+        </div>
+        <div class="product_img">
+            <img src="/assets/img/임티5.png" alt="">
         </div>
     </div>
 </body>

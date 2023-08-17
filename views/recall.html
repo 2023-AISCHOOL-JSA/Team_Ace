@@ -16,14 +16,14 @@
         <h1>수거신청</h1>
     </header>
     <div class="recall_body">
-    <form action="">
+    <form action="/page/addcoll">
         <div class="recall_container">
             <table>
                 <tbody>
                     <tr>
                         <th>고객명</th>
                         <td colspan="3">
-                            <div><input type="text" name="name" title="고객명 입력" value="" required></div>
+                            <div><input type="text" name="name" title="고객명 입력" value="{{info.NAME}}" required></div>
                         </td>
                     </tr>
                     <tr>
@@ -31,25 +31,10 @@
                         <td colspan="3">
                             <div class="phone_container">
                                 <div>
-                                    <select name="phone_01" title="항목 선택">
-                                        <option value="010">010</option>
-                                        <option value="011">011</option>
-                                        <option value="016">016</option>
-                                        <option value="017">017</option>
-                                        <option value="018">018</option>
-                                        <option value="019">019</option>
-                                    </select>
+                                    <input type="text" class="numeric" name="phone_01" title="번호 입력"
+                                        value="{{info.TEL}}" required>
                                 </div>
-                                <span class="behind">-</span>
-                                <div>
-                                    <input type="text" class="numeric" name="phone_02" title="번호 입력" maxlength="4"
-                                        value="" required>
-                                </div>
-                                <span class="behind">-</span>
-                                <div>
-                                    <input type="text" class="numeric" name="phone_03" title="번호 입력" maxlength="4"
-                                        value="" required>
-                                </div>
+                                
                             </div>
                         </td>
                     </tr>
@@ -57,12 +42,12 @@
                         <th>주소</th>
                         <td>
                             <div>
-                                <input class="inputBox" type="text" id="sample6_postcode" placeholder="우편번호" required>
+                                <input class="inputBox" type="text" id="sample6_postcode" placeholder="우편번호" value="{{info.POSTCODE}}" required>
                                 <input class="inputBox" type="button" onclick="sample6_execDaumPostcode()"
                                     value="우편번호 찾기" style="height: 40px;"><br>
-                                <input class="inputBox" type="text" id="sample6_address" placeholder="주소" required><br>
-                                <input class="inputBox" type="text" id="sample6_detailAddress" placeholder="상세주소" required>
-                                <input type="text" class="inputBox" id="sample6_extraAddress" placeholder="참고항목">
+                                <input class="inputBox" type="text" id="sample6_address" placeholder="주소" value="{{info.ADDR}}" required><br>
+                                <input class="inputBox" type="text" id="sample6_detailAddress" placeholder="상세주소" value="{{info.ADDR_DETAIL}}" required>
+                                <input type="text" class="inputBox" id="sample6_extraAddress" placeholder="참고항목" value="{{info.ADDR_EXTRA}}" >
                             </div>
                         </td>
                     </tr>
@@ -86,8 +71,8 @@
             </table>
         </div>
         <div class="button-container">
-            <a href=""><button type="button">이전페이지</button></a>
-            <button>수거신청</button>
+            <a href="/page/recall"><button type="button">이전페이지</button></a>
+            <button type="submit">수거신청</button>
         </div>
     </form>
 </div>
