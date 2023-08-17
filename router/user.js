@@ -401,19 +401,6 @@ router.get("/pay_c", function(request,response){
     })
 });
 
-router.get("/pay_c2", function(request, response){
-    conn.connect()
-    let sql = "INSERT INTO `ORDER` VALUES(count(*) + 1,1,1,1,1,1,1,1,1,1,1,1)"
-    conn.query(sql, function(err, rows){
-        if(!err){
-
-        }
-        else{
-
-        }
-    })
-})
-
 router.post("/collection", function(request,response){
     conn.connect()
     let id = request.session.info.ID
