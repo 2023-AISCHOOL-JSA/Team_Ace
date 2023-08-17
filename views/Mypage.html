@@ -12,6 +12,8 @@
 </head>
 
 <body>
+    {% extends "Header.html" %}
+    {% block content %}
     <div class="container">
         <ul class="tabs">
             <li class="tab-link current" data-tab="tab-1">주문목록</li>
@@ -25,7 +27,7 @@
             <!-- 상품 목록 1개 -->
             <div class="product">
                 <div id="product">
-                    <div id="productImage"><img src="../img/img.png" alt="img"></div>
+                    <div id="productImage"><img class="myImg" src="../img/img.png" alt="img"></div>
                     <div id="productName">
                         <div id="orderNum">주문번호</div>
                         <div id="orderProductName">1인 가구를 위한 푹신한 블루 체어 </div>
@@ -53,7 +55,7 @@
 
 <!-- 환불/수거 현황 Tab -->
         <div id="tab-2" class="tab-content">
-            <h1>수거 현황</h1> 
+            <h1 class="myH1">수거 현황</h1> 
             <table id="payBack">
                 <tr>
                     <th >상품 주문번호</th>
@@ -157,6 +159,7 @@
         </div>
             
     </div>
+    {% endblock %}
 </body>
 
 </html>
