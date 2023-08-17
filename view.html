@@ -1,55 +1,44 @@
-h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
-    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="../BOARD/style.css">
+    <title>view</title>
 </head>
 <body>
-    <div class="board_wrap">
-        <div class="board_title">
-            <strong>공지사항</strong>
-            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+    <div class="card">
+        <div class="card-header3"><h1><a href="../BOARD/index.html">게시판</a></h1></div>
+        <div class="card-view">
+            <div class="title">
+                <h3>안녕하세요. 이것은 게시판 제목입니다.</h3>
+            </div>
+            <div class="myinfo">
+
+                <!-- 목록을 만드는 <dl>, <dt>, <dd> tag -->
+                <dl>
+                    <dt>작성자</dt>
+                    <dd>김이름</dd>
+                </dl>
+                <dl>
+                    <dt>날짜</dt>
+                    <dd>22-01-27</dd>
+                </dl>
+                <dl>
+                    <dt>조회</dt>
+                    <dd>14회</dd>
+                </dl>
+            </div>
+            <div class="cont">
+                동해물과 백두산이 마르고 닳도록<br>
+                하느님이 보우하사 우리나라 만세<br>
+                무궁화 삼천리 화려 강산<br>
+                대한 사람 대한으로 길이 보전하세
+            </div>
         </div>
-        <div class="board_view_wrap">
-            <div class="board_view">
-                <div class="title">
-                    글 제목이 들어갑니다.
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>번호</dt>
-                        <dd>1</dd>
-                    </dl>
-                    <dl>
-                        <dt>글쓴이</dt>
-                        <dd>안우중</dd>
-                    </dl>
-                    <dl>
-                        <dt>작성일</dt>
-                        <dd>2023.08.11</dd>
-                    </dl>
-                    <dl>
-                        <dt>조회</dt>
-                        <dd>33</dd>
-                    </dl>
-                </div>
-                <div class="cont">
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다<br>
-                    글 내용이 들어갑니다
-                </div>
-            </div>
-            <div class="bt_wrap">
-                <a href="list.html" class="on">목록</a>
-                <a href="edit.html">수정</a>
-            </div>
+        <div class="btn-view">
+            <a href="edit.html">수정</a>
         </div>
     </div>
 </body>
