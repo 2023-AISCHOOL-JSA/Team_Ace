@@ -559,4 +559,8 @@ router.get('/mypage', function(request, response){
 router.get('/collection', function(request, response){
     response.render('collection', {collection: request.session.collection})
 })
+
+router.get("/Delivery_Check_table", function(request, response){
+    response.render("Delivery_Check_table")
+})
 module.exports = router;
