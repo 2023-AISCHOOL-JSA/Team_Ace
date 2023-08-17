@@ -936,11 +936,10 @@ color: #222;
 border-top-left-radius:  10px;
 }
 
-.tab-content {
-/* display: none; */
-background: #ffffff;
-padding: 15px;
-}
+.container>.tab-content {
+  display: none;
+  background: #F6F4EB;
+  padding: 15px;}
 
 /* 주문목록Tab */
 .tab-content.current {

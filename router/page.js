@@ -606,4 +606,12 @@ router.get('/mypage', function(request, response){
     response.render("mypage", {info: request.cookies.info,
              p: request.session.prc, tp: request.session.tpr, arr: request.session.bpl, length: request.session.length, ps: request.session.prd_size})
 })
+
+router.get('/collection', function(request, response){
+    response.render('collection', {collection: request.session.collection})
+})
+
+router.get("/Delivery_Check_table", function(request, response){
+    response.render("Delivery_Check_table")
+})
 module.exports = router;
