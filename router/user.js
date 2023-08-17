@@ -372,10 +372,10 @@ router.get("/pay_c", function(request,response){
     
     conn.query(sql, [id, selectedPrds], function (err, rows) {
         if (!err) {
-            // console.log(rows)
+            response.redirect("/page/basket");
         }
         else {
-
+            response.redirect("/page/basket");
         }
     })
 });

@@ -49,6 +49,8 @@ router.get('/', function (request, response) {
                 query2();
             } else {
                 console.log(err);
+                request.session.best = null;
+                query2();
             }
         });
     }
@@ -68,6 +70,8 @@ router.get('/', function (request, response) {
                 query3();
             } else {
                 console.log(err);
+                request.session.new = null;
+                query3();
             }
         });
 
@@ -88,6 +92,8 @@ router.get('/', function (request, response) {
                 query4();
             } else {
                 console.log(err);
+                request.session.sale = null;
+                query4();
             }
         });
     }
@@ -113,30 +119,28 @@ router.get('/', function (request, response) {
                 // console.log(err);
                 // console.log(rows);
                 if (!err){
-                    if (rows.length > 0){
-                        l = rows.length;
-                        request.session.basket = rows;
-                        for (let i = 0; i<rows.length; i++){
-                            prc.push(String(rows[i].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-                            tpr += rows[i].PRD_PRICE;
-                            bpl.push(i);
-                        }
-                        tpr = String(tpr).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-                        console.log(prc);
-                        console.log(tpr);
-                        console.log(bpl);
-                        console.log(l);
-                        request.session.tpr = tpr;
-                        request.session.bpl = bpl;
-                        request.session.prc = prc;
-                        request.session.length = l;
-                        console.log(request.session.basket[0]);
-                        console.log(prd_size);
-                        response.render('Main', {
-                            info: request.cookies.info, best: request.session.best, basket: request.session.basket,
-                            new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l, ps: prd_size
-                        });
+                    l = rows.length;
+                    request.session.basket = rows;
+                    for (let i = 0; i<rows.length; i++){
+                        prc.push(String(rows[i].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+                        tpr += rows[i].PRD_PRICE;
+                        bpl.push(i);
                     }
+                    tpr = String(tpr).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+                    console.log(prc);
+                    console.log(tpr);
+                    console.log(bpl);
+                    console.log(l);
+                    request.session.tpr = tpr;
+                    request.session.bpl = bpl;
+                    request.session.prc = prc;
+                    request.session.length = l;
+                    console.log(request.session.basket[0]);
+                    console.log(prd_size);
+                    response.render('Main', {
+                        info: request.cookies.info, best: request.session.best, basket: request.session.basket,
+                        new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l, ps: prd_size
+                    });
                 } else {
                     console.log(err);
                     console.log(prd_size);
@@ -232,7 +236,28 @@ router.get('/selectOne', function (request, response) {
 });
 
 router.get('/basket', function (request, response) {
-    response.render('basket', { basket: request.session.basket });
+    let id = request.session.info.ID;
+    console.log(request.session.info.ID);
+    console.log(id);
+    
+    conn.connect();
+    let sql = `SELECT *
+                    FROM PRD A JOIN PRD_IMG B
+                    ON A.PRD_NO=B.PRD_NO
+                WHERE A.PRD_NO IN (SELECT PRD_NO
+                                        FROM BASKET
+                                    WHERE ID = ?);`;
+    conn.query(sql, [id], function(err, rows){
+        // console.log(err);
+        // console.log(rows);
+        if (!err){
+            request.session.basket = rows;
+            response.render('basket', { basket: request.session.basket, boro: 0  });
+        } else {
+            response.render('basket', { basket: request.session.basket, boro: 0  });
+        }
+    });
+    
 });
 
 router.get("/delPrds", function(request, response){
@@ -271,6 +296,7 @@ router.get("/delPrds", function(request, response){
                     console.log("!!!!!!!!!!")
                     response.render('basket', { basket: request.session.basket, boro: 0 });
                 } else {
+                    request.session.basket = null;
                     response.render('basket', { basket: request.session.basket, boro: 0 });
                 }
             } else {

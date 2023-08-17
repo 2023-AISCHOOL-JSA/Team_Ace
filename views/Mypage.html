@@ -28,7 +28,7 @@
             {% for i in order -%}
             <div class="product">
                 <div id="product">
-                    <div id="productImage"><img class="myImg" src="{{i.IMG_PATH}}" alt="img"></div>
+                    <div id="productImage"><a href="/page/detail?PRD_NO={{i.PRD_NO}}"><img class="myImg" src="{{i.IMG_PATH}}" alt="img"></a></div>
                     <div id="productName">
                         <div id="orderNum">{{i.ORDER_NO}}</div>
                         <div id="orderProductName">{{i.PRD_NM}} </div>
