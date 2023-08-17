@@ -90,13 +90,13 @@
       }
     });
 
-    var products_swiper = new Swiper(".products-carousel", {
+    var products_swiper = new Swiper(".products-carousel1", {
       slidesPerView: 5,
       spaceBetween: 30,
       speed: 500,
       navigation: {
-        nextEl: ".products-carousel-next",
-        prevEl: ".products-carousel-prev",
+        nextEl: ".products-carousel-next1",
+        prevEl: ".products-carousel-prev1",
       },
       breakpoints: {
         0: {
@@ -121,6 +121,30 @@
       navigation: {
         nextEl: ".products-carousel-next2",
         prevEl: ".products-carousel-prev2",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+        991: {
+          slidesPerView: 4,
+        },
+        1500: {
+          slidesPerView: 6,
+        },
+      }
+    });
+
+    var products_swiper3 = new Swiper(".products-carousel3", {
+      slidesPerView: 5,
+      spaceBetween: 30,
+      speed: 500,
+      navigation: {
+        nextEl: ".products-carousel-next3",
+        prevEl: ".products-carousel-prev3",
       },
       breakpoints: {
         0: {

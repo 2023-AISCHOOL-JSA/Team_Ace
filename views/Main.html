@@ -98,7 +98,7 @@
       </symbol>
     </defs>
   </svg>
-
+  
   <div class="preloader-wrapper">
     <div class="preloader">
     </div>
@@ -133,8 +133,9 @@
               {% endif %}
             </li>
         </ul>
-
+        {% if info.ID != Null %}
         <button class="w-100 btn btn-primary btn-lg" onclick="location.href='/user/basket'" type="submit">장바구니 보기</button>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -208,17 +209,21 @@
 
           <!-- 헤더 아이콘  -->
           <ul class="d-flex justify-content-end list-unstyled m-0">
-            {%if info != Null %}
+            {%if info.ID != Null %}
             {%if info.ID == 'admin' %}
-            <li>
+            <li class="nav-item active h_icon">
               <p>관리자님 환영합니다!</p>
-              <a href="/user/selectAll">회원 전체 보기</a><br>
-              <a href="/user/Logout">로그아웃</a><br>
+            </li>
+            <li>
+              <a href="/user/selectAll">회원 전체 보기</a>
+            </li>
+            <li>
+              <a href="/user/Logout"><img src="/assets/img/로그아웃.png"><p>로그아웃</p></a>
             </li>
             {%else %}
             
-            <li>
-              <a href="/user/Logout">로그아웃</a><br>
+            <li class="nav-item active h_icon">
+              <a href="/user/Logout"><img src="/assets/img/로그아웃.png"><p>로그아웃</p></a>
             </li>
             {%endif%}
             {%else %}
@@ -325,7 +330,7 @@
                           살펴보기</a>
                       </div>
                       <div class="img-wrapper col-md-5">
-                        <img id="best_image" src="{{best[0].IMG_PATH}}" class="img-fluid">
+                        <a href="/page/detail?PRD_NO={{best[0].PRD_NO}}"><img id="best_image" src="{{best[0].IMG_PATH}}" class="img-fluid"></a>
                       </div>
                     </div>
                   </div>
@@ -340,7 +345,7 @@
                           살펴보기</a>
                       </div>
                       <div class="img-wrapper col-md-5">
-                        <img id="sale_image" src="{{sale[0].IMG_PATH}}" class="img-fluid">
+                        <a href="/page/detail?PRD_NO={{sale[0].PRD_NO}}"><img id="sale_image" src="{{sale[0].IMG_PATH}}" class="img-fluid"></a>
                       </div>
                     </div>
                   </div>
@@ -355,7 +360,7 @@
                           collection</a>
                       </div>
                       <div class="img-wrapper col-md-5">
-                        <img id="new_image" src="{{new[0].IMG_PATH}}" class="img-fluid">
+                        <a href="/page/detail?PRD_NO={{new[0].PRD_NO}}"><img id="new_image" src="{{new[0].IMG_PATH}}" class="img-fluid"></a>
                       </div>
                     </div>
                   </div>
@@ -365,9 +370,10 @@
 
               </div>
             </div>
+            {% if info.ID != Null %}
             <div class="sidebar">
               <ul>
-                <li><a href="/page/basket"><img src="/assets/img/장바구니.png">
+                <li><a href="/user/basket"><img src="/assets/img/장바구니.png">
                     <p>장바구니</p>
                   </a></li>
                 <li><a href="/page/recall"><img src="/assets/img/수거신청.png">
@@ -378,6 +384,7 @@
                   </a></li>
               </ul>
             </div>
+            {% endif %}
           </div>
           <!-- / Banner Blocks -->
 
@@ -408,23 +415,24 @@
 
         <div class="category-carousel swiper">
           <div class="swiper-wrapper loo">
-            <a href="/page/rentType?rt=Long" class="nav-link category-item swiper-slide">
+            <a href="/page/rentType?rt=L" class="nav-link category-item swiper-slide">
               <img src="/assets/img/임티1.png" class="imos">
               <h3 class="category-title">장기렌탈</h3>
             </a>
-            <a href="/page/rentType?rt=Short" class="nav-link category-item swiper-slide">
+            <a href="/page/rentType?rt=S" class="nav-link category-item swiper-slide">
               <img src="/assets/img/임티2.png" class="imos">
               <h3 class="category-title">단기렌탈</h3>
             </a>
-            <a href="/page/rentType?rt=Brand" class="nav-link category-item swiper-slide">
+            <a href="/page/brand" class="nav-link category-item swiper-slide">
               <img src="/assets/img/임티4.png" class="imos">
               <h3 class="category-title">브랜드 별 가구</h3>
             </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티5.png" class="imos">
+            {% if info.ID != Null %}
+            <a href="/page/basket" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/장바구니.png" class="imos">
               <h3 class="category-title">수거신청</h3>
             </a>
-
+            {% endif %}
           </div>
         </div>
 
@@ -438,7 +446,7 @@
 
 
   <section class="py-5">
-    <div class="container-fluid">
+    <div class="container-fluid" id="best_prd">
 
       <div class="row">
         <div class="col-md-12">
@@ -448,12 +456,27 @@
               <h3>BEST Product</h3>
               <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-all" type="button">All</a>
-                  <a class="nav-link text-uppercase fs-6" id="nav-fruits-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-fruits" type="button">대형 가구</a>
-                  <a class="nav-link text-uppercase fs-6" id="nav-juices-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-juices" type="button">소형 가구</a>
+                  {% if ps == 'A' or ps == Null %}
+                    <a href="/page/?ps=A" class="nav-link text-uppercase fs-6 active" type="submit">전체 가구</a>
+                  {% else %}
+                    <a href="/page/?ps=A" class="nav-link text-uppercase fs-6" type="submit">전체 가구</a>
+                  {% endif %}
+                  {% if ps == 'L' %}
+                    <a href="/page/?ps=L" class="nav-link text-uppercase fs-6 active" type="submit">대형 가구</a>
+                  {% else %}
+                    <a href="/page/?ps=L" class="nav-link text-uppercase fs-6" type="submit">대형 가구</a>
+                  {% endif %}
+                  {% if ps == 'M' %}
+                    <a href="/page/?ps=M" class="nav-link text-uppercase fs-6 active" type="submit">중형 가구</a>
+                  {% else %}
+                    <a href="/page/?ps=M" class="nav-link text-uppercase fs-6" type="submit">중형 가구</a>
+                  {% endif %}
+                  {% if ps == 'S' %}
+                    <a href="/page/?ps=S" class="nav-link text-uppercase fs-6 active" type="submit">소형 가구</a>
+                  {% else %}
+                    <a href="/page/?ps=S" class="nav-link text-uppercase fs-6" type="submit">소형 가구</a>
+                  {% endif %}
+
                 </div>
               </nav>
             </div>
@@ -532,8 +555,8 @@
             <div class="d-flex align-items-center">
               <a href="#" class="btn-link text-decoration-none">View All Categories →</a>
               <div class="swiper-buttons">
-                <button class="swiper-prev products-carousel-prev btn btn-primary">❮</button>
-                <button class="swiper-next products-carousel-next btn btn-primary">❯</button>
+                <button class="swiper-prev products-carousel-prev1 btn btn-primary">❮</button>
+                <button class="swiper-next products-carousel-next1 btn btn-primary">❯</button>
               </div>
             </div>
           </div>
@@ -543,7 +566,7 @@
       <div class="row">
         <div class="col-md-12">
 
-          <div class="products-carousel swiper">
+          <div class="products-carousel1 swiper">
             <div class="swiper-wrapper">
               {% for i in sale -%}
               <div class="product-item swiper-slide">
@@ -782,6 +805,11 @@
     crossorigin="anonymous"></script>
   <script src="/assets/js/plugins.js"></script>
   <script src="/assets/js/script.js"></script>
+  {% if ps != Null %}
+    <script> const point = document.querySelectorAll('#best_prd')[0].offsetTop;
+      window.scrollBy({left:0, top:point-550})
+    </script>
+  {% endif %}
 </body>
 
 </html>

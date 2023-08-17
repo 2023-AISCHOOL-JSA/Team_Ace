@@ -388,11 +388,49 @@
     <span class="buttonText">Top</span>
   </button>
 
-  
-  
-  
-  
-  
+  <section class="py-5 overflow-hidden">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+
+          <div class="section-header d-flex justify-content-between mb-5">
+            <h2 class="section-title">Category</h2>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="category-carousel swiper">
+          <div class="swiper-wrapper loo">
+            <a href="/page/rentType?rt=L" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티1.png" class="imos">
+              <h3 class="category-title">장기렌탈</h3>
+            </a>
+            <a href="/page/rentType?rt=S" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티2.png" class="imos">
+              <h3 class="category-title">단기렌탈</h3>
+            </a>
+            <a href="/page/brand" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티4.png" class="imos">
+              <h3 class="category-title">브랜드 별 가구</h3>
+            </a>
+            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
+              <img src="/assets/img/임티5.png" class="imos">
+              <h3 class="category-title">수거신청</h3>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </section>
+  {% if row == Null %}
   <section class="py-5">
     <div class="container-fluid">
       
@@ -404,35 +442,79 @@
               
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 {% if os.searching == 'b' %}
-                  <h4>"BEST 상품" 검색 결과</h4>
+                  <h4>"BEST 상품"</h4>
                 {% elif os.searching == 'n' %}
-                  <h4>"NEW 상품" 검색 결과</h4>
+                  <h4>"NEW 상품"</h4>
                 {% elif os.searching == 's' %}
-                  <h4>"SALE 상품" 검색 결과</h4>
+                  <h4>"SALE 상품"</h4>
+                {% elif rt == 'L' %}
+                  <h4>"장기 렌탈 상품"</h4>  
+                {% elif rt == 'S' %}
+                  <h4>"단기 렌탈 상품"</h4>
                 {% else %}
                   {% if os.option.length > 0 %}
-                    <h4>"{{os.option}}+{{os.searching}}"에 대한 검색 결과</h4>
+                    <h4>"{{os.option}}+{{os.searching}}"</h4>
                   {% else %}
-                    <h4>"{{os.searching}}"에 대한 검색 결과</h4>
+                    <h4>"{{os.searching}}"</h4>
                   {% endif %}
                 {% endif %}
+                {% if po == 'L'%}
+                  <h4> + "대형 가구"</h4>
+                {% elif po == 'M'%}
+                  <h4> + "중형 가구"</h4>
+                {% elif po == 'S'%}
+                  <h4> + "소형 가구"</h4>
+                {% elif po == 'H'%}
+                  <h4> + "판매량 순"</h4>
+                {% elif po == 'E'%}
+                  <h4> + "높은 가격 순"</h4>
+                {% elif po == 'C'%}
+                  <h4> + "낮은 가격 순"</h4>
+                {% endif %}
+                <h4> 검색 결과</h4>
               </div>
+              {% if po != Null %}
               <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-all" type="button">All</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-fruits" type="button">대형 가구</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-juices" type="button">소형 가구</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-all" type="button">판매량 순</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-fruits" type="button">높은 가격 순</a>
-                    <a class="nav-link text-uppercase fs-6" id="nav-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-fruits" type="button">낮은 가격 순</a>
-                  </div>
-                </nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    {% if po == 'A' or po == Null %}
+                      <a href="/page/rentType?po=A&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">전체 상품</a>
+                    {% else %}
+                      <a href="/page/rentType?po=A&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">전체 상품</a>
+                    {% endif %}
+                    {% if po == 'L' %}
+                      <a href="/page/rentType?po=L&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">대형 가구</a>
+                    {% else %}
+                      <a href="/page/rentType?po=L&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">대형 가구</a>
+                    {% endif %}
+                    {% if po == 'M' %}
+                      <a href="/page/rentType?po=M&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">중형 가구</a>
+                    {% else %}
+                      <a href="/page/rentType?po=M&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">중형 가구</a>
+                    {% endif %}
+                    {% if po == 'S' %}
+                      <a href="/page/rentType?po=S&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">소형 가구</a>
+                    {% else %}
+                      <a href="/page/rentType?po=S&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">소형 가구</a>
+                    {% endif %}
+
+                    {% if po == 'H' %}
+                      <a href="/page/rentType?po=H&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">판매량 순</a>
+                    {% else %}
+                      <a href="/page/rentType?po=H&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">판매량 순</a>
+                    {% endif %}
+                    {% if po == 'E' %}
+                      <a href="/page/rentType?po=E&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">높은 가격 순</a>
+                    {% else %}
+                      <a href="/page/rentType?po=E&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">높은 가격 순</a>
+                    {% endif %}
+                    {% if po == 'C' %}
+                      <a href="/page/rentType?po=C&rt={{rt}}" class="nav-link text-uppercase fs-6 active" type="submit">낮은 가격 순</a>
+                    {% else %}
+                      <a href="/page/rentType?po=C&rt={{rt}}" class="nav-link text-uppercase fs-6" type="submit">낮은 가격 순</a>
+                    {% endif %}
+                    </div>
+                  </nav>
+                  {% endif %}
               </div>
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
@@ -474,54 +556,68 @@
       </div>
     </div>
   </section>
-  
+  {% else %}
   <section class="py-5 overflow-hidden">
     <div class="container-fluid">
+      <div><h2 class="section-title"> "브랜드 별 가구" 검색 결과 </h2></div>
+      {% for i in row -%}
       <div class="row">
         <div class="col-md-12">
 
-          <div class="section-header d-flex justify-content-between mb-5">
-            <h2 class="section-title">Category</h2>
-
+          <div class="section-header d-flex justify-content-between my-5">
+            {% if i[0].SELLER_CODE == '1' %}
+              <h2 class="section-title"> 이케아 가구 </h2>
+            {% elif i[0].SELLER_CODE == '2' %}
+              <h2 class="section-title"> 한샘 가구 </h2>
+            {% elif i[0].SELLER_CODE == '3' %}
+              <h2 class="section-title"> 리바트 가구 </h2>
+            {% endif%}
+            <div class="d-flex align-items-center">
+              <a href="#" class="btn-link text-decoration-none">View All Categories →</a>
+              <div class="swiper-buttons">
+                <button class="swiper-prev products-carousel-prev{{i[0].SELLER_CODE}} btn btn-primary">❮</button>
+                <button class="swiper-next products-carousel-next{{i[0].SELLER_CODE}} btn btn-primary">❯</button>
+              </div>
+            </div>
           </div>
+
         </div>
-
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
 
-        <div class="category-carousel swiper">
-          <div class="swiper-wrapper loo">
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티1.png" class="imos">
-              <h3 class="category-title">장기렌탈</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티2.png" class="imos">
-              <h3 class="category-title">단기렌탈</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티3.png" class="imos">
-              <h3 class="category-title">세트상품</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티4.png" class="imos">
-              <h3 class="category-title">브랜드 별 가구</h3>
-            </a>
-            <a href="/assets/html/category.html" class="nav-link category-item swiper-slide">
-              <img src="/assets/img/임티5.png" class="imos">
-              <h3 class="category-title">수거신청</h3>
-            </a>
-
+          <div class="products-carousel{{i[0].SELLER_CODE}} swiper">
+            <div class="swiper-wrapper">
+              {% for j in i -%}
+              <div class="product-item swiper-slide">
+                <a href="#" class="btn-wishlist"><svg width="24" height="24">
+                    <use xlink:href="#heart"></use>
+                  </svg></a>
+                <figure>
+                  <a href="/page/detail?PRD_NO={{j.PRD_NO}}" title="Product Title">
+                    <img src="{{j.IMG_PATH}}" class="tab-image">
+                  </a>
+                </figure>
+                <h3>{{j.PRD_NM}}</h3>
+                <span class="rating"><svg width="24" height="24" class="text-primary">
+                    <use xlink:href="#star-solid"></use>
+                  </svg> {{j.PRD_SCORE}}</span>
+                <span class="price">{{j.PRD_PRICE}}￦</span>
+                <div class="d-flex align-items-center justify-content-between">
+                  <a href="#" class="nav-link">장바구니로 →<iconify-icon icon="uil:shopping-cart"></a>
+                </div>
+              </div>
+              {%- endfor %}
+            </div>
           </div>
-        </div>
+          <!-- / products-carousel -->
 
+        </div>
       </div>
-    </div>
+      {%- endfor %}
     </div>
   </section>
-
+  {% endif %}
   <footer class="py-5">
     <div class="container-fluid">
       <div class="row">

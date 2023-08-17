@@ -8,22 +8,42 @@ let conn = db.init();
 
 // http://localhost:8787/page
 router.get('/', function (request, response) {
+    let prd_size = request.query.ps;
     console.log("메인");
+    console.log(prd_size);
+
     conn.connect();
     const query1 = () => {
-        let sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.CNT
-                     FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_RP/COUNT(*) AS CNT
-                             FROM PRD A, PRD_ST B
-                            WHERE A.PRD_NO = B.PRD_NO
-                            GROUP BY B.PRD_NO) C , PRD_IMG D
+        let sql = "";
+        let val = [];
+        if (prd_size == 'A' || prd_size == null){
+            console.log("전체");
+            sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.CNT
+                    FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_RP/COUNT(*) AS CNT
+                            FROM PRD A, PRD_ST B
+                        WHERE A.PRD_NO = B.PRD_NO
+                        GROUP BY B.PRD_NO) C , PRD_IMG D
                     WHERE D.PRD_NO = C.PRD_NO
                     ORDER BY CNT DESC
-                    LIMIT 10;`;
+                    LIMIT 15;`;
+        } else {
+            console.log("일부");
+            sql = `SELECT D.IMG_PATH, C.PRD_NO, C.PRD_NM, C.PRD_PRICE, C.PRD_SCORE, C.CNT
+                    FROM (SELECT A.PRD_NO, A.PRD_NM, A.PRD_PRICE, A.PRD_SCORE, A.PRD_RP/COUNT(*) AS CNT
+                            FROM PRD A, PRD_ST B
+                        WHERE A.PRD_NO = B.PRD_NO
+                          AND A.PRD_SIZE = ?
+                        GROUP BY B.PRD_NO) C , PRD_IMG D
+                    WHERE D.PRD_NO = C.PRD_NO
+                    ORDER BY CNT DESC
+                    LIMIT 15;`;
+            val = [prd_size]
+        }
         // rows.PRD_PRICE = String(rows.PRD_PRICE)[:-3]
-        conn.query(sql, function (err, rows) {
-            console.log(String(rows[0].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+        conn.query(sql, val, function (err, rows) {
             console.log(err);
             console.log(rows);
+            console.log(String(rows[0].PRD_PRICE).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
             if (!err) {
                 request.session.best = rows;
                 query2();
@@ -39,7 +59,7 @@ router.get('/', function (request, response) {
                              WHERE PRD_SIGN > CURDATE()-100) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
                      ORDER BY PRD_SIGN DESC
-                     LIMIT 10;`;
+                     LIMIT 20;`;
         conn.query(sql2, function (err, rows) {
             console.log(err);
             console.log(rows);
@@ -60,11 +80,10 @@ router.get('/', function (request, response) {
                              WHERE PRD_SALE > 0) A, PRD_IMG B
                      WHERE A.PRD_NO = B.PRD_NO
                      ORDER BY PRD_SALE DESC
-                     LIMIT 10;`;
+                     LIMIT 20;`;
                      
         conn.query(sql3, function (err, rows) {
             console.log("실행2")
-            console.log(err);
             console.log(rows);
             if (!err) {
                 request.session.sale = rows;
@@ -116,23 +135,25 @@ router.get('/', function (request, response) {
                         request.session.prc = prc;
                         request.session.length = l;
                         console.log(request.session.basket[0]);
+                        console.log(prd_size);
                         response.render('Main', {
                             info: request.cookies.info, best: request.session.best, basket: request.session.basket,
-                            new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l
+                            new: request.session.new, sale: request.session.sale, p: prc, tp: tpr, arr: bpl, length: l, ps: prd_size
                         });
                     }
                 } else {
                     console.log(err);
+                    console.log(prd_size);
                     response.render('Main', {
                         info: request.cookies.info, best: request.session.best,
-                        new: request.session.new, sale: request.session.sale
+                        new: request.session.new, sale: request.session.sale, ps: prd_size
                     });
                 }
             });
         } else {
             response.render('Main', {
                 info: request.cookies.info, best: request.session.best, basket: [],
-                new: request.session.new, sale: request.session.sale, p: [], tp: 0, arr: [], length: 0
+                new: request.session.new, sale: request.session.sale, p: [], tp: 0, arr: [], length: 0, ps: prd_size
             });
         }
     }
@@ -239,12 +260,12 @@ router.get("/delPrds", function(request, response){
         });
     }
     const query2 = () => {
-        let sql2 = `SELECT *
-                    FROM PRD A JOIN PRD_IMG B
-                    ON A.PRD_NO=B.PRD_NO
-                    WHERE A.PRD_NO IN (SELECT PRD_NO
-                                        FROM BASKET
-                                        WHERE ID = ?);`;
+        let sql2 = `SELECT *, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%m') AS M, DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.DEL_TIME  DAY), '%d') AS D
+                      FROM PRD A JOIN PRD_IMG B
+                        ON A.PRD_NO=B.PRD_NO
+                     WHERE A.PRD_NO IN (SELECT PRD_NO
+                                          FROM BASKET
+                                         WHERE ID = ?);`;
         conn.query(sql2, [id], function(err, rows){
             console.log(err);
             console.log(rows);
@@ -354,45 +375,142 @@ router.post('/autoSearch', function(request,response){
     });
 })
 
+router.get('/brand', function (request, response) {
+    conn.connect();
+    let sql = `SELECT *
+                 FROM PRD A JOIN PRD_IMG B
+                   ON (A.PRD_NO = B.PRD_NO)
+                ORDER BY A.SELLER_CODE ASC`;
+    conn.query(sql, function(err, rows){
+        if(!err){
+            console.log(rows[0].SELLER_CODE);
+            let row = [];
+            let temp = [];
+            let a = String(rows[0].SELLER_CODE);
+            for (let i = 0; i<rows.length; i++) {
+                if (String(rows[i].SELLER_CODE) == a){
+                    temp.push(rows[i]);
+                } else {
+                    row.push(temp);
+                    console.log(temp);
+                    temp = [];
+                    temp.push(rows[i]);
+                    a = rows[i].SELLER_CODE;
+                }
+                console.log(a);
+            }
+            row.push(temp);
+            console.log(row);
+            response.render("Search", {info: request.cookies.info, row: row});
+        }
+        else{
+            console.log(err);
+            response.redirect("/page/");
+        }
+    });
+});
+
 router.get('/rentType', function(request,response){
-    let rentType = request.query.rt;
-    console.log(rentType);
     conn.connect();
     let sql = "";
     let val = [];
-    if (rentType == 'Long'){
-        sql = `SELECT *
-                 FROM PRD A JOIN PRD_IMG B
-                   ON (A.PRD_NO = B.PRD_NO)
-                WHERE A.RENT_TYPE = 'L';`;
-        val = []
-    } else if (rentType == 'Short'){
-        sql = `SELECT *
-                 FROM PRD A JOIN PRD_IMG B
-                   ON (A.PRD_NO = B.PRD_NO)
-                WHERE A.RENT_TYPE = 'S';`;
-        val = []
-    } else if (rentType == 'Brand'){
-        sql = `SELECT *
-                 FROM PRD A JOIN PRD_IMG B
-                   ON (A.PRD_NO = B.PRD_NO)
-                WHERE SELLER_CODE = 1;`;
-        val = ['%'+searching+'%']
+    let rentType = "";
+    let po = "";
+    if ( request.query.po == null){
+        if (request.query.rt != null){
+            rentType = request.query.rt;
+            console.log(rentType);
+            sql = `SELECT *
+                    FROM PRD A JOIN PRD_IMG B
+                    ON (A.PRD_NO = B.PRD_NO)
+                    WHERE A.RENT_TYPE = ?;`;
+            val = [rentType];
+        }
+    } else {
+        po = request.query.po;
+        if (request.query.rt == null){
+            if (po == 'A'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)`;
+                val = [];
+            } else if (po == 'L' || po == 'M' || po == 'S'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        WHERE A.PRD_SIZE = ?;`;
+                val = [po];
+            } else if (po == 'H'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        ORDER BY A.PRD_RP DESC;`;
+                val = [];
+            } else if (po == 'E'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        ORDER BY A.PRD_PRICE DESC;`;
+                val = [];
+            } else if (po == 'C'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        ORDER BY A.PRD_PRICE ASC;`;
+                val = [];
+            }
+        } else {
+            rentType = request.query.rt;
+            if (po == 'A'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        WHERE A.RENT_TYPE = ?`;
+                val = [rentType];
+            } else if (po == 'L' || po == 'M' || po == 'S'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        WHERE A.PRD_SIZE = ?
+                        AND A.RENT_TYPE = ?;`;
+                val = [po, rentType];
+            } else if (po == 'H'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        WHERE A.RENT_TYPE = ?
+                        ORDER BY A.PRD_RP DESC;`;
+                val = [rentType];
+            } else if (po == 'E'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        WHERE A.RENT_TYPE = ?
+                        ORDER BY A.PRD_PRICE DESC;`;
+                val = [rentType];
+            } else if (po == 'C'){
+                sql = `SELECT *
+                        FROM PRD A JOIN PRD_IMG B
+                        ON (A.PRD_NO = B.PRD_NO)
+                        WHERE A.RENT_TYPE = ?
+                        ORDER BY A.PRD_PRICE ASC;`;
+                val = [rentType];
+            }
+        }
     }
-    
     conn.query(sql, val, function(err, rows){
         console.log(rows);
 
         if(!err){
             console.log("조회 성공");
-            response.render("Search", {searched: rows, info: request.cookies.info, os:{'option':option,'searching':searching}});
+            response.render("Search", {searched: rows, info: request.cookies.info, rt: rentType, po: po});
         } else {
             console.log("조회 실패");
             response.redirect("/page/");
         }
 
     });
-})
+});
 
 router.post('/Search', function(request,response){
     let option = request.body.option;
