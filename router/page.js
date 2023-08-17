@@ -268,9 +268,10 @@ router.get("/delPrds", function(request, response){
             if (!err){
                 if (rows.length > 0){
                     request.session.basket = rows;
-                    response.render('basket', { basket: request.session.basket });
+                    console.log("!!!!!!!!!!")
+                    response.render('basket', { basket: request.session.basket, boro: 0 });
                 } else {
-                    response.render('basket', { basket: null });
+                    response.render('basket', { basket: request.session.basket, boro: 0 });
                 }
             } else {
                 console.log(err);
