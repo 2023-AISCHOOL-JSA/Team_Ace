@@ -567,9 +567,6 @@
             <div class="swiper-wrapper">
               {% for i in sale -%}
               <div class="product-item swiper-slide">
-                <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                    <use xlink:href="#heart"></use>
-                  </svg></a>
                 <figure>
                   <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                     <img src="{{i.IMG_PATH}}" class="tab-image">
@@ -621,9 +618,6 @@
             <div class="swiper-wrapper">
               {% for i in new -%}
               <div class="product-item swiper-slide">
-                <a href="#" class="btn-wishlist"><svg width="24" height="24">
-                    <use xlink:href="#heart"></use>
-                  </svg></a>
                 <figure>
                   <a href="/page/detail?PRD_NO={{i.PRD_NO}}" title="Product Title">
                     <img src="{{i.IMG_PATH}}" class="tab-image">
